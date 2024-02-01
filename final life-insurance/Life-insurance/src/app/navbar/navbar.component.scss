@@ -1,0 +1,293 @@
+.container{
+  max-width: 1024px;
+}
+.navbar_outContainer {
+
+
+  transition: height 0.3s ease;
+  box-shadow: 0 0 30px 8px rgba(0, 0, 0, .1);
+  z-index: 1;
+  position: relative;
+  padding: 0 !important;
+
+  .search-icon {
+    display: none; 
+    font-size: 16px;
+    padding: 4px 12px;
+    color: #939393;
+    cursor: pointer;
+  }
+ 
+
+  .navbar {
+
+    margin-bottom: auto;
+
+    .navbar-collapse {
+      justify-content: flex-end !important;
+  
+      .navbar-nav {
+        display: flex;
+        align-items: center;
+        margin-right: 0 !important;
+   
+        .nav-item {
+          .nav-link {
+            font-size: 16px;
+            color: #939393;
+            cursor: pointer;
+  
+    padding: 15px 20px;
+    height: 100%;
+          }
+
+
+          &.dropdown {
+            &:hover {
+              .dropdown-menu {
+                margin: 0;
+                display: block;
+              }
+            }
+
+            .dropdown-toggle::after {
+              display: none;
+            }
+
+            .dropdown {
+
+              position: relative;
+              display: inline-block;
+              transition: opacity 0.3s ease;
+
+              .dropbtn {
+                position: relative;
+                overflow: hidden;
+                color: #8DC63F;
+                font-size: 16px;
+                font-weight: 400;
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                outline: none;
+                text-decoration: none;
+
+                &::after {
+                  // content: url('../assets/chevron.svg');
+                  display: inline-block;
+                  margin-left: 5px;
+                  transition: all 0.3s ease-in-out;
+
+                }
+
+                &:hover::after {
+                  transform: rotate(180deg);
+                }
+
+                &::before {
+                  content: '';
+                  position: absolute;
+                  width: 100%;
+                  transform: scaleX(0);
+                  height: 1px;
+                  bottom: 0;
+                  left: 0;
+                  background-color: #8EC741;
+                  transform-origin: bottom right;
+                  transition: transform 0.25s ease-out;
+                }
+
+                &:hover::before {
+                  transform: scaleX(1);
+                  transform-origin: bottom left;
+                }
+              }
+
+              .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #264f84;
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+                z-index: 1;
+
+                a {
+                  padding: 12px 16px;
+                  text-decoration: none;
+                  display: block;
+                  font-weight: 500;
+                  max-width: 300px;
+                  height: 50px;
+                }
+
+                &.show {
+                  display: block;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.navbar-toggler {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.navbar-toggler span {
+  display: block;
+  background-color: #939393;
+  height: 3px;
+  width: 25px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  position: relative;
+  left: 0;
+  opacity: 1;
+  transition: all 0.2s ease-out;
+  transform-origin: center left;
+}
+
+.navbar-toggler span:nth-child(1) {
+  margin-top: 0.3em;
+}
+
+.navbar-toggler:not(.collapsed) span:nth-child(1) {
+  transform: translate(15%, -33%) rotate(45deg);
+}
+
+.navbar-toggler:not(.collapsed) span:nth-child(2) {
+  transform: translate(15%, 290%) rotate(-47deg);
+}
+
+
+.navbar-toggler span:nth-child(1) {
+  transform: translate(0%, 0%) rotate(0deg);
+}
+
+.navbar-toggler span:nth-child(2) {
+  transform: translate(0%, 0%) rotate(0deg);
+}
+
+
+// @media  (min-width: 1024px) and (max-height: 1310px) {
+//   /* Laptop */
+// }
+
+@media (max-width: 1030px) {
+  .navbar_outContainer {
+  
+
+    .navbar {
+
+      .navbar-collapse {
+     
+        .navbar-nav {
+    
+  
+          .nav-item {
+       
+       
+            .nav-link {
+              color: #939393;
+              font-size: 16px;
+      
+              letter-spacing: .5px;
+            }
+
+            .nav-button {
+              margin: 10px 0;
+            }
+
+            &.dropdown {
+              .dropdown {
+                display: block;
+                background-color: #fff;
+
+                .dropbtn {
+                  color: #939393;
+                  font-size: 20px;
+                  padding: 0;
+                  letter-spacing: .5px;
+
+                }
+
+                .dropdown-content {
+                  a {
+                    max-width: 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .navbar-brand {
+    img {
+      padding: 15px;
+    }
+  }
+
+}
+
+
+@media (max-width: 425px) {
+
+  .navbar_outContainer {
+    padding: 0;
+
+    .search-icon {
+      display: block;
+    }
+    .navbar {
+      padding: 0;
+
+      .navbar-collapse {
+        .navbar-nav {
+          align-items: flex-start;
+          background-color: #fff;
+          padding: 15px;
+    
+          .nav-item {
+            padding: 10px 0;
+            .nav-link {
+              color: #939393;
+              font-size: 16px;
+              padding: 0;
+              letter-spacing: .5px;
+            }
+
+            .nav-button {
+              margin: 10px 0;
+            }
+
+            &.dropdown {
+              display: block;
+              background-color: #fff;
+              .dropbtn {
+                color: #939393;
+                font-size: 20px;
+                padding: 0;
+                letter-spacing: .5px;
+              }
+
+              .dropdown-content {
+                a {
+                  max-width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

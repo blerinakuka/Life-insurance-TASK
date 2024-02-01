@@ -1,0 +1,151 @@
+.card-container{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 70px;
+    img{
+        margin-bottom: 30px;
+
+    }
+    .notes{
+        width: 40.78px;
+        height: 47.63px;
+    }
+    .like{
+        width: 37.78px;
+        height: 36.22px;
+    }
+    .tel{
+        width:38.98px;
+        height: 39.02px;
+    }
+    .card{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+        font-size: 16px;
+        color:#A5A5A5 ;
+        border:none;
+        box-shadow: 0px 0px 21px #00000029 ;
+        margin:30px;
+        border-radius: 12px;
+    }
+}
+.main-card{
+    display: flex;
+    justify-content: center;
+    margin-bottom:91px;
+    margin-top: 102px;
+    .card{
+        box-shadow: 0px 0px 21px #00000029 ;
+        justify-content: flex-end;
+        justify-items: end;
+        display: grid;
+        position: relative;
+        font-size: 16px;
+        border:none;
+        border-radius: 30px;
+        h1{
+            color: #252425;
+            font-size: 16px;
+            white-space: pre;
+   
+        }
+        p{
+            color: #707070;
+            max-width: 172px;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        padding:50px 9.5px 50px 9.5px ;
+        img{
+            position: absolute;
+    left: -130px;
+    height: 200px;
+    top: 65px;
+   
+    
+
+
+        }
+    }
+}
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+  //buttons
+  .button-design{
+    margin-top: 30px;
+    color: white;
+    border: 1px solid #25AE78;
+    border-radius: 36px;
+    background-color: #25AE78;
+    font-size: 14px;
+    height: 40px;
+}
+
+@media screen and (min-width: 767px) and (max-width: 1000px) {
+    .card-container{
+        flex-direction: column;
+        .card{
+            margin: 10px 30px 10px 30px;
+        }
+   
+    }
+    .button-design{
+        padding: 0 60px 0 60px;
+    }
+    .main-card{
+        margin-left: 50px;
+        .card{
+  
+            p{
+                line-height: 1.5;
+            }
+            img{
+                left: -90px;
+                max-width: 300px;
+                max-height: 250px;
+                top: 50px;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .card-container{
+        flex-direction: column;
+        .card{
+            margin: 10px 30px 10px 30px;
+        }
+   
+    }
+    .button-design{
+        padding: 0 40px 0 40px;
+    }
+    .main-card{
+        margin-left: 50px;
+        .card{
+  
+            p{
+                line-height: normal;
+            }
+            img{
+                left: -50px;
+                max-width: 200px;
+                max-height: 150px;
+                top: 100px;
+            }
+        }
+
+    }
+ 
+}
