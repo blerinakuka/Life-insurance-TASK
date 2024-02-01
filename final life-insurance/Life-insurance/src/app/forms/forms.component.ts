@@ -342,7 +342,7 @@ protected readonly PhoneNumberFormat = PhoneNumberFormat;
 
     const currentYear = new Date().getFullYear();
 
-    const minYear = 1900;
+    const minYear = 1924;
 
     if (birthYear < minYear || birthYear > currentYear) {
       return { 'invalidYear': true };

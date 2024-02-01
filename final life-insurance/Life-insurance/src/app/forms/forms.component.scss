@@ -809,7 +809,11 @@ display: flex;
 
 }
 
-  @media screen and (min-width: 790px)and (max-width: 1200px)  {
+.text-wrap-last{
+  white-space: pre-wrap;
+}
+
+  @media screen and (min-width: 761px)and (max-width: 1200px)  {
     .main-container{
 padding: 70px 0 70px 0;
     }
@@ -862,7 +866,7 @@ padding: 70px 0 70px 0;
 
   }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 760px) {
   .rotate-icon {
     padding-left: 0;
   }
