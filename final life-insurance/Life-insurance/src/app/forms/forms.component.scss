@@ -78,7 +78,7 @@
   .paragraph-margin.line-height{
     line-height: 2.5;
     color: #939393;
-    padding: 10px ;
+    padding: 0 10px ;
     span{
       font-weight: bolder;
       color: black;
@@ -809,7 +809,7 @@ display: flex;
 
 }
 
-  @media screen and (min-width: 767px)and (max-width: 1200px)  {
+  @media screen and (min-width: 790px)and (max-width: 1200px)  {
     .main-container{
 padding: 70px 0 70px 0;
     }
@@ -821,7 +821,7 @@ padding: 70px 0 70px 0;
     .card{
       margin: 20px 0 0 0;
       padding: 10px 10px 25.56px 10px;
-  
+
       .label-margin-checkboxes-responsive{
         label{          margin-top: 0!important;
         }
@@ -862,7 +862,7 @@ padding: 70px 0 70px 0;
 
   }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 769px) {
   .rotate-icon {
     padding-left: 0;
   }
@@ -923,6 +923,14 @@ table {
 
   }
   .container{
+    .paragraph-margin.line-height{
+      padding:10px 0px ;
+      span{
+        font-weight: bolder;
+        color: black;
+      }
+  
+    }
     .margin-top-accordion{
       margin-bottom: 40px;
     }
