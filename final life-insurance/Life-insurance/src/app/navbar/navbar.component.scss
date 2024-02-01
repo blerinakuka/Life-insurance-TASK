@@ -36,11 +36,9 @@
             font-size: 16px;
             color: #939393;
             cursor: pointer;
-  
-    padding: 15px 27px;
-    height: 100%;
+            padding: 15px 27px;
+            height: 100%;
           }
-
 
           &.dropdown {
             &:hover {
@@ -247,7 +245,7 @@
       display: block;
     }
     .navbar {
-      padding: 0;
+      padding: 15px 0;
 
       .navbar-collapse {
         .navbar-nav {
