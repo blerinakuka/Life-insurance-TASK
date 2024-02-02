@@ -335,7 +335,7 @@ margin: 20px 20px 65px 20px;
       position: absolute;
       border-radius: 3px;
       left: 0;
-      top: 0;
+      top: 8%;
     }
 
 
@@ -654,7 +654,9 @@ padding: 36px;
   font-size: 12px;
   padding-left: 15px;
 }
-
+.error-message.gender-error{
+  padding-left: 30px;
+}
 .error-message.agreed-error{
   display: flex;
   justify-content: left;
@@ -927,6 +929,11 @@ table {
 
   }
   .container{
+    label.checkbox-container::before {
+
+      left: 1%;
+      top: 30%;
+    }
     .paragraph-margin.line-height{
       padding:10px 0px ;
       span{
@@ -998,7 +1005,7 @@ table {
     flex-direction: column-reverse;
   }
   .step-line{
-    width: 20px;
+    width: 25px;
   }
 
   .error-message.agreed-error{
@@ -1035,5 +1042,8 @@ padding: 20px 0 20px 20px;
     margin-left: 15px;
     padding: 10px;
 }
+
+
+
 
 }
