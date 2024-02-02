@@ -496,6 +496,13 @@ border-color: #f3f3f3;
     border-color: #25AE78;
   }
 }
+.step-content {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
 .step-line {
   width: 75px;
   height: 3px;
@@ -720,7 +727,6 @@ padding: 36px;
     background-color: #2982F60D;
     outline: none;
     color: black;
-    font-weight: bolder;
     transition: border-color 0.5s, background-color 0.5s;
 
     &::placeholder {

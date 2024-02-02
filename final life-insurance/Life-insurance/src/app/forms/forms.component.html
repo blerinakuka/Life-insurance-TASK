@@ -2,19 +2,59 @@
 
 
   <div class="custom-stepper">
-    <div *ngFor="let step of steps; let i = index" class="step" [class.active]="currentStep === i" [class.completed]="currentStep >= i"  (click)="goToStep(i)">
-      <div class="circle" [class.clickable]="isStepClickable(i)" >
-          <img *ngIf="currentStep >= i" src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
-          <div *ngIf="currentStep < i" class="number"></div>
+    <div class="step active" [class.completed]="currentStep >= 0" (click)="goToStep(0)">
+      <div class="circle">
+        <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
       </div>
-      <div class="step-line" *ngIf="i < steps.length - 1"></div>
-  </div>
+      <div class="step-line"></div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep >= 1" (click)="goToStep(1)">
+      <div class="circle" [class.clickable]="isStepClickable(1)">
+        <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
       </div>
-    <div class="step-content ">
+      <div class="step-line"></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep >= 2" (click)="goToStep(2)">
+      <div class="circle" [class.clickable]="isStepClickable(2)">
+        <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
+      </div>
+      <div class="step-line"></div>
+    </div>
+
+        <!-- Step 4 -->
+        <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep >= 3" (click)="goToStep(3)">
+          <div class="circle" [class.clickable]="isStepClickable(3)">
+            <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
+          </div>
+          <div class="step-line"></div>
+        </div>
+
+             <!-- Step 5 -->
+             <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >=4" (click)="goToStep(4)">
+              <div class="circle" [class.clickable]="isStepClickable(4)">
+                <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
+              </div>
+              <div class="step-line"></div>
+            </div>
+
+                   <!-- Step 6 -->
+                   <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >= 5" (click)="goToStep(5)">
+                    <div class="circle" [class.clickable]="isStepClickable(5)">
+                      <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
+                    </div>
+                    <div></div>
+                  </div>
+      </div>
+    <div class=" ">
   
-      <ng-container [ngSwitch]="currentStep">
+  
+      <div >
         <form [formGroup]="myFormStart" (ngSubmit)="nextStep()">
-        <ng-container *ngSwitchCase="0">
+          <div class="step-content" [class.active]="currentStep === 0">
           <div class="container img first-three-forms-mobile ">
     
               <div class="col-lg-8 ">
@@ -121,18 +161,17 @@
                         </div>
                        <div class="row">
                         <div class="col-lg-4">
-                          <button type="button" class="button-design form-control" (click)="nextStep()" [disabled]="currentStep === steps.length - 1">Next</button>
+                          <button type="button" class="button-design form-control" (click)="nextStep()">Next</button>
                         </div>    
                       </div>
                     </div>
                   </div>
                     
-        </ng-container>
+                </div>
       </form>
  
       <form [formGroup]="myFormWorkStatus" (ngSubmit)="goToNextStepTwo()">
-        <ng-container *ngSwitchCase="1">
-
+        <div class="step-content" [class.active]="currentStep === 1">
           <div class="container img col-lg-12 first-three-forms-mobile">
               <!-- <div class="col-8"> -->
               <h2>Tell us more about you</h2>
@@ -193,20 +232,20 @@
 
                <div class="row buttons">
                 <div class="col-lg-4">
-                  <button (click)="goToPreviousStep()" type="button"  class=" form-control button-design back" [disabled]="currentStep === 0">Back</button>
+                  <button (click)="goToPreviousStep()" type="button"  class=" form-control button-design back" >Back</button>
     
                 </div>
                 <div class="col-lg-4">
-                  <button  type="button" class=" form-control button-design " (click)="goToNextStepTwo()" [disabled]="currentStep === steps.length - 1">Next</button>
+                  <button  type="button" class=" form-control button-design " (click)="goToNextStepTwo()" >Next</button>
                 </div>
                 </div>
               </div>
             </div>
             </div>
-        </ng-container>
+          </div>
         </form>
         <form [formGroup]="myFormLifeInsurancePlan" (ngSubmit)="nextStep()">
-        <ng-container *ngSwitchCase="2">
+          <div class="step-content" [class.active]="currentStep === 2">
           <div class="container img first-three-forms-mobile">
               <div class="">
               <h2>Your life insurance plan</h2>
@@ -242,10 +281,10 @@
          </div>
         </div>
         </div>
-        </ng-container>
+      </div>
         </form>
         <form [formGroup]="myFormLifeInsuranceGoal" (ngSubmit)="nextStep()">
-        <ng-container *ngSwitchCase="3">
+          <div class="step-content" [class.active]="currentStep === 3">
           <div class="container img checkboxes-container-margin">
 
               <h2>Choose your goals</h2>
@@ -288,17 +327,17 @@
                 
                     <div class="row buttons ">
                       <div class="col-lg-4">
-                          <button type="button" class=" form-control button-design back " (click)="goToPreviousStep()" [disabled]="currentStep === 0">Back</button>
+                          <button type="button" class=" form-control button-design back " (click)="goToPreviousStep()" >Back</button>
                       </div>
                       <div class="col-lg-4">
-                          <button  type="button" class=" form-control button-design next-checkboxes " (click)="goToNextStep()" [disabled]="currentStep === steps.length - 1">Next</button></div>
+                          <button  type="button" class=" form-control button-design next-checkboxes " (click)="goToNextStep()" >Next</button></div>
           </div>
         </div>
         </div>
-        </ng-container>
+      </div>
         </form>
   
-        <ng-container *ngSwitchCase="4">
+        <div class="step-content" [class.active]="currentStep === 4">
           <div class="container accordion  accordions-mobile img col-lg-8 ">
             <div class="">
               <h2>You are almost done</h2>
@@ -674,7 +713,7 @@
 
               <div class="row center buttons">
                 <div class="col-lg-3">
-                  <button type="button" class="form-control button-design back" (click)="goToPreviousStep()" [disabled]="currentStep === 0">Back</button>
+                  <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
                 </div>
                 <div class="col-lg-3">
                   <button class="form-control button-design" (click)="onLoadMoreClick()" [class.disabled]="isButtonDisabled">Load More</button>
@@ -682,9 +721,9 @@
               </div>
             </div>
           </div>
-        </ng-container>
+        </div>
         <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onSubmit()">
-        <ng-container *ngSwitchCase="5">
+          <div class="step-content" [class.active]="currentStep === 5">
           <div class="container img last-form-mobile">
     
             <div class="col-lg-8">
@@ -772,30 +811,17 @@
                       <div class="row">
                         <div class="col-lg-4">
                         <label>Telefon*</label>
-                        <!-- <input type="number" class="form-control input-design" formControlName="phoneNumber" id="phone"
-                        placeholder="Tel*"> -->
-                         <ngx-intl-tel-input
-                        [cssClass]="'form-control input-design'"
-                        [preferredCountries]="['ch', 'de']"
-                        [enableAutoCountrySelect]="true"
-                        [enablePlaceholder]="true"
-                        [searchCountryFlag]="true"
-                        [selectFirstCountry]="true"
-                        [phoneValidation]="true"
-                        [maxLength]="15"
-                    [numberFormat]="PhoneNumberFormat.National"
-                        formControlName="phoneNumber"
-                      ></ngx-intl-tel-input>
-                      <div
-                *ngIf="myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']"
-                class="error-message">
-                Telefon ist erforderlich.
-              </div>
-               <div
-                *ngIf="myFormPersonalDetails.get('phoneNumber')?.invalid && myFormPersonalDetails.get('phoneNumber')?.value !=undefined"
-                class="text-danger">
-                Falsche nummer.
-              </div> 
+                   
+                        <input #phoneInput id="phone" type="tel" formControlName="phoneNumber" />
+                  
+                        <div #errorMsg id="error-message" class="hide error-message"></div>
+                        <div #validMsg id="valid-msg" class="hide error-message"></div>
+                  
+                                <div
+                                *ngIf="myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']"
+                                class="error-message">
+                                Telefon ist erforderlich.
+                              </div>
                     </div>
 
                       <div class="col-lg-4">
@@ -851,14 +877,13 @@
             
                         </div>
                         <div class="col-lg-4">
-                          <button  type="button" class=" form-control button-design last-form-buttons" (click)="onSubmit()" 
-                        >Finish</button>  
+                          <button type="button" class="form-control button-design last-form-buttons" (click)="onSubmit()">Finish</button> 
                         </div>                
                         </div>
                   </div>
                 </div>
-        </ng-container>
+              </div>
         </form>
-      </ng-container>
+      </div>
     </div>
   </div>

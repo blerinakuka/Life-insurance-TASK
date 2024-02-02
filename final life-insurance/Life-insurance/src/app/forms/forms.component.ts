@@ -11,13 +11,7 @@ import {
   FormControl,
   NgModel
 } from '@angular/forms';
-import {
-  CountryISO,
-  NgxIntlTelInputModule,
-  SearchCountryField, 
-  PhoneNumberFormat
-} from "ngx-intl-tel-input";
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -30,6 +24,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import {PLZService} from "../PLZ.service";
+import intlTelInput from 'intl-tel-input';
+
+import 'intl-tel-input/build/css/intlTelInput.css';
+import 'intl-tel-input/build/js/utils.js';
 
 function customEmailValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -61,7 +59,6 @@ function customEmailValidator(): ValidatorFn {
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    NgxIntlTelInputModule,
     NgbModule,
   ],
 })
@@ -75,15 +72,52 @@ export class FormsComponent {
   myFormPersonalDetails: FormGroup;
   showTooltip = false;
   showPremiumTooltip = false;
-  SearchCountryField = SearchCountryField;
-  CountryISO = CountryISO;
-  preferredCountries: CountryISO[] = [
-    CountryISO.UnitedStates,
-    CountryISO.UnitedKingdom
-  ];
-  
-protected readonly PhoneNumberFormat = PhoneNumberFormat;
+  phoneNumberIsValid: boolean = true; 
+ 
 
+  @ViewChild('phoneInput') phoneInput!: ElementRef;
+  @ViewChild('btn') button!: ElementRef;
+  @ViewChild('errorMsg') errorMsg!: ElementRef;
+  @ViewChild('validMsg') validMsg!: ElementRef;
+
+  iti: any; 
+
+  errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+  reset() {
+    this.phoneInput.nativeElement.classList.remove("error");
+    this.errorMsg.nativeElement.innerHTML = "";
+    this.errorMsg.nativeElement.classList.add("hide");
+    this.validMsg.nativeElement.classList.add("hide");
+  }
+
+  ngAfterViewInit() {
+    this.iti = intlTelInput(this.phoneInput.nativeElement, {
+      initialCountry: "ch",
+      separateDialCode: true,
+      utilsScript: "/intl-tel-input/js/utils.js?1706723638591"
+    });
+  
+    // Subscribe to the input event to trigger validation while typing
+    this.phoneInput.nativeElement.addEventListener('input', () => {
+      this.validatePhoneNumber();
+    });
+  }
+  validatePhoneNumber(): boolean {
+    this.reset();
+    const inputValue = this.phoneInput.nativeElement.value.trim();
+  
+    if (inputValue && this.iti.isValidNumberPrecise()) {
+      this.validMsg.nativeElement.classList.remove("hide");
+      return true;
+    } else {
+      this.phoneInput.nativeElement.classList.add("error-message");
+      const errorCode = this.iti.getValidationError();
+      this.errorMsg.nativeElement.innerHTML = this.errorMap[errorCode] || "Invalid number";
+      this.errorMsg.nativeElement.classList.remove("hide");
+      return false;
+    }
+  }
 //STEPPER
   steps = [0, 1, 2,3 ,4 ,5 ]; 
   currentStep = 0;
@@ -437,7 +471,7 @@ protected readonly PhoneNumberFormat = PhoneNumberFormat;
   onSubmit() {
     this.markFormGroupTouched(this.myFormPersonalDetails);
   
-    if (this.myFormPersonalDetails.valid) {
+    if (this.myFormPersonalDetails.valid && this.validatePhoneNumber()) {
       console.log('myFormStart:', this.myFormStart.value);
       console.log('myFormWorkStatus:', this.myFormWorkStatus.value);
       console.log('myFormLifeInsurancePlan:', this.myFormLifeInsurancePlan.value);
@@ -447,7 +481,7 @@ protected readonly PhoneNumberFormat = PhoneNumberFormat;
   
       this.router.navigate(['/danke']);
     } else {
-      console.log('myFormPersonalDetails is not valid. Cannot submit.');
+      console.log('Validation failed. Cannot submit.');
     }
   }
 
