@@ -175,17 +175,17 @@ export class FormsComponent {
 
 //COUNTRY SELECT INPUT
   countries = [
-    { value: '1', name: 'Armenia' },
-    { value: '2', name: 'Afghanistan' },
-    { value: '3', name: 'Aland Islands' },
-    { value: '4', name: 'Albania' },
-    { value: '5', name: 'Algeria' },
-    { value: '6', name: 'American Samoa' },
-    { value: '7', name: 'Andorra' },
-    { value: '8', name: 'Anguilla' },
-    { value: '9', name: 'Antigua and Barbuda' },
-    { value: '10', name: 'Argentina' },
-    { value: '11', name: 'Switzerland' },
+    { value: 'Armenia', name: 'Armenia' },
+    { value: 'Afghanistan', name: 'Afghanistan' },
+    { value: 'Aland Islands', name: 'Aland Islands' },
+    { value: 'Albania', name: 'Albania' },
+    { value: 'Algeria', name: 'Algeria' },
+    { value: 'American Samoa', name: 'American Samoa' },
+    { value: 'Andorra', name: 'Andorra' },
+    { value: 'Anguilla', name: 'Anguilla' },
+    { value: 'Antigua and Barbuda', name: 'Antigua and Barbuda' },
+    { value: 'Argentina', name: 'Argentina' },
+    { value: 'Switzerland', name: 'Switzerland' },
   ];
   onCountrySelected(country: any) {
     this.selectedCountry = country;
@@ -205,8 +205,8 @@ export class FormsComponent {
           employmentStatus: ['']
         });
         this.myFormLifeInsurancePlan = this.formBuilder.group({
-         insuredSum: 0, 
-         insuredDuration: 0, 
+         insuredSum: 100000, 
+         insuredDuration: 10, 
         });
         this.myFormLifeInsuranceGoal = this.formBuilder.group({
           protectionOfFamily: [''], 
@@ -228,7 +228,8 @@ export class FormsComponent {
           gender: ['', Validators.required],
           agreedToTerms: [false, Validators.requiredTrue],
         });
-        this.myFormPersonalDetails.get('nationality')?.setValue('11');
+        this.myFormPersonalDetails.get('nationality')?.setValue('Switzerland');
+        
     
   }
 

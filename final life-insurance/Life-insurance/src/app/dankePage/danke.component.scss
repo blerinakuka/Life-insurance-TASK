@@ -69,12 +69,12 @@
         padding:50px 9.5px 50px 9.5px ;
         img{
             position: absolute;
-            left: -130px;
+            left: -150px;
             height: 100%;
-            max-height: 236px;
+            max-height: 200px;
             top: 65px;
             width: 100%;
-            max-width: 300px;
+            max-width:  250px;
 
 
         }
@@ -119,15 +119,16 @@
                 line-height: 1.5;
             }
             img{
-                left: -90px;
-                max-width: 300px;
-                max-height: 250px;
-                top: 50px;
+                left: -130px;
+                max-width: 250px;
+                max-height: 200px;
+                top: 60px;
             }
         }
 
     }
 }
+
 
 @media screen and (max-width: 767px) {
     .card-container{
@@ -149,9 +150,40 @@
             }
             img{
                 left: -50px;
+                max-width: 230px;
+                max-height: 180px;
+                top: 70px;
+            }
+        }
+
+    }
+ 
+}
+
+
+@media screen and (max-width: 385px) {
+    .card-container{
+        flex-direction: column;
+        .card{
+            margin: 10px 30px 10px 30px;
+        }
+   
+    }
+    .button-design{
+        padding: 0 40px 0 40px;
+    }
+    .main-card{
+        margin-left: 50px;
+        .card{
+  
+            p{
+                line-height: normal;
+            }
+            img{
+                left: -50px;
                 max-width: 200px;
                 max-height: 150px;
-                top: 100px;
+                top: 130px;
             }
         }
 
