@@ -154,6 +154,24 @@ export class FormsComponent {
       console.log('Form is invalid. Please check the error messages.');
     }
   }
+  goToNextStepThree(): void {
+    this.nextButtonClicked = true; // Set the flag when the "Next" button is clicked
+
+    // Check if at least one checkbox is checked
+    if (!this.atLeastOneCheckboxChecked() || !this.myFormLifeInsuranceGoal.valid) {
+      // Handle the error, show a message, etc.
+      console.log('Please select at least one checkbox.');
+    } else {
+      if (this.currentStep < this.steps.length - 1) {
+        this.currentStep++;
+      }
+    }
+  }
+
+  atLeastOneCheckboxChecked(): boolean {
+    return Object.keys(this.myFormLifeInsuranceGoal.controls)
+      .some(key => this.myFormLifeInsuranceGoal.get(key)?.value);
+  }
 
   goToPreviousStep(): void {
     if (this.currentStep > 0) {
@@ -201,21 +219,22 @@ export class FormsComponent {
         });
         this.myFormWorkStatus = this.formBuilder.group({
           smokingStatus: ['', Validators.required],      
-          profession: [''],        
-          employmentStatus: ['']
+          profession:['', Validators.required],       
+          employmentStatus: ['', Validators.required],
         });
         this.myFormLifeInsurancePlan = this.formBuilder.group({
-         insuredSum: 100000, 
-         insuredDuration: 10, 
+         insuredSum:['100000', [Validators.required]],
+         insuredDuration: ['10', [Validators.required]],
         });
         this.myFormLifeInsuranceGoal = this.formBuilder.group({
-          protectionOfFamily: [''], 
-          buyOwnHome: [''], 
-          taxOptimization: [''], 
-          financialInvestments: [''], 
-          financialIndependence: [''], 
-          wealthAccumulation: [''], 
-        });
+          protectionOfFamily: [''],
+          buyOwnHome: [''],
+          taxOptimization: [''],
+          financialInvestments: [''],
+          financialIndependence: [''],
+          wealthAccumulation: [''],
+       });
+      
         this.myFormChooseOffer = this.formBuilder.group({
           selectedAccordion: [''],
 
@@ -232,6 +251,9 @@ export class FormsComponent {
         
     
   }
+
+  //checkboxes required
+  nextButtonClicked = false;
 
   //GENDER BUTTONS VALUE
   clickedButton: string = '';
