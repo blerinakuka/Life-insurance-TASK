@@ -70,6 +70,7 @@ export class FormsComponent {
   myFormLifeInsuranceGoal: FormGroup;
   myFormChooseOffer: FormGroup;
   myFormPersonalDetails: FormGroup;
+
   showTooltip = false;
   showPremiumTooltip = false;
   phoneNumberIsValid: boolean = true; 
@@ -98,7 +99,6 @@ export class FormsComponent {
       utilsScript: "/intl-tel-input/js/utils.js?1706723638591"
     });
   
-    // Subscribe to the input event to trigger validation while typing
     this.phoneInput.nativeElement.addEventListener('input', () => {
       this.validatePhoneNumber();
     });
@@ -118,6 +118,7 @@ export class FormsComponent {
       return false;
     }
   }
+
 //STEPPER
   steps = [0, 1, 2,3 ,4 ,5 ]; 
   currentStep = 0;
@@ -154,12 +155,13 @@ export class FormsComponent {
       console.log('Form is invalid. Please check the error messages.');
     }
   }
-  goToNextStepThree(): void {
-    this.nextButtonClicked = true; // Set the flag when the "Next" button is clicked
 
-    // Check if at least one checkbox is checked
+  //checkboxes required
+    nextButtonClicked = false;
+  goToNextStepThree(): void {
+    this.nextButtonClicked = true; 
+
     if (!this.atLeastOneCheckboxChecked() || !this.myFormLifeInsuranceGoal.valid) {
-      // Handle the error, show a message, etc.
       console.log('Please select at least one checkbox.');
     } else {
       if (this.currentStep < this.steps.length - 1) {
@@ -252,8 +254,7 @@ export class FormsComponent {
     
   }
 
-  //checkboxes required
-  nextButtonClicked = false;
+
 
   //GENDER BUTTONS VALUE
   clickedButton: string = '';
@@ -261,7 +262,6 @@ export class FormsComponent {
     this.myFormPersonalDetails.controls['gender'].setValue(gender);
     this.clickedButton = gender;
   }
-
 
   //ACCORDIONS
   updateSelectedAccordion(selectedAccordion: string) {
@@ -444,7 +444,6 @@ export class FormsComponent {
   }
 
   //FULL NAME INPUT VALIDATION
-
   onInputFormat1(controlName: string): ValidationErrors | null {
     let inputValue: string = this.myFormStart.get(controlName)?.value;
 
