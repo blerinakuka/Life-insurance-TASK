@@ -105,7 +105,13 @@ footer {
         font-weight: lighter;
     }
   }
-
+  .position-footer-items{
+    display: flex;
+    justify-content: space-between;
+  }
+  .h5-margin-b{
+margin-bottom: 20px;
+  }
   h5{
     font-weight: 600;
     font-size: 16px;
@@ -127,6 +133,7 @@ footer {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
+    line-height: 3;
   }
 
   li {
