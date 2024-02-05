@@ -191,7 +191,7 @@ export class FormsComponent {
 
   selectedCountry: any; 
 
-//COUNTRY SELECT INPUT
+  //COUNTRY SELECT INPUT
   countries = [
     { value: 'Armenia', name: 'Armenia' },
     { value: 'Afghanistan', name: 'Afghanistan' },
