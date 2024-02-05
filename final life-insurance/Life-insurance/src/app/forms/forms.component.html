@@ -368,15 +368,16 @@
                     </div>
                   </div>
                   <div class="header-buttons">
-                   <div class="col-lg-6">
+              
                         <button #accordionButton type="button" class="form-control button-design accordion-btn"
                                                 
                         (click)="goToNextStep();updateSelectedAccordion('solidavita'); updateSelectedImage(accordionButton, '../assets/solidavita.svg') " [disabled]="currentStep === steps.length - 1">Angebot einholen</button>
-                      </div>
+                        <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                   <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"  >
                     <span class="button-text">Einzelheiten</span> <i class="fas fa-chevron-down"></i>
                   </button>
                 </div>
+              </div>
               </div>
             </div>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -428,14 +429,15 @@
                     </div>
                   </div>
                   <div class="header-buttons">
-                   <div class="col-lg-6">
+          
                         <button #accordionButton type="button" class="form-control button-design accordion-btn"                 
                                (click)="goToNextStep();updateSelectedAccordion('allianz'); updateSelectedImage(accordionButton, '../assets/allianz.svg') " [disabled]="currentStep === steps.length - 1">Angebot einholen</button>
-                      </div>
+                               <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                   <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" >
                     <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down"  ></i>
                   </button>
                 </div>
+              </div>
               </div>
             </div>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -487,14 +489,15 @@
                     </div>
                   </div>
                   <div class="header-buttons">
-                   <div class="col-lg-6">
+    
                         <button #accordionButton type="button" class="form-control button-design accordion-btn" 
                         (click)="goToNextStep(); updateSelectedAccordion('pax'); updateSelectedImage(accordionButton, '../assets/pax.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
-                      </div>
+                        <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                   <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                     <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down" ></i>
                   </button>
                 </div>
+              </div>
               </div>
             </div>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
@@ -550,13 +553,14 @@
                       </div>
                     </div>
                     <div class="header-buttons">
-                     <div class="col-lg-6">
+     
                           <button #accordionButton type="button" class="form-control button-design accordion-btn" 
                           (click)="goToNextStep(); updateSelectedAccordion('concordia'); updateSelectedImage(accordionButton, '../assets/concordia.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
-                        </div>
+                          <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                     <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
                       <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down" ></i>
                     </button>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -611,14 +615,15 @@
                       </div>
                     </div>
                     <div class="header-buttons">
-                     <div class="col-lg-6">
+       
                           <button #accordionButton type="button" class="form-control button-design accordion-btn" 
                           (click)="goToNextStep(); updateSelectedAccordion('zuricher-kantonalbank'); updateSelectedImage(accordionButton, '../assets/zuricher-kantonalbank.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
-                        </div>
+                          <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                     <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
                       <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down" ></i>
                     </button>
                   </div>
+                </div>
                 </div>
               </div>
                   <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
@@ -672,14 +677,15 @@
                       </div>
                     </div>
                     <div class="header-buttons">
-                     <div class="col-lg-6">
+    
                           <button #accordionButton type="button" class="form-control button-design accordion-btn" 
                           (click)="goToNextStep(); updateSelectedAccordion('groupe-mutuel'); updateSelectedImage(accordionButton, '../assets/groupe-mutuel.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
-                        </div>
+                          <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                     <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
                       <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down " ></i>
                     </button>
                   </div>
+                </div>
                 </div>
               </div>
                   <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">

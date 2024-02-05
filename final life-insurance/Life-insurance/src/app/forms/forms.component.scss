@@ -1102,15 +1102,19 @@ padding: 20px 0 20px 20px;
 .button-center{
   display: flex;
 }
+.margin-collapsed-button{
+  margin-right: 20px;
+}
 .acc-btn {
-  display: flex;
-  justify-content: center;
-  color: white;
+    display: flex;
+    justify-content: center;
+    color: white;
     border: 1px solid #25AE78;
-    border-radius: 16px;
+    border-radius: 12px;
     background-color: #25AE78;
     margin-left: 15px;
-    padding: 10px;
+    padding: 10px 3px;
+    height: 100%;
 }
 
 
