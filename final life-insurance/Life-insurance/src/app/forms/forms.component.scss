@@ -336,6 +336,7 @@ margin: 20px 20px 65px 20px;
     }
     .agreed-container{
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: left;
@@ -362,6 +363,7 @@ margin: 20px 20px 65px 20px;
 
     input[type="checkbox"]:checked + label.checkbox-container::before {
       background-color: #25AE78; 
+      border: none; 
       // border: 1px solid #CCCCCC;
     }
 
@@ -369,6 +371,7 @@ margin: 20px 20px 65px 20px;
       content: "\2713";
       font-size: 12px;
       color: #fff; 
+
       position: absolute;
       left: 4px;
       top: 0;
@@ -377,6 +380,7 @@ margin: 20px 20px 65px 20px;
 
     input[type="checkbox"]:checked + label.checkbox-container::after {
       visibility: visible;
+      border: none;
     }
     
 //radio
@@ -693,7 +697,8 @@ padding: 36px;
   display: flex;
   justify-content: left;
   text-align: left;
-  padding-left: 80px;
+  padding-left: 0px;
+
 }
 
 //tel
@@ -997,18 +1002,17 @@ table {
     label.checkbox-container::after {
 
       left: 3%;
-      top: 25%;
+      top: 5%;
     }
     label.checkbox-container.agreed::after{
       left: 7px;
-      top: 25%;
-
+      top: 5%;
   
     }
     label.checkbox-container::before {
 
       left: 1%;
-      top: 30%;
+
     }
     .paragraph-margin.line-height{
       padding:10px 0px ;

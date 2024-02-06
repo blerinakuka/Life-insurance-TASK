@@ -95,7 +95,7 @@
                             <div *ngIf="!isSuggestionSelected && (myFormStart.get('city')?.touched || myFormStart.get('city')?.dirty) &&
                             (!myFormStart.get('city')?.value || myFormStart.get('city')?.value.length <= 4 || myFormStart.get('city')?.value.length === 5)"
                                  class="error-message multiline-error">
-                              Bitte wählen Sie einen Vorschlag aus der Liste.
+                                 Please select a suggestion from the list.
                             </div>
             
                             <!-- <div
@@ -117,8 +117,8 @@
                             [class.error]="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
                             [class.selected]="myFormStart.get('insuranceModel')?.value">
                             <option value="" disabled selected>Please Select</option>
-                            <option value="Saule 3a" class="text-dark">Saule 3a</option>
-                            <option value="Saule 3b" class="text-dark">Saule 3b</option>
+                            <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
+                            <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
                           </select>
                           <div *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
                             class="error-message">
@@ -142,7 +142,7 @@
                         <div class="row">
                           <div class="col-lg-8">
                           <label>Full Name</label>
-                          <input type="text" placeholder="Ihre Vorname & Nachname" formControlName="fullName" class="form-control input-design"  (input)="onFullNameInput()" [class.error]="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched">
+                          <input type="text" placeholder="Full Name " formControlName="fullName" class="form-control input-design"  (input)="onFullNameInput()" [class.error]="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched">
                           <div *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched" class="error-message">
                             Full Name is required.
                           </div>
@@ -366,17 +366,17 @@
                       <img src="../assets/solidavita.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
                     </div>
                     <div class="col-lg-4">
-                      <p class="paragraph-margin table-p line-height">Bis zu <span class="bolder">1540</span> Franken Sparpotenzial MEDICASA Netz PROVITA</p>
+                      <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
                     </div>
                   </div>
                   <div class="header-buttons">
               
                         <button #accordionButton type="button" class="form-control button-design accordion-btn"
                                                 
-                        (click)="goToNextStep();updateSelectedAccordion('solidavita'); updateSelectedImage(accordionButton, '../assets/solidavita.svg') " [disabled]="currentStep === steps.length - 1">Angebot einholen</button>
+                        (click)="goToNextStep();updateSelectedAccordion('solidavita'); updateSelectedImage(accordionButton, '../assets/solidavita.svg') " [disabled]="currentStep === steps.length - 1">Get an offer</button>
                         <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                   <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"  >
-                    <span class="button-text">Einzelheiten</span> <i class="fas fa-chevron-down"></i>
+                    <span class="button-text">Details</span> <i class="fas fa-chevron-down"></i>
                   </button>
                 </div>
               </div>
@@ -386,24 +386,24 @@
                   <div class="accordion-body">                        <table class="table mt-3">
                     <tbody>
                       <tr class="bg-light">
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Gewählte Franchise:</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
                         <td>CHF 200</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 94.10 (-27.45% gegenüber 2021)</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 94.10 (-27.45% compared to 2021)</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Pramientotal pro Jahr:</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
                         <td>CHF 1129.20</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 129.70 (+0.00% gegenüber 2020)</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+0.00% compared to 2020)</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 129.70 (+6.31% gegenüber 2019)</td>
+                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+6.31% compared to 2019)</td>
                       </tr>
                     </tbody>
                   </table>
@@ -428,16 +428,16 @@
                       <img src="../assets/allianz.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
                     </div>
                     <div class="col-lg-4">
-                      <p class="paragraph-margin table-p line-height">Bis zu <span class="bolder">1540</span> Franken Sparpotenzial MEDICASA Netz PROVITA</p>
+                      <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
                     </div>
                   </div>
                   <div class="header-buttons">
           
                         <button #accordionButton type="button" class="form-control button-design accordion-btn"                 
-                               (click)="goToNextStep();updateSelectedAccordion('allianz'); updateSelectedImage(accordionButton, '../assets/allianz.svg') " [disabled]="currentStep === steps.length - 1">Angebot einholen</button>
+                               (click)="goToNextStep();updateSelectedAccordion('allianz'); updateSelectedImage(accordionButton, '../assets/allianz.svg') " [disabled]="currentStep === steps.length - 1">Get an offer</button>
                                <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                   <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" >
-                    <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down"  ></i>
+                    <span class="button-text">Details</span><i class="fas fa-chevron-down"  ></i>
                   </button>
                 </div>
               </div>
@@ -447,24 +447,24 @@
                   <div class="accordion-body">                        <table class="table mt-3">
                     <tbody>
                       <tr class="bg-light">
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Gewählte Franchise:</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
                         <td>CHF 200</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 94.10 (-27.45% gegenüber 2021)</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 94.10 (-27.45% compared to 2021)</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Pramientotal pro Jahr:</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
                         <td>CHF 1129.20</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 129.70 (+0.00% gegenüber 2020)</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+0.00% compared to 2020)</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 129.70 (+6.31% gegenüber 2019)</td>
+                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+6.31% compared to 2019)</td>
                       </tr>
                     </tbody>
                   </table>
@@ -488,16 +488,16 @@
                       <img src="../assets/pax.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
                     </div>
                     <div class="col-lg-4">
-                      <p class="paragraph-margin table-p line-height">Bis zu <span class="bolder">1540</span> Franken Sparpotenzial MEDICASA Netz PROVITA</p>
+                      <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
                     </div>
                   </div>
                   <div class="header-buttons">
     
                         <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                        (click)="goToNextStep(); updateSelectedAccordion('pax'); updateSelectedImage(accordionButton, '../assets/pax.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
+                        (click)="goToNextStep(); updateSelectedAccordion('pax'); updateSelectedImage(accordionButton, '../assets/pax.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
                         <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                   <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                    <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down" ></i>
+                    <span class="button-text">Details</span><i class="fas fa-chevron-down" ></i>
                   </button>
                 </div>
               </div>
@@ -507,24 +507,24 @@
                   <div class="accordion-body">                        <table class="table mt-3">
                     <tbody>
                       <tr class="bg-light">
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Gewählte Franchise:</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
                         <td>CHF 200</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 94.10 (-27.45% gegenüber 2021)</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 94.10 (-27.45% compared to 2021)</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Pramientotal pro Jahr:</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
                         <td>CHF 1129.20</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 129.70 (+0.00% gegenüber 2020)</td>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+0.00% compared to 2020)</td>
                       </tr>
                       <tr>
-                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                        <td>CHF 129.70 (+6.31% gegenüber 2019)</td>
+                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+6.31% compared to 2019)</td>
                       </tr>
                     </tbody>
                   </table>
@@ -552,16 +552,16 @@
                         <img src="../assets/concordia.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
                       </div>
                       <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height">Bis zu <span class="bolder">1540</span> Franken Sparpotenzial MEDICASA Netz PROVITA</p>
+                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
                       </div>
                     </div>
                     <div class="header-buttons">
      
                           <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                          (click)="goToNextStep(); updateSelectedAccordion('concordia'); updateSelectedImage(accordionButton, '../assets/concordia.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
+                          (click)="goToNextStep(); updateSelectedAccordion('concordia'); updateSelectedImage(accordionButton, '../assets/concordia.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
                           <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                     <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                      <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down" ></i>
+                      <span class="button-text">Details</span><i class="fas fa-chevron-down" ></i>
                     </button>
                   </div>
                   </div>
@@ -571,24 +571,24 @@
                     <div class="accordion-body">                        <table class="table mt-3">
                       <tbody>
                         <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Gewählte Franchise:</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
                           <td>CHF 200</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 94.10 (-27.45% gegenüber 2021)</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Pramientotal pro Jahr:</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
                           <td>CHF 1129.20</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 129.70 (+0.00% gegenüber 2020)</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 129.70 (+6.31% gegenüber 2019)</td>
+                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
                         </tr>
                       </tbody>
                     </table>
@@ -614,16 +614,16 @@
                         <img src="../assets/zuricher-kantonalbank.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
                       </div>
                       <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height">Bis zu <span class="bolder">1540</span> Franken Sparpotenzial MEDICASA Netz PROVITA</p>
+                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
                       </div>
                     </div>
                     <div class="header-buttons">
        
                           <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                          (click)="goToNextStep(); updateSelectedAccordion('zuricher-kantonalbank'); updateSelectedImage(accordionButton, '../assets/zuricher-kantonalbank.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
+                          (click)="goToNextStep(); updateSelectedAccordion('zuricher-kantonalbank'); updateSelectedImage(accordionButton, '../assets/zuricher-kantonalbank.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
                           <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                     <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                      <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down" ></i>
+                      <span class="button-text">Details</span><i class="fas fa-chevron-down" ></i>
                     </button>
                   </div>
                 </div>
@@ -633,24 +633,24 @@
                     <div class="accordion-body">                        <table class="table mt-3">
                       <tbody>
                         <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Gewählte Franchise:</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
                           <td>CHF 200</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 94.10 (-27.45% gegenüber 2021)</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Pramientotal pro Jahr:</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
                           <td>CHF 1129.20</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 129.70 (+0.00% gegenüber 2020)</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 129.70 (+6.31% gegenüber 2019)</td>
+                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
                         </tr>
                       </tbody>
                     </table>
@@ -676,16 +676,16 @@
                         <img src="../assets/groupe-mutuel.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
                       </div>
                       <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height">Bis zu <span class="bolder">1540</span> Franken Sparpotenzial MEDICASA Netz PROVITA</p>
+                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
                       </div>
                     </div>
                     <div class="header-buttons">
     
                           <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                          (click)="goToNextStep(); updateSelectedAccordion('groupe-mutuel'); updateSelectedImage(accordionButton, '../assets/groupe-mutuel.svg') " [disabled]="currentStep === steps.length - 1" >Angebot einholen</button>
+                          (click)="goToNextStep(); updateSelectedAccordion('groupe-mutuel'); updateSelectedImage(accordionButton, '../assets/groupe-mutuel.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
                           <div class="col-sm-3 col-lg-6 col-md-6 margin-collapsed-button">
                     <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
-                      <span class="button-text">Einzelheiten</span><i class="fas fa-chevron-down " ></i>
+                      <span class="button-text">Details</span><i class="fas fa-chevron-down " ></i>
                     </button>
                   </div>
                 </div>
@@ -695,24 +695,24 @@
                     <div class="accordion-body">                        <table class="table mt-3">
                       <tbody>
                         <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Gewählte Franchise:</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
                           <td>CHF 200</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 94.10 (-27.45% gegenüber 2021)</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Pramientotal pro Jahr:</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
                           <td>CHF 1129.20</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 129.70 (+0.00% gegenüber 2020)</td>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
                         </tr>
                         <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monatliche Prämien:</td>
-                          <td>CHF 129.70 (+6.31% gegenüber 2019)</td>
+                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
                         </tr>
                       </tbody>
                     </table>
@@ -774,7 +774,7 @@
                   </div>
                       <div class="card last-form-margin ">
                         <div class="row last-form">
-                          <label>Geschlecht</label>
+                          <label>Gender</label>
                           <div class="buttons-container">
                             <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons " >
                               <div type="button" [class.clicked]="clickedButton === 'male'" class="gender-button-input-design" (click)="setGender('male')">
@@ -797,13 +797,13 @@
 
                        <div class="row">
                         <div class="col-lg-4">
-                        <label>Vollständiger Name</label>
+                        <label>Full name</label>
                         <input placeholder="" class="form-control input-design-readonly" [value]="myFormStart.get('fullName')?.value" readonly>
      
                       </div>
             
                       <div class="col-lg-4">
-                        <label>Strasse,Nr</label>
+                        <label>Street, No</label>
                         <input
                         type="text"
                         class="form-control input-design "
@@ -814,23 +814,23 @@
                       <div
                         *ngIf="myFormPersonalDetails.get('adress')?.touched && myFormPersonalDetails.get('adress')?.errors?.['required']"
                         class="error-message">
-                        Strasse ist erforderlich.
+                        Street is required.
                       </div>
                       <div *ngIf="myFormPersonalDetails.get('adress')?.hasError('invalidFormat')"
                            class="text-danger multiline-error">
-                        Invalid format for strasse.
+                           Invalid format for street.
                       </div>
                       </div>
                     
                       <div class="col-lg-4">
-                        <label>Postleitzahl</label>
+                        <label>Postal Code</label>
                         <input placeholder="" class="form-control input-design-readonly" [value]="myFormStart.get('city')?.value" readonly>
                       </div>
                       </div>
             
                       <div class="row">
                         <div class="col-lg-4">
-                        <label>Telefon</label>
+                        <label>Phone</label>
                    
                         <input #phoneInput id="phone" type="text" formControlName="phoneNumber"   maxlength="15"/>
                   
@@ -840,7 +840,7 @@
                                 <div
                                 *ngIf="myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']"
                                 class="error-message">
-                                Telefon ist erforderlich.
+                                Telephone is required.
                               </div>
                     </div>
 
@@ -851,17 +851,17 @@
                         <div
                           *ngIf="myFormPersonalDetails.get('email')?.touched && myFormPersonalDetails.get('email')?.errors?.['required']"
                           class="error-message">
-                          E-Mail ist erforderlich.
+                          Email is required.
                         </div>
                         <div
                           *ngIf="myFormPersonalDetails.get('email')?.dirty && myFormPersonalDetails.get('email')?.value && myFormPersonalDetails.get('email')?.hasError('invalidEmail')"
                           class="error-message">
-                          Bitte geben Sie eine gültige E-Mail-Adresse ein.
+                          Please enter a valid email address.
                         </div>
                       </div>
             
                       <div class="col-lg-4">
-                        <label>Nationalität</label>
+                        <label>Nationality</label>
                         <select placeholder="Please select" class="form-control-select"
                                 formControlName="nationality"  [class.selected]="myFormPersonalDetails.get('nationality')?.value"
                             >
@@ -873,23 +873,23 @@
                       <div class="col-lg-12 agreed-container mt-3">
                         <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
                         <label class="checkbox-container agreed" for="checkbox20">
-                        Ich habe die
+                          I have the
                         <a href="https://infoversicherung.ch/impressum" target="_blank">
-                          Nutzungsbedingungen
+                          Terms of Use
                         </a>
-                        und
+                        and
                         <a href="https://infoversicherung.ch/datenschutz" target="_blank">
-                          Datenschutz-Bestimmungen
+                          Privacy Policy
                         </a>
-                        gelesen und akzeptiert
+                        read and accepted
                         </label>
-                 
+                        <div
+                        *ngIf="myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']"
+                        class="error-message agreed-error">
+                        Please accept our conditions.
                       </div>
-                      <div
-                      *ngIf="myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']"
-                      class="error-message agreed-error">
-                      Bitte akzeptieren Sie unsere Bedingungen.
-                    </div>
+                      </div>
+                 
             
                       <div class="row buttons">
                         <div class="col-lg-4">
