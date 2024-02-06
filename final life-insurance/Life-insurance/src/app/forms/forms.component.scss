@@ -852,7 +852,7 @@ display: flex;
   white-space: pre-wrap;
 }
 
-  @media screen and (min-width: 762px)and (max-width: 1200px)  {
+  @media screen and (min-width: 768px)and (max-width: 1200px)  {
     .main-container{
 padding: 70px 0 70px 0;
     }
@@ -887,6 +887,14 @@ padding: 70px 0 70px 0;
       margin: 20px 0 0 0;
       padding: 10px 10px 25.56px 10px;
 
+      .row.buttons{
+        display: flex;
+        flex-direction: column-reverse;
+      }
+      .row.center.buttons{
+        display: flex;
+        flex-direction: column-reverse;
+      }
       .label-margin-checkboxes-responsive{
         label{          margin-top: 0!important;
         }
