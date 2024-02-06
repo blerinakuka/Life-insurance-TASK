@@ -274,7 +274,7 @@
                       </label>
                       <div>
                        <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredDuration')?.value }}<span>Years</span></p>
-                       <input class="range" type="range" formControlName="insuredDuration" min="10" [max]="calculateValue()" (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
+                       <input class="range" type="range" formControlName="insuredDuration" [min]="calculateValueMin()" [max]="calculateValue()" (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
                       </div>
                     </div>
   

@@ -201,22 +201,31 @@ export class FormsComponent {
   rangeSlide(value: number) {
     this.myFormLifeInsurancePlan.get('insuredSum')?.setValue(value);
   }
-
   calculateValue(): number {
     const birthYear = this.myFormStart.get('birthyear')?.value;
-  
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
   
-    let result = 65 - age;
-  
-    if (result <= 0) {
-      result = 30;
+    if (age === 65) {
+      return 1; 
+    } else if (age < 65) {
+      return Math.max(0, 65 - age);
+    } else {
+      return 30; 
     }
-  
-    return result;
   }
 
+    calculateValueMin(): number {
+      const birthYear = this.myFormStart.get('birthyear')?.value;
+      const currentYear = new Date().getFullYear();
+      const age = currentYear - birthYear;
+    
+      if (age >= 64 && age <= 65) {
+        return 0;
+      } else {
+        return 1; 
+      }
+    }
   rangeSlideDuration(value: number) {
     this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(value);
   }
@@ -257,7 +266,7 @@ export class FormsComponent {
         });
         this.myFormLifeInsurancePlan = this.formBuilder.group({
          insuredSum:['100000', [Validators.required]],
-         insuredDuration: ['10', [Validators.required]],
+         insuredDuration: ['1', [Validators.required]],
         });
         this.myFormLifeInsuranceGoal = this.formBuilder.group({
           protectionOfFamily: [''],
@@ -282,6 +291,10 @@ export class FormsComponent {
         });
         this.myFormPersonalDetails.get('nationality')?.setValue('Switzerland');
         
+        this.myFormStart.get('birthyear')?.valueChanges.subscribe(() => {
+
+          this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(1);
+        });
     
   }
 
@@ -302,9 +315,7 @@ export class FormsComponent {
   }
   selectedImage: string | null = null;
   updateSelectedImage(button: HTMLButtonElement, image: string) {
-    console.log('Selected Image:', image);
     this.selectedImage = image;
-    console.log('Button Clicked:', button);
   }
   showAdditionalAccordions = false;
   isButtonDisabled = false;
