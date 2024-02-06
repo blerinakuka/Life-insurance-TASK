@@ -202,6 +202,18 @@ export class FormsComponent {
     this.myFormLifeInsurancePlan.get('insuredSum')?.setValue(value);
   }
 
+  calculateValue(): number {
+    // Get the birth year from the form control
+    const birthYear = this.myFormStart.get('birthyear')?.value;
+
+    // Calculate age
+    const currentYear = new Date().getFullYear();
+    const age = currentYear - birthYear;
+
+    // Subtract age from 65 and return the result
+    return 65 - age;
+  }
+
   rangeSlideDuration(value: number) {
     this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(value);
   }
