@@ -203,22 +203,17 @@ export class FormsComponent {
   }
 
   calculateValue(): number {
-    // Get the birth year from the form control
     const birthYear = this.myFormStart.get('birthyear')?.value;
   
-    // Calculate age
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
   
-    // Subtract age from 65
     let result = 65 - age;
   
-    // If result is less than or equal to 0, set it to 30
     if (result <= 0) {
       result = 30;
     }
   
-    // Return the result
     return result;
   }
 
