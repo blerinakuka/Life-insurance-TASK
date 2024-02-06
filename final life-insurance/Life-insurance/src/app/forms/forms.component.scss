@@ -569,12 +569,9 @@ border-color: #f3f3f3;
   border-radius: 50%;
   background: #000000;
   cursor: pointer;
-
-  box-shadow: -407px 0 0 400px #25ae78;
-  
-
+  box-shadow: -407px 0 0 402px #25ae78;
 }
-
+//checkboxes
 .second-checkboxes{
   display: flex;
   flex-wrap: wrap;
@@ -756,7 +753,6 @@ padding: 36px;
     //&:hover,
   &:not(:placeholder-shown) {
     border: 1px solid #25AE78;
-    background-color: #2982F60D;
     outline: none;
     color: #5f5f5f;
     transition: border-color 0.5s, background-color 0.5s;
