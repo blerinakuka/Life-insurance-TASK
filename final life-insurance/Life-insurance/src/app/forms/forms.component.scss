@@ -593,7 +593,7 @@ border-color: #f3f3f3;
 
 .card-header{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   text-align: left;
   border-radius: 27px;
@@ -604,6 +604,10 @@ border-color: #f3f3f3;
     color: #cccccc;
     font-size: 20px;
   }
+}
+
+.width-acc{
+  width:100%;
 }
 
 .acc-btn{
@@ -802,6 +806,8 @@ display: flex;
 .header-buttons{
   display: flex;
   width: 100%;
+  align-items: center;
+  justify-content: center;
   .button-center{
     display: flex;
   }
@@ -844,31 +850,31 @@ display: flex;
   white-space: pre-wrap;
 }
 
-  @media screen and (min-width: 761px)and (max-width: 1200px)  {
+  @media screen and (min-width: 762px)and (max-width: 1200px)  {
     .main-container{
 padding: 70px 0 70px 0;
     }
-    .card-header-item-container{
-    img{
-      margin-right: 20px;
-    }
-      }
-      .card.acc{
-        max-width: 840px;
-        width: 100%;
-        padding: 0px 0px 15px 0px;
-        border-radius: 27px;
-        margin: 25px 0px 0px 0px;
-        // box-shadow: 10px 17px 17px 10px rgba(0, 0, 0, 0.1607843137);
-        box-shadow: 20px 7px 40px #00000029;
-      }
-    .accordion{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
+    // .card-header-item-container{
+    // img{
+    //   margin-right: 20px;
+    // }
+    //   }
+    //   .card.acc{
+    //     max-width: 840px;
+    //     width: 100%;
+    //     padding: 0px 0px 15px 0px;
+    //     border-radius: 27px;
+    //     margin: 25px 0px 0px 0px;
+    //     // box-shadow: 10px 17px 17px 10px rgba(0, 0, 0, 0.1607843137);
+    //     box-shadow: 20px 7px 40px #00000029;
+    //   }
+    // .accordion{
+    //   display: flex;
+    //   justify-content: center;
+    //   flex-direction: column;
+    //   align-items: center;
     
-    }
+    // }
     .card{
       margin: 20px 0 0 0;
       padding: 10px 10px 25.56px 10px;
@@ -925,7 +931,7 @@ padding: 70px 0 70px 0;
 
   }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 767px) {
   .rotate-icon {
     padding-left: 0;
   }

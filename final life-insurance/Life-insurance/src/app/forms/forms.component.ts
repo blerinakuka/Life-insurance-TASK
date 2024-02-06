@@ -102,6 +102,14 @@ export class FormsComponent {
     this.phoneInput.nativeElement.addEventListener('input', () => {
       this.validatePhoneNumber();
     });
+    this.phoneInput.nativeElement.addEventListener('keydown', (event: KeyboardEvent) => {
+      // Check if the key pressed is not a digit or the delete/backspace key
+      if (!/^\d$/.test(event.key) && event.key !== 'Delete' && event.key !== 'Backspace' && event.key !== '+') {
+        // Prevent the default behavior (typing)
+        event.preventDefault();
+      }
+    });
+
   }
   validatePhoneNumber(): boolean {
     this.reset();
@@ -119,6 +127,7 @@ export class FormsComponent {
     }
   }
 
+  
 //STEPPER
   steps = [0, 1, 2,3 ,4 ,5 ]; 
   currentStep = 0;
@@ -178,6 +187,12 @@ export class FormsComponent {
   goToPreviousStep(): void {
     if (this.currentStep > 0) {
       this.currentStep--;
+      this.myFormPersonalDetails.markAsUntouched();
+      this.myFormStart.markAsUntouched();
+      this.myFormChooseOffer.markAsUntouched();
+      this.myFormLifeInsuranceGoal.markAsUntouched();
+      this.myFormWorkStatus.markAsUntouched();
+      this.myFormLifeInsurancePlan.markAsUntouched();
     }
   }
 
@@ -443,40 +458,46 @@ export class FormsComponent {
     return null;
   }
 
-  //FULL NAME INPUT VALIDATION
-  onInputFormat1(controlName: string): ValidationErrors | null {
-    let inputValue: string = this.myFormStart.get(controlName)?.value;
+ // FULL NAME INPUT VALIDATION
+ onInputFormat1(controlName: string): ValidationErrors | null {
+  let inputValue: string = this.myFormStart.get(controlName)?.value;
 
-    const originalValue = inputValue;
+  const originalValue = inputValue;
 
-    inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
+  inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
 
-    if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
-      inputValue = inputValue.slice(1);
-    }
-
-    inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
-
-    inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
-
-    const words = inputValue.split(/\s+/);
-    if (words.length > 4) {
-      words.splice(4);
-    }
-    inputValue = words.join(' ');
-
-    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
-    if (inputValue !== originalValue) {
-      this.myFormStart.get(controlName)?.setValue(inputValue, {emitEvent: false});
-      return {'invalidFormat': true};
-    }
-
-    return null;
+  if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
+    inputValue = inputValue.slice(1);
   }
-  onFullNameInput() {
-    this.onInputFormat1('fullName');
+
+  inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
+
+  inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
+
+  const words = inputValue.split(/\s+/);
+  if (words.length > 4) {
+    words.splice(4);
   }
+  inputValue = words.join(' ');
+
+  inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+
+  // Limit input length to 100 characters
+  if (inputValue.length > 100) {
+    inputValue = inputValue.substring(0, 100);
+  }
+
+  if (inputValue !== originalValue) {
+    this.myFormStart.get(controlName)?.setValue(inputValue, { emitEvent: false });
+    return { 'invalidFormat': true };
+  }
+
+  return null;
+}
+
+onFullNameInput() {
+  this.onInputFormat1('fullName');
+}
 
   //MARK FORM GROUP TOUCHED kur e bon submit nese ka error
   markFormGroupTouched(formGroup: FormGroup) {

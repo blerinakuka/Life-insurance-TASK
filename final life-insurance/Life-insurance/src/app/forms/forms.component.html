@@ -66,7 +66,7 @@
                         <div class="card col-lg-7">
                          <div class="row">
                           <div class="col-lg-4">
-                          <label>Postal Code*</label>
+                          <label>Postal Code</label>
                           <div class="autocomplete-container">
                             <input
                               #autocompleteInput
@@ -108,7 +108,7 @@
                         </div>
               
                         <div class="col-lg-4">
-                          <label>Insurance model 3a/3b* 
+                          <label>Insurance model 3a/3b
                             <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
                               <img src="../assets/info.svg" alt="Info Icon">
                             </span>
@@ -117,8 +117,8 @@
                             [class.error]="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
                             [class.selected]="myFormStart.get('insuranceModel')?.value">
                             <option value="" disabled selected>Please Select</option>
-                            <option value="Saule 3a">Saule 3a</option>
-                            <option value="Saule 3b">Saule 3b</option>
+                            <option value="Saule 3a" class="text-dark">Saule 3a</option>
+                            <option value="Saule 3b" class="text-dark">Saule 3b</option>
                           </select>
                           <div *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
                             class="error-message">
@@ -126,12 +126,12 @@
                           </div>
                         </div>
                         <div class="col-lg-4">
-                          <label>Premium model* <span matTooltip="This is information about Premium model." matTooltipPosition="below">  <img src="../assets/info.svg" alt="Info Icon"></span></label>
+                          <label>Premium model <span matTooltip="This is information about Premium model." matTooltipPosition="below">  <img src="../assets/info.svg" alt="Info Icon"></span></label>
                           <select placeholder="Please select" class="form-control-select "  formControlName="premiumModel" formControlName="premiumModel" [class.error]="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
                           [class.selected]="myFormStart.get('premiumModel')?.value">
                             <option value="" disabled selected>Please Select</option>
-                            <option value="Fix">Fix</option>
-                            <option value="Flex">Flex</option>
+                            <option value="Fix" class="text-dark">Fix</option>
+                            <option value="Flex" class="text-dark">Flex</option>
                           </select>
                           <div *ngIf="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched" class="error-message">
                             Premium model is required.
@@ -141,7 +141,7 @@
               
                         <div class="row">
                           <div class="col-lg-8">
-                          <label>Full Name*</label>
+                          <label>Full Name</label>
                           <input type="text" placeholder="Ihre Vorname & Nachname" formControlName="fullName" class="form-control input-design"  (input)="onFullNameInput()" [class.error]="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched">
                           <div *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched" class="error-message">
                             Full Name is required.
@@ -149,7 +149,7 @@
                          </div>
               
                         <div class="col-lg-4">
-                          <label>Birth Year*</label>
+                          <label>Birth Year</label>
                           <input type=number placeholder="YYYY" formControlName="birthyear" class="form-control input-design" (input)="onBirthYearInput($event)" [class.error]="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched">
                           <div *ngIf="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched" class="error-message">
                             Birth Year is required.
@@ -181,7 +181,7 @@
                 <div class="card ">
                  <div class="row">
                   <div class="col-lg-4">
-                    <label>Do you smoke* 
+                    <label>Do you smoke
                       <span  matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
                         <img src="../assets/info.svg" alt="Info Icon">
                       </span>
@@ -189,16 +189,16 @@
                     <select placeholder="Please select" class="form-control-select" formControlName="smokingStatus" [class.error]="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched"
                     [class.selected]="myFormWorkStatus.get('smokingStatus')?.value">
                       <option value="" disabled selected>Please Select</option>
-                      <option value="Never">Never</option>
-                      <option value="Rarely">Rarely</option>
-                      <option value="Often">Often</option>
+                      <option value="Never" class="text-dark">Never</option>
+                      <option value="Rarely" class="text-dark">Rarely</option>
+                      <option value="Often" class="text-dark">Often</option>
                     </select>
                     <div *ngIf="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched" class="error-message">
                       Smoking status is required.
                     </div>
                   </div>
                   <div class="col-lg-8">
-                    <label>What’s your profession?*</label>
+                    <label>What’s your profession?</label>
                     <input type="text" placeholder="Profession" class="form-control input-design" formControlName="profession">
                     <div *ngIf="myFormWorkStatus.get('profession')?.hasError('required') && myFormWorkStatus.get('profession')?.touched" class="error-message">
                       Profession is required.
@@ -207,7 +207,7 @@
               
                 </div>
                 <div class="row label-occupational">
-                  <label>Occupational situation*</label>
+                  <label>Occupational situation</label>
                   <div class="second">
                     <div class="row-1">
                       <div class="col-lg-6 margin-radio-responsive">
@@ -261,7 +261,7 @@
       
                 <div class="card range-slider col-lg-12">
                   <div class="row ">
-                      <label class="label-margin">Insured sum*</label>
+                      <label class="label-margin">Insured sum</label>
                       <div>
                        <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredSum')?.value }}<span>CHF</span></p>
                        <input class="range" type="range" formControlName="insuredSum" step="10000" min="100000" max="600000" (input)="rangeSlide(myFormLifeInsurancePlan.get('insuredSum')?.value)">
@@ -270,7 +270,8 @@
                     </div>
   
                     <div class="row ">
-                      <label class="label-margin">Insured duration*</label>
+                      <label class="label-margin">Insured duration
+                      </label>
                       <div>
                        <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredDuration')?.value }}<span>Years</span></p>
                        <input class="range" type="range" formControlName="insuredDuration" min="10" max="30" (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
@@ -300,7 +301,7 @@
       
                 <div class="card col-lg-7">
                   <div class="row checkboxes-margin">
-                  <label class="checkbox-label">Savings goal*</label>
+                  <label class="checkbox-label">Savings goal</label>
       
                     <div class="second-checkboxes">
                     
@@ -355,6 +356,7 @@
               <p class="margin-top-accordion">We work with all insurance providers; we analyze offers every day. We will give you the offer with the best price benefit ratio/relationship. Click more on the side of the company name for more details.</p>
         
             <div class="accordion " id="accordionFlushExample">
+              <div class="width-acc">
               <div class="card acc">
                 <div class="card-header" id="flush-headingOne">
                   <label class="ml-3">1</label>
@@ -416,6 +418,7 @@
                   
                 </div>
               </div>
+            </div>
               <div class="card acc">
                 <div class="card-header" id="flush-headingTwo">
                   <label class="ml-3">2</label>
@@ -538,7 +541,7 @@
               </div>
 
 
-              <div *ngIf="showAdditionalAccordions">
+              <div *ngIf="showAdditionalAccordions" class="width-acc">
                 <!-- Accordion 4 -->
                 <div class="card acc">
                   <div class="card-header" id="flush-headingFour">
@@ -771,7 +774,7 @@
                   </div>
                       <div class="card last-form-margin ">
                         <div class="row last-form">
-                          <label>Geschlecht*</label>
+                          <label>Geschlecht</label>
                           <div class="buttons-container">
                             <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons " >
                               <div type="button" [class.clicked]="clickedButton === 'male'" class="gender-button-input-design" (click)="setGender('male')">
@@ -794,13 +797,13 @@
 
                        <div class="row">
                         <div class="col-lg-4">
-                        <label>Vollständiger Name*</label>
+                        <label>Vollständiger Name</label>
                         <input placeholder="" class="form-control input-design-readonly" [value]="myFormStart.get('fullName')?.value" readonly>
      
                       </div>
             
                       <div class="col-lg-4">
-                        <label>Strasse,Nr*</label>
+                        <label>Strasse,Nr</label>
                         <input
                         type="text"
                         class="form-control input-design "
@@ -820,16 +823,16 @@
                       </div>
                     
                       <div class="col-lg-4">
-                        <label>Postleitzahl*</label>
+                        <label>Postleitzahl</label>
                         <input placeholder="" class="form-control input-design-readonly" [value]="myFormStart.get('city')?.value" readonly>
                       </div>
                       </div>
             
                       <div class="row">
                         <div class="col-lg-4">
-                        <label>Telefon*</label>
+                        <label>Telefon</label>
                    
-                        <input #phoneInput id="phone" type="tel" formControlName="phoneNumber" />
+                        <input #phoneInput id="phone" type="text" formControlName="phoneNumber"   maxlength="15"/>
                   
                         <div #errorMsg id="error-message" class="hide error-message"></div>
                         <div #validMsg id="valid-msg" class="hide error-message"></div>
@@ -842,7 +845,7 @@
                     </div>
 
                       <div class="col-lg-4">
-                        <label>E-Mail*</label>
+                        <label>E-Mail</label>
                         <input type="email" class="form-control input-design" formControlName="email" id="email"
                               placeholder="E-Mail*">
                         <div
@@ -858,7 +861,7 @@
                       </div>
             
                       <div class="col-lg-4">
-                        <label>Nationalität*</label>
+                        <label>Nationalität</label>
                         <select placeholder="Please select" class="form-control-select"
                                 formControlName="nationality"  [class.selected]="myFormPersonalDetails.get('nationality')?.value"
                             >
