@@ -410,6 +410,14 @@ export class FormsComponent {
   }
 
   //BIRTH YEAR INPUT VALIDATION
+
+  calculateSubtraction() {
+    const birthYear = this.myFormStart.get('birthyear')?.value;
+    const ageDifference = 65 - birthYear;
+    console.log('Age difference:', ageDifference);
+    // Do whatever you want with the age difference here
+  }
+
   birthYearValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const birthYear = control.value;
 

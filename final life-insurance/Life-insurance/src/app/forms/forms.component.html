@@ -873,7 +873,7 @@
                       <div class="col-lg-12 agreed-container mt-3">
                         <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
                         <label class="checkbox-container agreed" for="checkbox20">
-                          I have the
+                          I have read and accepted the
                         <a href="https://infoversicherung.ch/impressum" target="_blank">
                           Terms of Use
                         </a>
@@ -881,7 +881,7 @@
                         <a href="https://infoversicherung.ch/datenschutz" target="_blank">
                           Privacy Policy
                         </a>
-                        read and accepted
+                      
                         </label>
                         <div
                         *ngIf="myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']"
