@@ -75,7 +75,7 @@ export class FormsComponent {
   showPremiumTooltip = false;
   phoneNumberIsValid: boolean = true; 
  
-
+//TEL
   @ViewChild('phoneInput') phoneInput!: ElementRef;
   @ViewChild('btn') button!: ElementRef;
   @ViewChild('errorMsg') errorMsg!: ElementRef;
@@ -103,9 +103,8 @@ export class FormsComponent {
       this.validatePhoneNumber();
     });
     this.phoneInput.nativeElement.addEventListener('keydown', (event: KeyboardEvent) => {
-      // Check if the key pressed is not a digit or the delete/backspace key
+
       if (!/^\d$/.test(event.key) && event.key !== 'Delete' && event.key !== 'Backspace' && event.key !== '+') {
-        // Prevent the default behavior (typing)
         event.preventDefault();
       }
     });
@@ -116,6 +115,8 @@ export class FormsComponent {
     const inputValue = this.phoneInput.nativeElement.value.trim();
   
     if (inputValue && this.iti.isValidNumberPrecise()) {
+      const number = this.iti.getNumber(intlTelInputUtils.numberFormat.E164);
+      this.myFormPersonalDetails.patchValue({ phoneNumber: number }); // Update phoneNumber FormControl value
       this.validMsg.nativeElement.classList.remove("hide");
       return true;
     } else {
