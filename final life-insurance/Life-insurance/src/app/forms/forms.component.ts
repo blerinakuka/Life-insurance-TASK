@@ -116,7 +116,7 @@ export class FormsComponent {
   
     if (inputValue && this.iti.isValidNumberPrecise()) {
       const number = this.iti.getNumber(intlTelInputUtils.numberFormat.E164);
-      this.myFormPersonalDetails.patchValue({ phoneNumber: number }); // Update phoneNumber FormControl value
+      this.myFormPersonalDetails.patchValue({ phoneNumber: number });
       this.validMsg.nativeElement.classList.remove("hide");
       return true;
     } else {

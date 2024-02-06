@@ -2,7 +2,7 @@
 
 
   <div class="custom-stepper">
-    <div class="step active" [class.completed]="currentStep >= 0" (click)="goToStep(0)">
+    <div class="step active" [class.completed]="currentStep >= 0">
       <div class="circle">
         <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
       </div>
@@ -10,7 +10,7 @@
     </div>
 
     <!-- Step 2 -->
-    <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep >= 1" (click)="goToStep(1)">
+    <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep >= 1" >
       <div class="circle" [class.clickable]="isStepClickable(1)">
         <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
       </div>
@@ -18,7 +18,7 @@
     </div>
 
     <!-- Step 3 -->
-    <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep >= 2" (click)="goToStep(2)">
+    <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep >= 2" >
       <div class="circle" [class.clickable]="isStepClickable(2)">
         <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
       </div>
@@ -26,7 +26,7 @@
     </div>
 
         <!-- Step 4 -->
-        <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep >= 3" (click)="goToStep(3)">
+        <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep >= 3" >
           <div class="circle" [class.clickable]="isStepClickable(3)">
             <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
           </div>
@@ -34,7 +34,7 @@
         </div>
 
              <!-- Step 5 -->
-             <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >=4" (click)="goToStep(4)">
+             <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >=4" >
               <div class="circle" [class.clickable]="isStepClickable(4)">
                 <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
               </div>
@@ -42,7 +42,7 @@
             </div>
 
                    <!-- Step 6 -->
-                   <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >= 5" (click)="goToStep(5)">
+                   <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >= 5">
                     <div class="circle" [class.clickable]="isStepClickable(5)">
                       <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
                     </div>
