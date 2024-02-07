@@ -285,7 +285,7 @@ export class FormsComponent {
     this.myFormPersonalDetails = this.formBuilder.group({
       nationality: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      adress: ['', [Validators.required, this.errorValidator.bind(this)]],
+      address: ['', [Validators.required, this.errorValidator.bind(this)]],
       email: ['', [Validators.required, customEmailValidator()]],
       gender: ['', Validators.required],
       agreedToTerms: [false, Validators.requiredTrue],
@@ -432,7 +432,7 @@ export class FormsComponent {
     return null;
   }
   onStrasseInput() {
-    this.onStrasseInputFormat('adress');
+    this.onStrasseInputFormat('address');
   }
 
   //BIRTH YEAR INPUT VALIDATION
@@ -588,7 +588,7 @@ export class FormsComponent {
         selectedAccordion: this.myFormChooseOffer.value.selectedAccordion,
         nationality: this.myFormPersonalDetails.value.nationality,
         phoneNumber: this.myFormPersonalDetails.value.phoneNumber,
-        adress: this.myFormPersonalDetails.value.adress,
+        address: this.myFormPersonalDetails.value.address,
         email: this.myFormPersonalDetails.value.email,
         gender: this.myFormPersonalDetails.value.gender,
         agreedToTerms: this.myFormPersonalDetails.value.agreedToTerms,
