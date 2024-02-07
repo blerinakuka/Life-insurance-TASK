@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 export class PLZService {
   private apiUrl = 'https://api.hoi-versicherung.ch/api/Location/all';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   fetchDataByPlz(plzValue: string): Observable<any> {
     const url = `https://api.hoi-versicherung.ch/api/Location/locationFilter?zipCode=${plzValue}`;

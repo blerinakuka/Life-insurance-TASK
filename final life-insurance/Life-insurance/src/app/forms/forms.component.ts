@@ -12,18 +12,18 @@ import {
   NgModel
 } from '@angular/forms';
 import { ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
-import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
-import {PLZService} from "../PLZ.service";
+import { PLZService } from "../PLZ.service";
 import intlTelInput from 'intl-tel-input';
 
 import 'intl-tel-input/build/css/intlTelInput.css';
@@ -33,7 +33,7 @@ function customEmailValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const valid = emailRegex.test(control.value);
-    return valid ? null : {'invalidEmail': true};
+    return valid ? null : { 'invalidEmail': true };
   };
 }
 
@@ -45,7 +45,7 @@ function customEmailValidator(): ValidatorFn {
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: {displayDefaultIndicatorType: false},
+      useValue: { displayDefaultIndicatorType: false },
     },
   ],
   standalone: true,
@@ -73,15 +73,15 @@ export class FormsComponent {
 
   showTooltip = false;
   showPremiumTooltip = false;
-  phoneNumberIsValid: boolean = true; 
- 
-//TEL
+  phoneNumberIsValid: boolean = true;
+
+  //TEL
   @ViewChild('phoneInput') phoneInput!: ElementRef;
   @ViewChild('btn') button!: ElementRef;
   @ViewChild('errorMsg') errorMsg!: ElementRef;
   @ViewChild('validMsg') validMsg!: ElementRef;
 
-  iti: any; 
+  iti: any;
 
   errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
@@ -98,7 +98,7 @@ export class FormsComponent {
       separateDialCode: true,
       utilsScript: "/intl-tel-input/js/utils.js?1706723638591"
     });
-  
+
     this.phoneInput.nativeElement.addEventListener('input', () => {
       this.validatePhoneNumber();
     });
@@ -113,7 +113,7 @@ export class FormsComponent {
   validatePhoneNumber(): boolean {
     this.reset();
     const inputValue = this.phoneInput.nativeElement.value.trim();
-  
+
     if (inputValue && this.iti.isValidNumberPrecise()) {
       const number = this.iti.getNumber(intlTelInputUtils.numberFormat.E164);
       this.myFormPersonalDetails.patchValue({ phoneNumber: number });
@@ -128,13 +128,20 @@ export class FormsComponent {
     }
   }
 
-  
-//STEPPER
-  steps = [0, 1, 2,3 ,4 ,5 ]; 
+
+  //STEPPER
   currentStep = 0;
+  steps = Array.from({ length: 6 }, (_, i) => i); // Generates an array [0, 1, 2, 3, 4, 5]
+
   isStepClickable(step: number): boolean {
-    return step <= this.currentStep;
+    // Implement your logic to determine if the step is clickable
+    return true;
   }
+  // steps = [0, 1, 2, 3, 4, 5];
+  // currentStep = 0;
+  // isStepClickable(step: number): boolean {
+  //   return step <= this.currentStep;
+  // }
   goToStep(step: number): void {
     this.currentStep = step;
   }
@@ -144,10 +151,10 @@ export class FormsComponent {
     }
   }
   nextStep(): void {
- 
+
     this.markFormGroupTouched(this.myFormStart);
 
-    if (this.myFormStart.valid  && this.isSuggestionSelected) {
+    if (this.myFormStart.valid && this.isSuggestionSelected) {
       console.log('Form is valid. Proceeding to the next step.');
       this.currentStep++;
     } else {
@@ -167,9 +174,9 @@ export class FormsComponent {
   }
 
   //checkboxes required
-    nextButtonClicked = false;
+  nextButtonClicked = false;
   goToNextStepThree(): void {
-    this.nextButtonClicked = true; 
+    this.nextButtonClicked = true;
 
     if (!this.atLeastOneCheckboxChecked() || !this.myFormLifeInsuranceGoal.valid) {
       console.log('Please select at least one checkbox.');
@@ -205,33 +212,33 @@ export class FormsComponent {
     const birthYear = this.myFormStart.get('birthyear')?.value;
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
-  
+
     if (age === 65) {
-      return 1; 
+      return 1;
     } else if (age < 65) {
       return Math.max(0, 65 - age);
     } else {
-      return 30; 
+      return 30;
     }
   }
 
-    calculateValueMin(): number {
-      const birthYear = this.myFormStart.get('birthyear')?.value;
-      const currentYear = new Date().getFullYear();
-      const age = currentYear - birthYear;
-    
-      if (age >= 64 && age <= 65) {
-        return 0;
-      } else {
-        return 1; 
-      }
+  calculateValueMin(): number {
+    const birthYear = this.myFormStart.get('birthyear')?.value;
+    const currentYear = new Date().getFullYear();
+    const age = currentYear - birthYear;
+
+    if (age >= 64 && age <= 65) {
+      return 0;
+    } else {
+      return 1;
     }
+  }
   rangeSlideDuration(value: number) {
     this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(value);
   }
-  
 
-  selectedCountry: any; 
+
+  selectedCountry: any;
 
   //COUNTRY SELECT INPUT
   countries = [
@@ -251,51 +258,51 @@ export class FormsComponent {
     this.selectedCountry = country;
   }
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private PLZservice: PLZService,private cdr: ChangeDetectorRef) {
-        this.myFormStart = this.formBuilder.group({
-          fullName: ['', [Validators.required, this.errorValidator.bind(this)]],
-          birthyear: ['', [Validators.required,  Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
-          city: ['', [this.customPLZValidator, Validators.pattern('^[0-9]*$')]],
-          insuranceModel: ['', Validators.required],
-          premiumModel: ['', Validators.required],
-        });
-        this.myFormWorkStatus = this.formBuilder.group({
-          smokingStatus: ['', Validators.required],      
-          profession:['', Validators.required],       
-          employmentStatus: ['', Validators.required],
-        });
-        this.myFormLifeInsurancePlan = this.formBuilder.group({
-         insuredSum:['100000', [Validators.required]],
-         insuredDuration: ['1', [Validators.required]],
-        });
-        this.myFormLifeInsuranceGoal = this.formBuilder.group({
-          protectionOfFamily: [''],
-          buyOwnHome: [''],
-          taxOptimization: [''],
-          financialInvestments: [''],
-          financialIndependence: [''],
-          wealthAccumulation: [''],
-       });
-      
-        this.myFormChooseOffer = this.formBuilder.group({
-          selectedAccordion: [''],
+  constructor(private formBuilder: FormBuilder, private router: Router, private PLZservice: PLZService, private cdr: ChangeDetectorRef) {
+    this.myFormStart = this.formBuilder.group({
+      fullName: ['', [Validators.required, this.errorValidator.bind(this)]],
+      birthyear: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
+      city: ['', [this.customPLZValidator, Validators.pattern('^[0-9]*$')]],
+      insuranceModel: ['', Validators.required],
+      premiumModel: ['', Validators.required],
+    });
+    this.myFormWorkStatus = this.formBuilder.group({
+      smokingStatus: ['', Validators.required],
+      profession: ['', Validators.required],
+      employmentStatus: ['', Validators.required],
+    });
+    this.myFormLifeInsurancePlan = this.formBuilder.group({
+      insuredSum: ['100000', [Validators.required]],
+      insuredDuration: ['1', [Validators.required]],
+    });
+    this.myFormLifeInsuranceGoal = this.formBuilder.group({
+      protectionOfFamily: [''],
+      buyOwnHome: [''],
+      taxOptimization: [''],
+      financialInvestments: [''],
+      financialIndependence: [''],
+      wealthAccumulation: [''],
+    });
 
-        });
-        this.myFormPersonalDetails = this.formBuilder.group({
-          nationality: ['', Validators.required],
-          phoneNumber: ['', Validators.required],
-          adress: ['', [Validators.required, this.errorValidator.bind(this)]],
-          email: ['', [Validators.required, customEmailValidator()]],
-          gender: ['', Validators.required],
-          agreedToTerms: [false, Validators.requiredTrue],
-        });
-        this.myFormPersonalDetails.get('nationality')?.setValue('Switzerland');
-        
-        this.myFormStart.get('birthyear')?.valueChanges.subscribe(() => {
+    this.myFormChooseOffer = this.formBuilder.group({
+      selectedAccordion: [''],
 
-          this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(1);
-        });
-    
+    });
+    this.myFormPersonalDetails = this.formBuilder.group({
+      nationality: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      adress: ['', [Validators.required, this.errorValidator.bind(this)]],
+      email: ['', [Validators.required, customEmailValidator()]],
+      gender: ['', Validators.required],
+      agreedToTerms: [false, Validators.requiredTrue],
+    });
+    this.myFormPersonalDetails.get('nationality')?.setValue('Switzerland');
+
+    this.myFormStart.get('birthyear')?.valueChanges.subscribe(() => {
+
+      this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(1);
+    });
+
   }
 
 
@@ -330,72 +337,72 @@ export class FormsComponent {
     this.isAccordionCollapsed = !this.isAccordionCollapsed;
   }
 
-//PLZ 
+  //PLZ 
   customPLZValidator(control: AbstractControl): ValidationErrors | null {
-          const plzValue: string = control.value;
+    const plzValue: string = control.value;
 
-            if (!plzValue || plzValue.length < 4 || plzValue.length > 5 || !/^\d+$/.test(plzValue)) {
-            return {invalidPLZLength: true};
-            }
-          return null;
-        }
+    if (!plzValue || plzValue.length < 4 || plzValue.length > 5 || !/^\d+$/.test(plzValue)) {
+      return { invalidPLZLength: true };
+    }
+    return null;
+  }
   onPlzChange() {
-          const plzControl = this.myFormStart.get('city');
+    const plzControl = this.myFormStart.get('city');
 
-          if (!plzControl || !plzControl.value) {
-          this.resetSuggestionState();
-          this.autocompleteSuggestions = [];
-          plzControl?.setErrors({invalidPLZLength: true});
-          return;
-          }
+    if (!plzControl || !plzControl.value) {
+      this.resetSuggestionState();
+      this.autocompleteSuggestions = [];
+      plzControl?.setErrors({ invalidPLZLength: true });
+      return;
+    }
 
-          const plzValue = plzControl.value.toString();
-          const plzLength = plzValue.length;
+    const plzValue = plzControl.value.toString();
+    const plzLength = plzValue.length;
 
-          if (plzLength > 4 && plzLength === 5) {
-          this.resetSuggestionState();
-          this.autocompleteSuggestions = [];
-          plzControl.setErrors({invalidPLZLength: true});
-          return;
-          }
+    if (plzLength > 4 && plzLength === 5) {
+      this.resetSuggestionState();
+      this.autocompleteSuggestions = [];
+      plzControl.setErrors({ invalidPLZLength: true });
+      return;
+    }
 
-          const plzSubstring = plzValue.substring(0, 4);
-          this.PLZservice.fetchDataByPlz(plzSubstring).subscribe(
-          (data: any) => {
-          this.autocompleteSuggestions = this.PLZservice.extractAutocompleteData(data, plzSubstring);
-          this.resetSuggestionState();
-          },
-          (error: any) => {
-            this.resetSuggestionState();
-          }
-        );
+    const plzSubstring = plzValue.substring(0, 4);
+    this.PLZservice.fetchDataByPlz(plzSubstring).subscribe(
+      (data: any) => {
+        this.autocompleteSuggestions = this.PLZservice.extractAutocompleteData(data, plzSubstring);
+        this.resetSuggestionState();
+      },
+      (error: any) => {
+        this.resetSuggestionState();
+      }
+    );
 
-      plzControl.setErrors(null);
+    plzControl.setErrors(null);
   }
 
-        resetSuggestionState() {
-          this.isSuggestionSelected = false;
-        }
+  resetSuggestionState() {
+    this.isSuggestionSelected = false;
+  }
 
-        autocompleteSuggestions: string[] = [];
-        isSuggestionSelected: boolean = false;
-        inputValue: string = '';
-        isDataSelected: boolean = false;
-        selectSuggestion(suggestion: string) {
-          if (suggestion !== '') {
-            this.myFormStart.get('city')?.patchValue(suggestion);
-            this.inputValue = suggestion;
-            this.autocompleteSuggestions = [];
-            this.isDataSelected = true;
-            this.myFormStart.get('city')?.clearValidators();
-            this.myFormStart.get('city')?.updateValueAndValidity();
-            this.isSuggestionSelected = true;
-            console.log('isSuggestionSelected:', this.isSuggestionSelected);
-          } else {
-            this.isSuggestionSelected = false;
-            console.log('isSuggestionSelected:', this.isSuggestionSelected);
-          }
-        }
+  autocompleteSuggestions: string[] = [];
+  isSuggestionSelected: boolean = false;
+  inputValue: string = '';
+  isDataSelected: boolean = false;
+  selectSuggestion(suggestion: string) {
+    if (suggestion !== '') {
+      this.myFormStart.get('city')?.patchValue(suggestion);
+      this.inputValue = suggestion;
+      this.autocompleteSuggestions = [];
+      this.isDataSelected = true;
+      this.myFormStart.get('city')?.clearValidators();
+      this.myFormStart.get('city')?.updateValueAndValidity();
+      this.isSuggestionSelected = true;
+      console.log('isSuggestionSelected:', this.isSuggestionSelected);
+    } else {
+      this.isSuggestionSelected = false;
+      console.log('isSuggestionSelected:', this.isSuggestionSelected);
+    }
+  }
 
   //STREET INPUT VALIDATION
   onStrasseInputFormat(controlName: string): ValidationErrors | null {
@@ -425,8 +432,8 @@ export class FormsComponent {
 
     if (inputValue !== originalValue) {
 
-      this.myFormPersonalDetails.get(controlName)?.setValue(inputValue, {emitEvent: false});
-      return {'invalidFormat': true};
+      this.myFormPersonalDetails.get(controlName)?.setValue(inputValue, { emitEvent: false });
+      return { 'invalidFormat': true };
     }
 
     return null;
@@ -493,46 +500,46 @@ export class FormsComponent {
     return null;
   }
 
- // FULL NAME INPUT VALIDATION
- onInputFormat1(controlName: string): ValidationErrors | null {
-  let inputValue: string = this.myFormStart.get(controlName)?.value;
+  // FULL NAME INPUT VALIDATION
+  onInputFormat1(controlName: string): ValidationErrors | null {
+    let inputValue: string = this.myFormStart.get(controlName)?.value;
 
-  const originalValue = inputValue;
+    const originalValue = inputValue;
 
-  inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
+    inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
 
-  if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
-    inputValue = inputValue.slice(1);
+    if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
+      inputValue = inputValue.slice(1);
+    }
+
+    inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
+
+    inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
+
+    const words = inputValue.split(/\s+/);
+    if (words.length > 4) {
+      words.splice(4);
+    }
+    inputValue = words.join(' ');
+
+    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+
+    // Limit input length to 100 characters
+    if (inputValue.length > 100) {
+      inputValue = inputValue.substring(0, 100);
+    }
+
+    if (inputValue !== originalValue) {
+      this.myFormStart.get(controlName)?.setValue(inputValue, { emitEvent: false });
+      return { 'invalidFormat': true };
+    }
+
+    return null;
   }
 
-  inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
-
-  inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
-
-  const words = inputValue.split(/\s+/);
-  if (words.length > 4) {
-    words.splice(4);
+  onFullNameInput() {
+    this.onInputFormat1('fullName');
   }
-  inputValue = words.join(' ');
-
-  inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
-  // Limit input length to 100 characters
-  if (inputValue.length > 100) {
-    inputValue = inputValue.substring(0, 100);
-  }
-
-  if (inputValue !== originalValue) {
-    this.myFormStart.get(controlName)?.setValue(inputValue, { emitEvent: false });
-    return { 'invalidFormat': true };
-  }
-
-  return null;
-}
-
-onFullNameInput() {
-  this.onInputFormat1('fullName');
-}
 
   //MARK FORM GROUP TOUCHED kur e bon submit nese ka error
   markFormGroupTouched(formGroup: FormGroup) {
@@ -548,7 +555,7 @@ onFullNameInput() {
   //SUBMIT
   onSubmit() {
     this.markFormGroupTouched(this.myFormPersonalDetails);
-  
+
     if (this.myFormPersonalDetails.valid && this.validatePhoneNumber()) {
       console.log('myFormStart:', this.myFormStart.value);
       console.log('myFormWorkStatus:', this.myFormWorkStatus.value);
@@ -556,7 +563,7 @@ onFullNameInput() {
       console.log('myFormLifeInsuranceGoal:', this.myFormLifeInsuranceGoal.value);
       console.log('myFormChooseOffer:', this.myFormChooseOffer.value);
       console.log('myFormPersonalDetails:', this.myFormPersonalDetails.value);
-  
+
       this.router.navigate(['/danke']);
     } else {
       console.log('Validation failed. Cannot submit.');

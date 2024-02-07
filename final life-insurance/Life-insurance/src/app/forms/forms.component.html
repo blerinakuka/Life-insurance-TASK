@@ -2,541 +2,563 @@
 
 
   <div class="custom-stepper">
-    <div class="step active" [class.completed]="currentStep >= 0">
-      <div class="circle">
-        <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
-      </div>
-      <div class="step-line"></div>
-    </div>
-
-    <!-- Step 2 -->
-    <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep >= 1" >
-      <div class="circle" [class.clickable]="isStepClickable(1)">
-        <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
-      </div>
-      <div class="step-line"></div>
-    </div>
-
-    <!-- Step 3 -->
-    <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep >= 2" >
-      <div class="circle" [class.clickable]="isStepClickable(2)">
-        <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
-      </div>
-      <div class="step-line"></div>
-    </div>
-
-        <!-- Step 4 -->
-        <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep >= 3" >
-          <div class="circle" [class.clickable]="isStepClickable(3)">
-            <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
-          </div>
-          <div class="step-line"></div>
+    <div *ngFor="let step of steps; let i = index">
+      <div class="step" [class.active]="currentStep === i" [class.completed]="currentStep >= i">
+        <div class="circle" [class.clickable]="isStepClickable(i)">
+          <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
-
-             <!-- Step 5 -->
-             <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >=4" >
-              <div class="circle" [class.clickable]="isStepClickable(4)">
-                <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
-              </div>
-              <div class="step-line"></div>
-            </div>
-
-                   <!-- Step 6 -->
-                   <div class="step" [class.active]="currentStep === 4" [class.completed]="currentStep >= 5">
-                    <div class="circle" [class.clickable]="isStepClickable(5)">
-                      <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
-                    </div>
-                    <div></div>
-                  </div>
+        <div class="step-line" *ngIf="i < steps.length - 1"></div> 
       </div>
-    <div class=" ">
-  
-  
-      <div >
-        <form [formGroup]="myFormStart" (ngSubmit)="nextStep()">
-          <div class="step-content" [class.active]="currentStep === 0">
+    </div>
+  </div>
+  <div class=" ">
+
+
+    <div>
+      <form [formGroup]="myFormStart" (ngSubmit)="nextStep()">
+        <div class="step-content" [class.active]="currentStep === 0">
           <div class="container img first-three-forms-mobile ">
-    
-              <div class="col-lg-8 ">
-                      <h2>Choose the best life insurance for your financial goals</h2>
-                      <p>You are in the right place. This is the first step towards your financial future. You can enter your personal data and continue with the upcoming steps of analyzing your pension situation and choose the right life insurance for your financial goals.</p>
-              
-                        <img class="img-margin" src="../assets/firstIcon.png" alt="img life insurance">
-                      </div>
-                        <div class="card col-lg-7">
-                         <div class="row">
-                          <div class="col-lg-4">
-                          <label>Postal Code</label>
-                          <div class="autocomplete-container">
-                            <input
-                              #autocompleteInput
-                              type="text"
-                              class="input-design form-control"
-                              formControlName="city"
-                              id="plz"
-                              placeholder="PLZ"
-                              (input)="onPlzChange()"
-                              autocomplete="off"
-                              inputmode="numeric"
-                              oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');"
-                            >
-            
-                            <ul *ngIf="autocompleteSuggestions && autocompleteSuggestions.length > 0" class="autocomplete-drop">
-                              <li *ngFor="let suggestion of autocompleteSuggestions" (click)="selectSuggestion(suggestion)">
-                                {{ suggestion }}
-                              </li>
-                            </ul>
-            
-                            <!-- <div
+
+            <div class="col-lg-8 ">
+              <h2>Choose the best life insurance for your financial goals</h2>
+              <p>You are in the right place. This is the first step towards your financial future. You can enter your
+                personal data and continue with the upcoming steps of analyzing your pension situation and choose the
+                right life insurance for your financial goals.</p>
+
+              <img class="img-margin" src="../assets/firstIcon.png" alt="img life insurance">
+            </div>
+            <div class="card col-lg-7">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label>Postal Code</label>
+                  <div class="autocomplete-container">
+                    <input #autocompleteInput type="text" class="input-design form-control" formControlName="city"
+                      id="plz" placeholder="PLZ" (input)="onPlzChange()" autocomplete="off" inputmode="numeric"
+                      oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
+
+                    <ul *ngIf="autocompleteSuggestions && autocompleteSuggestions.length > 0" class="autocomplete-drop">
+                      <li *ngFor="let suggestion of autocompleteSuggestions" (click)="selectSuggestion(suggestion)">
+                        {{ suggestion }}
+                      </li>
+                    </ul>
+
+                    <!-- <div
                               *ngIf="!isSuggestionSelected && (myFormPersonalDetails.get('city')?.touched || myFormPersonalDetails.get('city')?.dirty) && !myFormPersonalDetails.get('city')?.errors?.['invalidPLZLength']"
                               class="text-danger error-message">
                               Bitte wählen Sie einen Vorschlag aus der Liste.
                             </div> -->
-                            <div *ngIf="!isSuggestionSelected && (myFormStart.get('city')?.touched || myFormStart.get('city')?.dirty) &&
+                    <div
+                      *ngIf="!isSuggestionSelected && (myFormStart.get('city')?.touched || myFormStart.get('city')?.dirty) &&
                             (!myFormStart.get('city')?.value || myFormStart.get('city')?.value.length <= 4 || myFormStart.get('city')?.value.length === 5)"
-                                 class="error-message multiline-error">
-                                 Please select a suggestion from the list.
-                            </div>
-            
-                            <!-- <div
+                      class="error-message multiline-error">
+                      Please select a suggestion from the list.
+                    </div>
+
+                    <!-- <div
                               *ngIf="myFormStart.get('city')?.touched && myFormStart.get('city')?.errors?.['invalidPLZLength'] && myFormStart.get('city')?.value.length < 4 && !isSuggestionSelected"
                               class="error-message multiline-error">
                               PLZ sollte mindestens 4 oder 5 Ziffern haben.
                             </div> -->
-            
-                          </div>
-                        </div>
-              
-                        <div class="col-lg-4">
-                          <label>Insurance model 3a/3b
-                            <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
-                              <img src="../assets/info.svg" alt="Info Icon">
-                            </span>
-                          </label>
-                          <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
-                            [class.error]="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
-                            [class.selected]="myFormStart.get('insuranceModel')?.value">
-                            <option value="" disabled selected>Please Select</option>
-                            <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
-                            <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
-                          </select>
-                          <div *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
-                            class="error-message">
-                            Insurance model is required.
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <label>Premium model <span matTooltip="This is information about Premium model." matTooltipPosition="below">  <img src="../assets/info.svg" alt="Info Icon"></span></label>
-                          <select placeholder="Please select" class="form-control-select "  formControlName="premiumModel" formControlName="premiumModel" [class.error]="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
-                          [class.selected]="myFormStart.get('premiumModel')?.value">
-                            <option value="" disabled selected>Please Select</option>
-                            <option value="Fix" class="text-dark">Fix</option>
-                            <option value="Flex" class="text-dark">Flex</option>
-                          </select>
-                          <div *ngIf="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched" class="error-message">
-                            Premium model is required.
-                          </div>
-                        </div>
-                        </div>
-              
-                        <div class="row">
-                          <div class="col-lg-8">
-                          <label>Full Name</label>
-                          <input type="text" placeholder="Full Name " formControlName="fullName" class="form-control input-design"  (input)="onFullNameInput()" [class.error]="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched">
-                          <div *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched" class="error-message">
-                            Full Name is required.
-                          </div>
-                         </div>
-              
-                        <div class="col-lg-4">
-                          <label>Birth Year</label>
-                          <input type=number placeholder="YYYY" formControlName="birthyear" class="form-control input-design" (input)="onBirthYearInput($event)" [class.error]="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched">
-                          <div *ngIf="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched" class="error-message">
-                            Birth Year is required.
-                          </div>
-                          <div *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && myFormStart.get('birthyear')?.dirty" class="error-message">
-                            Invalid birth year. Please enter a valid year.
-                          </div>
-                        </div>
-                        </div>
-                       <div class="row">
-                        <div class="col-lg-4">
-                          <button type="button" class="button-design form-control" (click)="nextStep()">Next</button>
-                        </div>    
-                      </div>
-                    </div>
+
                   </div>
-                    
                 </div>
+
+                <div class="col-lg-4">
+                  <label>Insurance model 3a/3b
+                    <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
+                      <img src="../assets/info.svg" alt="Info Icon">
+                    </span>
+                  </label>
+                  <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
+                    [class.error]="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
+                    [class.selected]="myFormStart.get('insuranceModel')?.value">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
+                    <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
+                  </select>
+                  <div
+                    *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
+                    class="error-message">
+                    Insurance model is required.
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label>Premium model <span matTooltip="This is information about Premium model."
+                      matTooltipPosition="below"> <img src="../assets/info.svg" alt="Info Icon"></span></label>
+                  <select placeholder="Please select" class="form-control-select " formControlName="premiumModel"
+                    formControlName="premiumModel"
+                    [class.error]="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
+                    [class.selected]="myFormStart.get('premiumModel')?.value">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Fix" class="text-dark">Fix</option>
+                    <option value="Flex" class="text-dark">Flex</option>
+                  </select>
+                  <div
+                    *ngIf="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
+                    class="error-message">
+                    Premium model is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-8">
+                  <label>Full Name</label>
+                  <input type="text" placeholder="Full Name " formControlName="fullName"
+                    class="form-control input-design" (input)="onFullNameInput()"
+                    [class.error]="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched">
+                  <div *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched"
+                    class="error-message">
+                    Full Name is required.
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <label>Birth Year</label>
+                  <input type=number placeholder="YYYY" formControlName="birthyear" class="form-control input-design"
+                    (input)="onBirthYearInput($event)"
+                    [class.error]="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched">
+                  <div
+                    *ngIf="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched"
+                    class="error-message">
+                    Birth Year is required.
+                  </div>
+                  <div
+                    *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && myFormStart.get('birthyear')?.dirty"
+                    class="error-message">
+                    Invalid birth year. Please enter a valid year.
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <button type="button" class="button-design form-control" (click)="nextStep()">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </form>
- 
+
       <form [formGroup]="myFormWorkStatus" (ngSubmit)="goToNextStepTwo()">
         <div class="step-content" [class.active]="currentStep === 1">
           <div class="container img col-lg-12 first-three-forms-mobile">
-              <!-- <div class="col-8"> -->
-              <h2>Tell us more about you</h2>
-              <p>We select premiums individually, depending on your employment status, your profession and whether you are smoker or not.</p>
-                <img class="img-margin" src="../assets/secondIcon.png" alt="img life insurance">
-      
-                <div class="card ">
-                 <div class="row">
-                  <div class="col-lg-4">
-                    <label>Do you smoke
-                      <span  matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
-                        <img src="../assets/info.svg" alt="Info Icon">
-                      </span>
-                    </label>
-                    <select placeholder="Please select" class="form-control-select" formControlName="smokingStatus" [class.error]="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched"
-                    [class.selected]="myFormWorkStatus.get('smokingStatus')?.value">
-                      <option value="" disabled selected>Please Select</option>
-                      <option value="Never" class="text-dark">Never</option>
-                      <option value="Rarely" class="text-dark">Rarely</option>
-                      <option value="Often" class="text-dark">Often</option>
-                    </select>
-                    <div *ngIf="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched" class="error-message">
-                      Smoking status is required.
-                    </div>
-                  </div>
-                  <div class="col-lg-8">
-                    <label>What’s your profession?</label>
-                    <input type="text" placeholder="Profession" class="form-control input-design" formControlName="profession">
-                    <div *ngIf="myFormWorkStatus.get('profession')?.hasError('required') && myFormWorkStatus.get('profession')?.touched" class="error-message">
-                      Profession is required.
-                    </div>
-                  </div>
-              
-                </div>
-                <div class="row label-occupational">
-                  <label>Occupational situation</label>
-                  <div class="second">
-                    <div class="row-1">
-                      <div class="col-lg-6 margin-radio-responsive">
-                  <input type="radio" id="radio1"  value="employed" formControlName="employmentStatus">
-                  <label  for="radio1"> Employed</label>
-                </div>
-                <div class="col-lg-6 margin-radio-responsive">
-                  <input type="radio"  id="radio2"  value="self_employed" formControlName="employmentStatus">
-                  <label  for="radio2"> Self-employed</label>
-                </div>
-              </div>
-              <div class="row-1">
-                <div class="col-lg-6 margin-radio-responsive">
-                  <input type="radio" id="radio3" value="student" formControlName="employmentStatus">
-                  <label  for="radio3"> Student</label>
-                </div>
-              <div class="col-lg-6 margin-radio-responsive">
-                <input type="radio" id="radio4"  value="not_working" formControlName="employmentStatus">
-                <label  for="radio4">  Not working</label>
-              </div>
-        
-            </div>
-     
-            <!-- </div> -->
-            </div>
-            <div *ngIf="myFormWorkStatus.get('employmentStatus')?.hasError('required') && myFormWorkStatus.get('employmentStatus')?.touched" class="error-message">
-              Employment Status is required.
-            </div>
+            <!-- <div class="col-8"> -->
+            <h2>Tell us more about you</h2>
+            <p>We select premiums individually, depending on your employment status, your profession and whether you are
+              smoker or not.</p>
+            <img class="img-margin" src="../assets/secondIcon.png" alt="img life insurance">
 
-               <div class="row buttons">
+            <div class="card ">
+              <div class="row">
                 <div class="col-lg-4">
-                  <button (click)="goToPreviousStep()" type="button"  class=" form-control button-design back" >Back</button>
-    
+                  <label>Do you smoke
+                    <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
+                      <img src="../assets/info.svg" alt="Info Icon">
+                    </span>
+                  </label>
+                  <select placeholder="Please select" class="form-control-select" formControlName="smokingStatus"
+                    [class.error]="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched"
+                    [class.selected]="myFormWorkStatus.get('smokingStatus')?.value">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Never" class="text-dark">Never</option>
+                    <option value="Rarely" class="text-dark">Rarely</option>
+                    <option value="Often" class="text-dark">Often</option>
+                  </select>
+                  <div
+                    *ngIf="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched"
+                    class="error-message">
+                    Smoking status is required.
+                  </div>
                 </div>
-                <div class="col-lg-4">
-                  <button  type="button" class=" form-control button-design " (click)="goToNextStepTwo()" >Next</button>
+                <div class="col-lg-8">
+                  <label>What’s your profession?</label>
+                  <input type="text" placeholder="Profession" class="form-control input-design"
+                    formControlName="profession">
+                  <div
+                    *ngIf="myFormWorkStatus.get('profession')?.hasError('required') && myFormWorkStatus.get('profession')?.touched"
+                    class="error-message">
+                    Profession is required.
+                  </div>
                 </div>
+
+              </div>
+              <div class="row label-occupational">
+                <label>Occupational situation</label>
+                <div class="second">
+                  <div class="row-1">
+                    <div class="col-lg-6 margin-radio-responsive">
+                      <input type="radio" id="radio1" value="employed" formControlName="employmentStatus">
+                      <label for="radio1"> Employed</label>
+                    </div>
+                    <div class="col-lg-6 margin-radio-responsive">
+                      <input type="radio" id="radio2" value="self_employed" formControlName="employmentStatus">
+                      <label for="radio2"> Self-employed</label>
+                    </div>
+                  </div>
+                  <div class="row-1">
+                    <div class="col-lg-6 margin-radio-responsive">
+                      <input type="radio" id="radio3" value="student" formControlName="employmentStatus">
+                      <label for="radio3"> Student</label>
+                    </div>
+                    <div class="col-lg-6 margin-radio-responsive">
+                      <input type="radio" id="radio4" value="not_working" formControlName="employmentStatus">
+                      <label for="radio4"> Not working</label>
+                    </div>
+
+                  </div>
+
+                  <!-- </div> -->
+                </div>
+                <div
+                  *ngIf="myFormWorkStatus.get('employmentStatus')?.hasError('required') && myFormWorkStatus.get('employmentStatus')?.touched"
+                  class="error-message">
+                  Employment Status is required.
+                </div>
+
+                <div class="row buttons">
+                  <div class="col-lg-4">
+                    <button (click)="goToPreviousStep()" type="button"
+                      class=" form-control button-design back">Back</button>
+
+                  </div>
+                  <div class="col-lg-4">
+                    <button type="button" class=" form-control button-design " (click)="goToNextStepTwo()">Next</button>
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
-        </form>
-        <form [formGroup]="myFormLifeInsurancePlan" (ngSubmit)="nextStep()">
-          <div class="step-content" [class.active]="currentStep === 2">
+        </div>
+      </form>
+      <form [formGroup]="myFormLifeInsurancePlan" (ngSubmit)="nextStep()">
+        <div class="step-content" [class.active]="currentStep === 2">
           <div class="container img col-lg-12 first-three-forms-mobile">
-              <div class="">
+            <div class="">
               <h2>Your life insurance plan</h2>
-              <p>Pull the bar and determine the amount of money you want to save for your life insurance and for how long.</p>
-                <img class="img-margin" src="../assets/safeImg.svg" alt="img life insurance">
-      
-                <div class="card range-slider col-lg-12">
-                  <div class="row ">
-                      <label class="label-margin">Insured sum</label>
-                      <div>
-                       <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredSum')?.value }}<span>CHF</span></p>
-                       <input class="range" type="range" formControlName="insuredSum" step="10000" min="100000" max="600000" (input)="rangeSlide(myFormLifeInsurancePlan.get('insuredSum')?.value)">
-  
-                      </div>
-                    </div>
-  
-                    <div class="row ">
-                      <label class="label-margin">Insured duration
-                      </label>
-                      <div>
-                       <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredDuration')?.value }}<span>Years</span></p>
-                       <input class="range" type="range" formControlName="insuredDuration" [min]="calculateValueMin()" [max]="calculateValue()" (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
-                      </div>
-                    </div>
-  
-            <div class="row buttons">
-              <div class="col-lg-4">
-                  <button type="button" class=" form-control button-design back" (click)="goToPreviousStep()" [disabled]="currentStep === 0">Back</button>
+              <p>Pull the bar and determine the amount of money you want to save for your life insurance and for how
+                long.</p>
+              <img class="img-margin" src="../assets/safeImg.svg" alt="img life insurance">
+
+              <div class="card range-slider col-lg-12">
+                <div class="row ">
+                  <label class="label-margin">Insured sum</label>
+                  <div>
+                    <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredSum')?.value
+                      }}<span>CHF</span></p>
+                    <input class="range" type="range" formControlName="insuredSum" step="10000" min="100000"
+                      max="600000" (input)="rangeSlide(myFormLifeInsurancePlan.get('insuredSum')?.value)">
+
+                  </div>
+                </div>
+
+                <div class="row ">
+                  <label class="label-margin">Insured duration
+                  </label>
+                  <div>
+                    <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredDuration')?.value
+                      }}<span>Years</span></p>
+                    <input class="range" type="range" formControlName="insuredDuration" [min]="calculateValueMin()"
+                      [max]="calculateValue()"
+                      (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
+                  </div>
+                </div>
+
+                <div class="row buttons">
+                  <div class="col-lg-4">
+                    <button type="button" class=" form-control button-design back" (click)="goToPreviousStep()"
+                      [disabled]="currentStep === 0">Back</button>
+                  </div>
+                  <div class="col-lg-4">
+                    <button type="button" class=" form-control button-design " (click)="goToNextStep()"
+                      [disabled]="currentStep === steps.length - 1">Next</button>
+                  </div>
+                </div>
               </div>
-              <div class="col-lg-4">
-                  <button  type="button" class=" form-control button-design " (click)="goToNextStep()" [disabled]="currentStep === steps.length - 1">Next</button>
-              </div>
-              </div>    
-         </div>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
-        </form>
-        <form [formGroup]="myFormLifeInsuranceGoal" (ngSubmit)="nextStep()">
-          <div class="step-content" [class.active]="currentStep === 3">
+      </form>
+      <form [formGroup]="myFormLifeInsuranceGoal" (ngSubmit)="nextStep()">
+        <div class="step-content" [class.active]="currentStep === 3">
           <div class="container img checkboxes-container-margin">
 
-              <h2>Choose your goals</h2>
-              <p>You can select the options that are relevant to you and we will help you choose the plan that fits best for your saving goals.</p>
-                <img class="img-margin" src="../assets/pigImg.svg" alt="img life insurance">
-      
-                <div class="card col-lg-7">
-                  <div class="row checkboxes-margin">
-                  <label class="checkbox-label">Savings goal</label>
-      
-                    <div class="second-checkboxes">
-                    
-                      <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive ">
-                      <input type="checkbox" id="checkbox1" formControlName="protectionOfFamily">
-                      <label class="checkbox-container no-margin-label-row-1" for="checkbox1" >Protection of family</label>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
-                      <input type="checkbox" id="checkbox2" formControlName="buyOwnHome">
-                      <label class="checkbox-container no-margin-label-row-1" for="checkbox2">Buy your own home</label>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
-                      <input type="checkbox" id="checkbox3" formControlName="taxOptimization">
-                      <label class="checkbox-container no-margin-label-row-1" for="checkbox3">Tax optimization</label>
-                    </div>
-              
-                      <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
-                      <input type="checkbox" id="checkbox4" formControlName="financialInvestments">
-                      <label class="checkbox-container" for="checkbox4">Financial investments</label>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
-                      <input type="checkbox" id="checkbox5" formControlName="financialIndependence">
-                      <label class="checkbox-container" for="checkbox5">Financial independence</label>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
-                      <input type="checkbox" id="checkbox6" formControlName="wealthAccumulation">
-                      <label class="checkbox-container" for="checkbox6">Wealth accumulation</label>
-                    </div>
+            <h2>Choose your goals</h2>
+            <p>You can select the options that are relevant to you and we will help you choose the plan that fits best
+              for your saving goals.</p>
+            <img class="img-margin" src="../assets/pigImg.svg" alt="img life insurance">
+
+            <div class="card col-lg-7">
+              <div class="row checkboxes-margin">
+                <label class="checkbox-label">Savings goal</label>
+
+                <div class="second-checkboxes">
+
+                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive ">
+                    <input type="checkbox" id="checkbox1" formControlName="protectionOfFamily">
+                    <label class="checkbox-container no-margin-label-row-1" for="checkbox1">Protection of family</label>
                   </div>
-                  <div *ngIf="nextButtonClicked && !atLeastOneCheckboxChecked()" class="error-message mb-2">
-                    Please select at least one checkbox.
+                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
+                    <input type="checkbox" id="checkbox2" formControlName="buyOwnHome">
+                    <label class="checkbox-container no-margin-label-row-1" for="checkbox2">Buy your own home</label>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
+                    <input type="checkbox" id="checkbox3" formControlName="taxOptimization">
+                    <label class="checkbox-container no-margin-label-row-1" for="checkbox3">Tax optimization</label>
+                  </div>
+
+                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
+                    <input type="checkbox" id="checkbox4" formControlName="financialInvestments">
+                    <label class="checkbox-container" for="checkbox4">Financial investments</label>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
+                    <input type="checkbox" id="checkbox5" formControlName="financialIndependence">
+                    <label class="checkbox-container" for="checkbox5">Financial independence</label>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
+                    <input type="checkbox" id="checkbox6" formControlName="wealthAccumulation">
+                    <label class="checkbox-container" for="checkbox6">Wealth accumulation</label>
                   </div>
                 </div>
-              
-                
-                    <div class="row buttons ">
-                      <div class="col-lg-4">
-                          <button type="button" class=" form-control button-design back " (click)="goToPreviousStep()" >Back</button>
-                      </div>
-                      <div class="col-lg-4">
-                          <button  type="button" class=" form-control button-design next-checkboxes " (click)="goToNextStepThree()" >Next</button></div>
+                <div *ngIf="nextButtonClicked && !atLeastOneCheckboxChecked()" class="error-message mb-2">
+                  Please select at least one checkbox.
+                </div>
+              </div>
+
+
+              <div class="row buttons ">
+                <div class="col-lg-4">
+                  <button type="button" class=" form-control button-design back "
+                    (click)="goToPreviousStep()">Back</button>
+                </div>
+                <div class="col-lg-4">
+                  <button type="button" class=" form-control button-design next-checkboxes "
+                    (click)="goToNextStepThree()">Next</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        </div>
-      </div>
-        </form>
-  
-        <div class="step-content" [class.active]="currentStep === 4">
-          <div class="container accordion  accordions-mobile img col-lg-8 ">
-            <div class="">
-              <h2>You are almost done</h2>
-              <p class="margin-top-accordion">We work with all insurance providers; we analyze offers every day. We will give you the offer with the best price benefit ratio/relationship. Click more on the side of the company name for more details.</p>
-        
+      </form>
+
+      <div class="step-content" [class.active]="currentStep === 4">
+        <div class="container accordion  accordions-mobile img col-lg-8 ">
+          <div class="">
+            <h2>You are almost done</h2>
+            <p class="margin-top-accordion">We work with all insurance providers; we analyze offers every day. We will
+              give you the offer with the best price benefit ratio/relationship. Click more on the side of the company
+              name for more details.</p>
+
             <div class="accordion " id="accordionFlushExample">
               <div class="width-acc">
-              <div class="card acc">
-                <div class="card-header" id="flush-headingOne">
-                  <label class="ml-3">1</label>
-                  <div class="card-header-item-container">
-                  <div class="header-img-description">
-                    <div class="col-lg-2">
-                      <img src="../assets/solidavita.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
-                    </div>
-                    <div class="col-lg-4">
-                      <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
-                    </div>
-                  </div>
-                  <div class="header-buttons">
+                <div class="card acc">
+                  <div class="card-header" id="flush-headingOne">
+                    <label class="ml-3">1</label>
+                    <div class="card-header-item-container">
+                      <div class="header-img-description">
+                        <div class="col-lg-2">
+                          <img src="../assets/solidavita.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
+                            style="max-width: 100px;">
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                        </div>
+                      </div>
+                      <div class="header-buttons">
 
                         <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                        
-                        (click)="goToNextStep();updateSelectedAccordion('solidavita'); updateSelectedImage(accordionButton, '../assets/solidavita.svg') " [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                    <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                  <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"  >
-                    <span class="button-text">Details</span> <i class="fas fa-chevron-down"></i>
-                  </button>
+                          (click)="goToNextStep();updateSelectedAccordion('solidavita'); updateSelectedImage(accordionButton, '../assets/solidavita.svg') "
+                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
+                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            <span class="button-text">Details</span> <i class="fas fa-chevron-down"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <table class="table mt-3">
+                        <tbody>
+                          <tr class="bg-light">
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                            <td>CHF 200</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                            </td>
+                            <td>CHF 1129.20</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <p class="bolder paragraph-margin">Customer satisfaction</p>
+                        </div>
+                        <div class="col-lg-5">
+                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                            alt="rating img">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
-              </div>
-            </div>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">                        <table class="table mt-3">
-                    <tbody>
-                      <tr class="bg-light">
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                        <td>CHF 200</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
-                        <td>CHF 1129.20</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="row">
-                    <div class="col-lg-5">
-                      <p class="bolder paragraph-margin">Customer satisfaction</p>
-                    </div>
-                    <div class="col-lg-5">
-                      <img src="../assets/ratingStars.svg" alt="rating img">    <img src="../assets/5-5.svg" alt="rating img">
-                    </div>
-                  </div></div>
-                  
-                </div>
-              </div>
-            </div>
               <div class="card acc">
                 <div class="card-header" id="flush-headingTwo">
                   <label class="ml-3">2</label>
                   <div class="card-header-item-container">
-                  <div class="header-img-description">
-                    <div class="col-lg-2">
-                      <img src="../assets/allianz.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
+                    <div class="header-img-description">
+                      <div class="col-lg-2">
+                        <img src="../assets/allianz.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
+                          style="max-width: 100px;">
+                      </div>
+                      <div class="col-lg-4">
+                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                            class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                      </div>
                     </div>
-                    <div class="col-lg-4">
-                      <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                    <div class="header-buttons">
+
+                      <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                        (click)="goToNextStep();updateSelectedAccordion('allianz'); updateSelectedImage(accordionButton, '../assets/allianz.svg') "
+                        [disabled]="currentStep === steps.length - 1">Get an offer</button>
+                      <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                        <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                          <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div class="header-buttons">
-          
-                        <button #accordionButton type="button" class="form-control button-design accordion-btn"                 
-                               (click)="goToNextStep();updateSelectedAccordion('allianz'); updateSelectedImage(accordionButton, '../assets/allianz.svg') " [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                               <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                  <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" >
-                    <span class="button-text">Details</span><i class="fas fa-chevron-down"  ></i>
-                  </button>
                 </div>
-              </div>
-              </div>
-            </div>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">                        <table class="table mt-3">
-                    <tbody>
-                      <tr class="bg-light">
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                        <td>CHF 200</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
-                        <td>CHF 1129.20</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="row">
-                    <div class="col-lg-5">
-                      <p class="bolder paragraph-margin">Customer satisfaction</p>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <table class="table mt-3">
+                      <tbody>
+                        <tr class="bg-light">
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                          <td>CHF 200</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                          </td>
+                          <td>CHF 1129.20</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <p class="bolder paragraph-margin">Customer satisfaction</p>
+                      </div>
+                      <div class="col-lg-5">
+                        <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                          alt="rating img">
+                      </div>
                     </div>
-                    <div class="col-lg-5">
-                      <img src="../assets/ratingStars.svg" alt="rating img">    <img src="../assets/5-5.svg" alt="rating img">
-                    </div>
-                  </div></div>
-                  
+                  </div>
+
                 </div>
               </div>
               <div class="card acc">
                 <div class="card-header" id="flush-headingThree">
                   <label class="ml-3">3</label>
                   <div class="card-header-item-container">
-                  <div class="header-img-description">
-                    <div class="col-lg-2">
-                      <img src="../assets/pax.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
+                    <div class="header-img-description">
+                      <div class="col-lg-2">
+                        <img src="../assets/pax.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
+                          style="max-width: 100px;">
+                      </div>
+                      <div class="col-lg-4">
+                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                            class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                      </div>
                     </div>
-                    <div class="col-lg-4">
-                      <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                    <div class="header-buttons">
+
+                      <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                        (click)="goToNextStep(); updateSelectedAccordion('pax'); updateSelectedImage(accordionButton, '../assets/pax.svg') "
+                        [disabled]="currentStep === steps.length - 1">Get an offer</button>
+                      <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                        <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#flush-collapseThree" aria-expanded="false"
+                          aria-controls="flush-collapseThree">
+                          <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div class="header-buttons">
-    
-                        <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                        (click)="goToNextStep(); updateSelectedAccordion('pax'); updateSelectedImage(accordionButton, '../assets/pax.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
-                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                  <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                    <span class="button-text">Details</span><i class="fas fa-chevron-down" ></i>
-                  </button>
                 </div>
-              </div>
-              </div>
-            </div>
-                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">                        <table class="table mt-3">
-                    <tbody>
-                      <tr class="bg-light">
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                        <td>CHF 200</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
-                        <td>CHF 1129.20</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                      </tr>
-                      <tr>
-                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                        <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="row">
-                    <div class="col-lg-5">
-                      <p class="bolder paragraph-margin">Customer satisfaction</p>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <table class="table mt-3">
+                      <tbody>
+                        <tr class="bg-light">
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                          <td>CHF 200</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                          </td>
+                          <td>CHF 1129.20</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                        </tr>
+                        <tr>
+                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <p class="bolder paragraph-margin">Customer satisfaction</p>
+                      </div>
+                      <div class="col-lg-5">
+                        <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                          alt="rating img">
+                      </div>
                     </div>
-                    <div class="col-lg-5">
-                      <img src="../assets/ratingStars.svg" alt="rating img">    <img src="../assets/5-5.svg" alt="rating img">
-                    </div>
-                  </div></div>
-                  
+                  </div>
+
                 </div>
               </div>
 
@@ -547,122 +569,142 @@
                   <div class="card-header" id="flush-headingFour">
                     <label class="ml-3">4</label>
                     <div class="card-header-item-container">
-                    <div class="header-img-description">
-                      <div class="col-lg-2">
-                        <img src="../assets/concordia.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
+                      <div class="header-img-description">
+                        <div class="col-lg-2">
+                          <img src="../assets/concordia.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
+                            style="max-width: 100px;">
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                        </div>
                       </div>
-                      <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                      <div class="header-buttons">
+
+                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                          (click)="goToNextStep(); updateSelectedAccordion('concordia'); updateSelectedImage(accordionButton, '../assets/concordia.svg') "
+                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
+                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFour" aria-expanded="false"
+                            aria-controls="flush-collapseFour">
+                            <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div class="header-buttons">
-     
-                          <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                          (click)="goToNextStep(); updateSelectedAccordion('concordia'); updateSelectedImage(accordionButton, '../assets/concordia.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
-                          <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                    <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                      <span class="button-text">Details</span><i class="fas fa-chevron-down" ></i>
-                    </button>
                   </div>
+                  <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <table class="table mt-3">
+                        <tbody>
+                          <tr class="bg-light">
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                            <td>CHF 200</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                            </td>
+                            <td>CHF 1129.20</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <p class="bolder paragraph-margin">Customer satisfaction</p>
+                        </div>
+                        <div class="col-lg-5">
+                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                            alt="rating img">
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
-              </div>
-                  <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">                        <table class="table mt-3">
-                      <tbody>
-                        <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                          <td>CHF 200</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
-                          <td>CHF 1129.20</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="row">
-                      <div class="col-lg-5">
-                        <p class="bolder paragraph-margin">Customer satisfaction</p>
-                      </div>
-                      <div class="col-lg-5">
-                        <img src="../assets/ratingStars.svg" alt="rating img">    <img src="../assets/5-5.svg" alt="rating img">
-                      </div>
-                    </div></div>
-                    
-                  </div>
-                </div>
-              
+
                 <!-- Accordion 5 -->
                 <div class="card acc">
                   <div class="card-header" id="flush-headingFive">
                     <label class="ml-3">5</label>
                     <div class="card-header-item-container">
-                    <div class="header-img-description">
-                      <div class="col-lg-2">
-                        <img src="../assets/zuricher-kantonalbank.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
+                      <div class="header-img-description">
+                        <div class="col-lg-2">
+                          <img src="../assets/zuricher-kantonalbank.svg" alt="Accordion Image"
+                            class="img-fluid float-left mr-3" style="max-width: 100px;">
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                        </div>
                       </div>
-                      <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                      <div class="header-buttons">
+
+                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                          (click)="goToNextStep(); updateSelectedAccordion('zuricher-kantonalbank'); updateSelectedImage(accordionButton, '../assets/zuricher-kantonalbank.svg') "
+                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
+                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFive" aria-expanded="false"
+                            aria-controls="flush-collapseFive">
+                            <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div class="header-buttons">
-       
-                          <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                          (click)="goToNextStep(); updateSelectedAccordion('zuricher-kantonalbank'); updateSelectedImage(accordionButton, '../assets/zuricher-kantonalbank.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
-                          <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                    <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                      <span class="button-text">Details</span><i class="fas fa-chevron-down" ></i>
-                    </button>
                   </div>
-                </div>
-                </div>
-              </div>
-                  <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">                        <table class="table mt-3">
-                      <tbody>
-                        <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                          <td>CHF 200</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
-                          <td>CHF 1129.20</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="row">
-                      <div class="col-lg-5">
-                        <p class="bolder paragraph-margin">Customer satisfaction</p>
+                  <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <table class="table mt-3">
+                        <tbody>
+                          <tr class="bg-light">
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                            <td>CHF 200</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                            </td>
+                            <td>CHF 1129.20</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <p class="bolder paragraph-margin">Customer satisfaction</p>
+                        </div>
+                        <div class="col-lg-5">
+                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                            alt="rating img">
+                        </div>
                       </div>
-                      <div class="col-lg-5">
-                        <img src="../assets/ratingStars.svg" alt="rating img">    <img src="../assets/5-5.svg" alt="rating img">
-                      </div>
-                    </div></div>
-                    
+                    </div>
+
                   </div>
                 </div>
 
@@ -671,239 +713,255 @@
                   <div class="card-header" id="flush-headingSix">
                     <label class="ml-3">6</label>
                     <div class="card-header-item-container">
-                    <div class="header-img-description">
-                      <div class="col-lg-2">
-                        <img src="../assets/groupe-mutuel.svg" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
+                      <div class="header-img-description">
+                        <div class="col-lg-2">
+                          <img src="../assets/groupe-mutuel.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
+                            style="max-width: 100px;">
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                        </div>
                       </div>
-                      <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">1540</span> francs MEDICASA network PROVITA</p>
+                      <div class="header-buttons">
+
+                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                          (click)="goToNextStep(); updateSelectedAccordion('groupe-mutuel'); updateSelectedImage(accordionButton, '../assets/groupe-mutuel.svg') "
+                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
+                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                            <span class="button-text">Details</span><i class="fas fa-chevron-down "></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div class="header-buttons">
-    
-                          <button #accordionButton type="button" class="form-control button-design accordion-btn" 
-                          (click)="goToNextStep(); updateSelectedAccordion('groupe-mutuel'); updateSelectedImage(accordionButton, '../assets/groupe-mutuel.svg') " [disabled]="currentStep === steps.length - 1" >Get an offer</button>
-                          <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                    <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
-                      <span class="button-text">Details</span><i class="fas fa-chevron-down " ></i>
-                    </button>
+                  </div>
+                  <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <table class="table mt-3">
+                        <tbody>
+                          <tr class="bg-light">
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                            <td>CHF 200</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                            </td>
+                            <td>CHF 1129.20</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <p class="bolder paragraph-margin">Customer satisfaction</p>
+                        </div>
+                        <div class="col-lg-5">
+                          <img src="../assets/ratingStars.svg" alt="rating img"><img src="../assets/5-5.svg"
+                            alt="rating img">
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
-                </div>
+
               </div>
-                  <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">                        <table class="table mt-3">
-                      <tbody>
-                        <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                          <td>CHF 200</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:</td>
-                          <td>CHF 1129.20</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="row">
-                      <div class="col-lg-5">
-                        <p class="bolder paragraph-margin">Customer satisfaction</p>
-                      </div>
-                      <div class="col-lg-5">
-                        <img src="../assets/ratingStars.svg" alt="rating img"><img src="../assets/5-5.svg" alt="rating img">
-                      </div>
-                    </div></div>
-                    
-                  </div>
-                </div>
-              
+            </div>
+
+            <div class="row center buttons">
+              <div class="col-lg-3">
+                <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
+              </div>
+              <div class="col-lg-3">
+                <button class="form-control button-design" (click)="onLoadMoreClick()"
+                  [class.disabled]="isButtonDisabled">Load More</button>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onSubmit()">
+        <div class="step-content" [class.active]="currentStep === 5">
+          <div class="container img last-form-mobile">
 
-              <div class="row center buttons">
-                <div class="col-lg-3">
-                  <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
+            <div class="col-lg-8">
+              <h2>You’re done!</h2>
+              <p>We will crunch numbers and analyze which provider is the best for your needs. We will present to you
+                only the best offers, and then you decide, non-binding and free of charge service. We will be in touch
+                with you for more details as soon as possible.</p>
+
+            </div>
+
+            <div class="values-responsive">
+              <div class="responsive-values-design">
+                <div class="img-class-value">
+                  <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
                 </div>
-                <div class="col-lg-3">
-                  <button class="form-control button-design" (click)="onLoadMoreClick()" [class.disabled]="isButtonDisabled">Load More</button>
+                <div class=" border-right ">
+
+                  <p class="text-wrap-last">{{ myFormStart.get('fullName')?.value.length > 20 ?
+                    myFormStart.get('fullName')?.value.substring(0, 20) + '...' : myFormStart.get('fullName')?.value }},
+                    {{ myFormStart.get('birthyear')?.value }} </p>
+
+                  <p>Insured sum {{ myFormLifeInsurancePlan.get('insuredSum')?.value }} CHF</p>
+                </div>
+
+              </div>
+              <div class="paragraph-values">
+                <p>{{ myFormStart.get('insuranceModel')?.value }}, {{ myFormStart.get('premiumModel')?.value }} </p>
+
+                <p>{{myFormWorkStatus.get('smokingStatus')?.value }}</p>
+              </div>
+
+            </div>
+            <div class="card last-form-margin ">
+              <div class="row last-form">
+                <label>Gender</label>
+                <div class="buttons-container">
+                  <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons ">
+                    <div type="button" [class.clicked]="clickedButton === 'male'" class="gender-button-input-design"
+                      (click)="setGender('male')">
+                      <img src="../assets/man.svg" alt="Male">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons ">
+                    <div type="button" [class.clicked]="clickedButton === 'female'" class="gender-button-input-design"
+                      (click)="setGender('female')">
+                      <img src="../assets/woman.svg" alt="Female">
+                    </div>
+                  </div>
+
+                </div>
+                <div
+                  *ngIf="myFormPersonalDetails.get('gender')?.hasError('required') && (myFormPersonalDetails.get('gender')?.touched || myFormPersonalDetails.get('gender')?.dirty)"
+                  class="error-message gender-error">
+                  Gender is required.
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4">
+                  <label>Full name</label>
+                  <input placeholder="" class="form-control input-design-readonly"
+                    [value]="myFormStart.get('fullName')?.value" readonly>
+
+                </div>
+
+                <div class="col-lg-4">
+                  <label>Street, No</label>
+                  <input type="text" class="form-control input-design " formControlName="adress" id="strasse"
+                    placeholder="Strasse, Nr*" (input)="onStrasseInput()">
+                  <div
+                    *ngIf="myFormPersonalDetails.get('adress')?.touched && myFormPersonalDetails.get('adress')?.errors?.['required']"
+                    class="error-message">
+                    Street is required.
+                  </div>
+                  <div *ngIf="myFormPersonalDetails.get('adress')?.hasError('invalidFormat')"
+                    class="text-danger multiline-error">
+                    Invalid format for street.
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <label>Postal Code</label>
+                  <input placeholder="" class="form-control input-design-readonly"
+                    [value]="myFormStart.get('city')?.value" readonly>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4">
+                  <label>Phone</label>
+
+                  <input #phoneInput id="phone" type="text" formControlName="phoneNumber" maxlength="20" />
+
+                  <div #errorMsg id="error-message" class="hide error-message"></div>
+                  <div #validMsg id="valid-msg" class="hide error-message"></div>
+
+                  <div
+                    *ngIf="myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']"
+                    class="error-message">
+                    Telephone is required.
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <label>E-Mail</label>
+                  <input type="email" class="form-control input-design" formControlName="email" id="email"
+                    placeholder="E-Mail*">
+                  <div
+                    *ngIf="myFormPersonalDetails.get('email')?.touched && myFormPersonalDetails.get('email')?.errors?.['required']"
+                    class="error-message">
+                    Email is required.
+                  </div>
+                  <div
+                    *ngIf="myFormPersonalDetails.get('email')?.dirty && myFormPersonalDetails.get('email')?.value && myFormPersonalDetails.get('email')?.hasError('invalidEmail')"
+                    class="error-message">
+                    Please enter a valid email address.
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <label>Nationality</label>
+                  <select placeholder="Please select" class="form-control-select" formControlName="nationality"
+                    [class.selected]="myFormPersonalDetails.get('nationality')?.value">
+                    <option *ngFor="let country of countries" [value]="country.value">{{ country.name }}</option>
+                  </select>
+                </div>
+
+              </div>
+              <div class="col-lg-12 agreed-container mt-3">
+                <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
+                <label class="checkbox-container agreed" for="checkbox20">
+                  I have read and accepted the
+                  <a href="https://infoversicherung.ch/impressum" target="_blank">
+                    Terms of Use
+                  </a>
+                  and
+                  <a href="https://infoversicherung.ch/datenschutz" target="_blank">
+                    Privacy Policy
+                  </a>
+
+                </label>
+                <div
+                  *ngIf="myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']"
+                  class="error-message agreed-error">
+                  Please accept our conditions.
+                </div>
+              </div>
+
+
+              <div class="row buttons">
+                <div class="col-lg-4">
+                  <button (click)="goToPreviousStep()" type="button"
+                    class=" form-control button-design back last-form-buttons"
+                    [disabled]="currentStep === 0">Back</button>
+
+                </div>
+                <div class="col-lg-4">
+                  <button type="button" class="form-control button-design last-form-buttons"
+                    (click)="onSubmit()">Finish</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onSubmit()">
-          <div class="step-content" [class.active]="currentStep === 5">
-          <div class="container img last-form-mobile">
-    
-            <div class="col-lg-8">
-                    <h2>You’re done!</h2>
-                    <p>We will crunch numbers and analyze which provider is the best for your needs. We will present to you only the best offers, and then you decide, non-binding and free of charge service. We will be in touch with you for more details as soon as possible.</p>
-            
-                    </div>
-
-                  <div class="values-responsive">
-                    <div class="responsive-values-design">
-                      <div class="img-class-value">
-                      <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3" >
-                    </div>
-                    <div class=" border-right ">
-                                      
-                      <p class="text-wrap-last">{{ myFormStart.get('fullName')?.value.length > 20 ? myFormStart.get('fullName')?.value.substring(0, 20) + '...' : myFormStart.get('fullName')?.value }}, {{ myFormStart.get('birthyear')?.value }} </p>
-
-                      <p>Insured sum {{ myFormLifeInsurancePlan.get('insuredSum')?.value }} CHF</p>
-                              </div>
-
-                    </div>
-                    <div class="paragraph-values">
-                      <p >{{ myFormStart.get('insuranceModel')?.value }}, {{ myFormStart.get('premiumModel')?.value }} </p>
-                                              
-                      <p>{{myFormWorkStatus.get('smokingStatus')?.value }}</p>
-                    </div>
-
-                  </div>
-                      <div class="card last-form-margin ">
-                        <div class="row last-form">
-                          <label>Gender</label>
-                          <div class="buttons-container">
-                            <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons " >
-                              <div type="button" [class.clicked]="clickedButton === 'male'" class="gender-button-input-design" (click)="setGender('male')">
-                                <img src="../assets/man.svg" alt="Male">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons ">
-                              <div type="button" [class.clicked]="clickedButton === 'female'" class="gender-button-input-design" (click)="setGender('female')">
-                                <img src="../assets/woman.svg" alt="Female">
-                              </div>
-                            </div>
-                   
-                          </div>
-                          <div *ngIf="myFormPersonalDetails.get('gender')?.hasError('required') && (myFormPersonalDetails.get('gender')?.touched || myFormPersonalDetails.get('gender')?.dirty)"
-                          class="error-message gender-error">
-                          Gender is required.
-                        </div>
-                    
-                        </div>
-
-                       <div class="row">
-                        <div class="col-lg-4">
-                        <label>Full name</label>
-                        <input placeholder="" class="form-control input-design-readonly" [value]="myFormStart.get('fullName')?.value" readonly>
-     
-                      </div>
-            
-                      <div class="col-lg-4">
-                        <label>Street, No</label>
-                        <input
-                        type="text"
-                        class="form-control input-design "
-                        formControlName="adress"
-                        id="strasse"
-                        placeholder="Strasse, Nr*"
-                        (input)="onStrasseInput()">
-                      <div
-                        *ngIf="myFormPersonalDetails.get('adress')?.touched && myFormPersonalDetails.get('adress')?.errors?.['required']"
-                        class="error-message">
-                        Street is required.
-                      </div>
-                      <div *ngIf="myFormPersonalDetails.get('adress')?.hasError('invalidFormat')"
-                           class="text-danger multiline-error">
-                           Invalid format for street.
-                      </div>
-                      </div>
-                    
-                      <div class="col-lg-4">
-                        <label>Postal Code</label>
-                        <input placeholder="" class="form-control input-design-readonly" [value]="myFormStart.get('city')?.value" readonly>
-                      </div>
-                      </div>
-            
-                      <div class="row">
-                        <div class="col-lg-4">
-                        <label>Phone</label>
-                   
-                        <input #phoneInput id="phone" type="text" formControlName="phoneNumber"   maxlength="20"/>
-                  
-                        <div #errorMsg id="error-message" class="hide error-message"></div>
-                        <div #validMsg id="valid-msg" class="hide error-message"></div>
-                  
-                                <div
-                                *ngIf="myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']"
-                                class="error-message">
-                                Telephone is required.
-                              </div>
-                    </div>
-
-                      <div class="col-lg-4">
-                        <label>E-Mail</label>
-                        <input type="email" class="form-control input-design" formControlName="email" id="email"
-                              placeholder="E-Mail*">
-                        <div
-                          *ngIf="myFormPersonalDetails.get('email')?.touched && myFormPersonalDetails.get('email')?.errors?.['required']"
-                          class="error-message">
-                          Email is required.
-                        </div>
-                        <div
-                          *ngIf="myFormPersonalDetails.get('email')?.dirty && myFormPersonalDetails.get('email')?.value && myFormPersonalDetails.get('email')?.hasError('invalidEmail')"
-                          class="error-message">
-                          Please enter a valid email address.
-                        </div>
-                      </div>
-            
-                      <div class="col-lg-4">
-                        <label>Nationality</label>
-                        <select placeholder="Please select" class="form-control-select"
-                                formControlName="nationality"  [class.selected]="myFormPersonalDetails.get('nationality')?.value"
-                            >
-                          <option *ngFor="let country of countries" [value]="country.value">{{ country.name }}</option>
-                        </select>
-                      </div>
-                      
-                      </div>
-                      <div class="col-lg-12 agreed-container mt-3">
-                        <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
-                        <label class="checkbox-container agreed" for="checkbox20">
-                          I have read and accepted the
-                        <a href="https://infoversicherung.ch/impressum" target="_blank">
-                          Terms of Use
-                        </a>
-                        and
-                        <a href="https://infoversicherung.ch/datenschutz" target="_blank">
-                          Privacy Policy
-                        </a>
-                      
-                        </label>
-                        <div
-                        *ngIf="myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']"
-                        class="error-message agreed-error">
-                        Please accept our conditions.
-                      </div>
-                      </div>
-                 
-            
-                      <div class="row buttons">
-                        <div class="col-lg-4">
-                          <button (click)="goToPreviousStep()" type="button"  class=" form-control button-design back last-form-buttons" [disabled]="currentStep === 0">Back</button>
-            
-                        </div>
-                        <div class="col-lg-4">
-                          <button type="button" class="form-control button-design last-form-buttons" (click)="onSubmit()">Finish</button> 
-                        </div>                
-                        </div>
-                  </div>
-                </div>
-              </div>
-        </form>
-      </div>
+      </form>
     </div>
   </div>
+</div>

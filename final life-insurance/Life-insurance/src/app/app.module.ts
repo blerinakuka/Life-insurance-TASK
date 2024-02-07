@@ -8,20 +8,18 @@ import { DankeComponent } from './dankePage/danke.component';
 import { routes } from './app.routes';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { HomeComponent } from './home/home.component';
-// import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DankeComponent,
     HomeComponent,
-    // NavbarComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     NgxIntlTelInputModule,
-    RouterModule.forRoot(routes), // Add this line for routing
+    RouterModule.forRoot(routes), 
   ],
   providers: [],
   bootstrap: [AppComponent],
