@@ -12,8 +12,6 @@
     </div>
   </div>
   <div class=" ">
-
-
     <div>
       <form [formGroup]="myFormStart" (ngSubmit)="nextStep()">
         <div class="step-content" [class.active]="currentStep === 0">
@@ -42,23 +40,12 @@
                       </li>
                     </ul>
 
-                    <!-- <div
-                              *ngIf="!isSuggestionSelected && (myFormPersonalDetails.get('city')?.touched || myFormPersonalDetails.get('city')?.dirty) && !myFormPersonalDetails.get('city')?.errors?.['invalidPLZLength']"
-                              class="text-danger error-message">
-                              Bitte wählen Sie einen Vorschlag aus der Liste.
-                            </div> -->
                     <div
                       *ngIf="!isSuggestionSelected && (myFormStart.get('city')?.touched || myFormStart.get('city')?.dirty) &&
                             (!myFormStart.get('city')?.value || myFormStart.get('city')?.value.length <= 4 || myFormStart.get('city')?.value.length === 5)"
                       class="error-message multiline-error">
                       Please select a suggestion from the list.
                     </div>
-
-                    <!-- <div
-                              *ngIf="myFormStart.get('city')?.touched && myFormStart.get('city')?.errors?.['invalidPLZLength'] && myFormStart.get('city')?.value.length < 4 && !isSuggestionSelected"
-                              class="error-message multiline-error">
-                              PLZ sollte mindestens 4 oder 5 Ziffern haben.
-                            </div> -->
 
                   </div>
                 </div>
@@ -70,7 +57,7 @@
                     </span>
                   </label>
                   <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
-                    [class.error]="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
+            
                     [class.selected]="myFormStart.get('insuranceModel')?.value">
                     <option value="" disabled selected>Please Select</option>
                     <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
@@ -87,7 +74,7 @@
                       matTooltipPosition="below"> <img src="../assets/info.svg" alt="Info Icon"></span></label>
                   <select placeholder="Please select" class="form-control-select " formControlName="premiumModel"
                     formControlName="premiumModel"
-                    [class.error]="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
+        
                     [class.selected]="myFormStart.get('premiumModel')?.value">
                     <option value="" disabled selected>Please Select</option>
                     <option value="Fix" class="text-dark">Fix</option>
@@ -106,7 +93,7 @@
                   <label>Full Name</label>
                   <input type="text" placeholder="Full Name " formControlName="fullName"
                     class="form-control input-design" (input)="onFullNameInput()"
-                    [class.error]="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched">
+                    >
                   <div *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched"
                     class="error-message">
                     Full Name is required.
@@ -115,9 +102,9 @@
 
                 <div class="col-lg-4">
                   <label>Birth Year</label>
-                  <input type=number placeholder="YYYY" formControlName="birthyear" class="form-control input-design"
+                  <input type="number" placeholder="YYYY" formControlName="birthyear" class="form-control input-design"
                     (input)="onBirthYearInput($event)"
-                    [class.error]="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched">
+                   >
                   <div
                     *ngIf="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched"
                     class="error-message">
@@ -144,7 +131,6 @@
       <form [formGroup]="myFormWorkStatus" (ngSubmit)="goToNextStepTwo()">
         <div class="step-content" [class.active]="currentStep === 1">
           <div class="container img col-lg-12 first-three-forms-mobile">
-            <!-- <div class="col-8"> -->
             <h2>Tell us more about you</h2>
             <p>We select premiums individually, depending on your employment status, your profession and whether you are
               smoker or not.</p>
@@ -159,7 +145,7 @@
                     </span>
                   </label>
                   <select placeholder="Please select" class="form-control-select" formControlName="smokingStatus"
-                    [class.error]="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched"
+             
                     [class.selected]="myFormWorkStatus.get('smokingStatus')?.value">
                     <option value="" disabled selected>Please Select</option>
                     <option value="Never" class="text-dark">Never</option>
@@ -206,10 +192,7 @@
                       <input type="radio" id="radio4" value="not_working" formControlName="employmentStatus">
                       <label for="radio4"> Not working</label>
                     </div>
-
                   </div>
-
-                  <!-- </div> -->
                 </div>
                 <div
                   *ngIf="myFormWorkStatus.get('employmentStatus')?.hasError('required') && myFormWorkStatus.get('employmentStatus')?.touched"
@@ -325,8 +308,6 @@
                   Please select at least one checkbox.
                 </div>
               </div>
-
-
               <div class="row buttons ">
                 <div class="col-lg-4">
                   <button type="button" class=" form-control button-design back "
@@ -352,6 +333,7 @@
 
             <div class="accordion " id="accordionFlushExample">
               <div class="width-acc">
+                          <!-- Accordion 1 -->
                 <div class="card acc">
                   <div class="card-header" id="flush-headingOne">
                     <label class="ml-3">1</label>
@@ -422,6 +404,7 @@
                   </div>
                 </div>
               </div>
+                        <!-- Accordion 2 -->
               <div class="card acc">
                 <div class="card-header" id="flush-headingTwo">
                   <label class="ml-3">2</label>
@@ -491,6 +474,7 @@
 
                 </div>
               </div>
+                        <!-- Accordion 3 -->
               <div class="card acc">
                 <div class="card-header" id="flush-headingThree">
                   <label class="ml-3">3</label>

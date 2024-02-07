@@ -31,12 +31,11 @@ import 'intl-tel-input/build/js/utils.js';
 
 function customEmailValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
     const valid = emailRegex.test(control.value);
     return valid ? null : { 'invalidEmail': true };
   };
 }
-
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
@@ -131,17 +130,13 @@ export class FormsComponent {
 
   //STEPPER
   currentStep = 0;
-  steps = Array.from({ length: 6 }, (_, i) => i); // Generates an array [0, 1, 2, 3, 4, 5]
+  steps = Array.from({ length: 6 }, (_, i) => i);
 
   isStepClickable(step: number): boolean {
-    // Implement your logic to determine if the step is clickable
+
     return true;
   }
-  // steps = [0, 1, 2, 3, 4, 5];
-  // currentStep = 0;
-  // isStepClickable(step: number): boolean {
-  //   return step <= this.currentStep;
-  // }
+  
   goToStep(step: number): void {
     this.currentStep = step;
   }
@@ -237,7 +232,6 @@ export class FormsComponent {
     this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(value);
   }
 
-
   selectedCountry: any;
 
   //COUNTRY SELECT INPUT
@@ -304,8 +298,6 @@ export class FormsComponent {
     });
 
   }
-
-
 
   //GENDER BUTTONS VALUE
   clickedButton: string = '';
@@ -397,10 +389,8 @@ export class FormsComponent {
       this.myFormStart.get('city')?.clearValidators();
       this.myFormStart.get('city')?.updateValueAndValidity();
       this.isSuggestionSelected = true;
-      console.log('isSuggestionSelected:', this.isSuggestionSelected);
     } else {
       this.isSuggestionSelected = false;
-      console.log('isSuggestionSelected:', this.isSuggestionSelected);
     }
   }
 
@@ -417,7 +407,6 @@ export class FormsComponent {
       inputValue = inputValue.slice(1);
     }
 
-
     inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
 
     inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
@@ -429,6 +418,10 @@ export class FormsComponent {
     inputValue = words.join(' ');
 
     inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+
+    if (inputValue.length > 150) {
+      inputValue = inputValue.substring(0, 150);
+    }
 
     if (inputValue !== originalValue) {
 
@@ -448,31 +441,35 @@ export class FormsComponent {
     const birthYear = this.myFormStart.get('birthyear')?.value;
     const ageDifference = 65 - birthYear;
     console.log('Age difference:', ageDifference);
-    // Do whatever you want with the age difference here
   }
 
   birthYearValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const birthYear = control.value;
-
+  
     const currentYear = new Date().getFullYear();
-
     const minYear = 1924;
-
-    if (birthYear < minYear || birthYear > currentYear) {
+  
+    if (isNaN(birthYear) || birthYear < minYear || birthYear > currentYear) {
       return { 'invalidYear': true };
     }
-
+  
     return null;
   }
-
   onBirthYearInput(event: Event): void {
     let inputValue = (event.target as HTMLInputElement).value;
 
-    inputValue = inputValue.slice(0, 4);
+    if (inputValue.length > 4) {
+        inputValue = inputValue.slice(0, 4);
+    }
 
-    this.myFormStart.get('birthyear')?.setValue(inputValue, { emitEvent: false });
-  }
+    const parsedValue = parseInt(inputValue, 10);
 
+    if (!isNaN(parsedValue)) {
+        this.myFormStart.get('birthyear')?.setValue(parsedValue, { emitEvent: false });
+    } else {
+        this.myFormStart.get('birthyear')?.setValue(null, { emitEvent: false });
+    }
+}
   //ERROR TRIGGERING FOR ALL THE INPUT VALIDATIONS
   errorValidator(control: AbstractControl): ValidationErrors | null {
     const inputValue: string = control.value;
@@ -524,7 +521,6 @@ export class FormsComponent {
 
     inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
 
-    // Limit input length to 100 characters
     if (inputValue.length > 100) {
       inputValue = inputValue.substring(0, 100);
     }
@@ -555,15 +551,51 @@ export class FormsComponent {
   //SUBMIT
   onSubmit() {
     this.markFormGroupTouched(this.myFormPersonalDetails);
-
+  
     if (this.myFormPersonalDetails.valid && this.validatePhoneNumber()) {
-      console.log('myFormStart:', this.myFormStart.value);
-      console.log('myFormWorkStatus:', this.myFormWorkStatus.value);
-      console.log('myFormLifeInsurancePlan:', this.myFormLifeInsurancePlan.value);
-      console.log('myFormLifeInsuranceGoal:', this.myFormLifeInsuranceGoal.value);
-      console.log('myFormChooseOffer:', this.myFormChooseOffer.value);
-      console.log('myFormPersonalDetails:', this.myFormPersonalDetails.value);
-
+      let savingsGoals = [];
+  
+      if (this.myFormLifeInsuranceGoal.value.protectionOfFamily) {
+        savingsGoals.push("Protection of Family");
+      }
+      if (this.myFormLifeInsuranceGoal.value.buyOwnHome) {
+        savingsGoals.push("Buy Own Home");
+      }
+      if (this.myFormLifeInsuranceGoal.value.taxOptimization) {
+        savingsGoals.push("Tax Optimization");
+      }
+      if (this.myFormLifeInsuranceGoal.value.financialInvestments) {
+        savingsGoals.push("Financial Investments");
+      }
+      if (this.myFormLifeInsuranceGoal.value.financialIndependence) {
+        savingsGoals.push("Financial Independence");
+      }
+      if (this.myFormLifeInsuranceGoal.value.wealthAccumulation) {
+        savingsGoals.push("Wealth Accumulation");
+      }
+  
+      let formData = {
+        fullName: this.myFormStart.value.fullName,
+        birthyear: this.myFormStart.value.birthyear,
+        city: this.myFormStart.value.city,
+        insuranceModel: this.myFormStart.value.insuranceModel,
+        premiumModel: this.myFormStart.value.premiumModel,
+        smokingStatus: this.myFormWorkStatus.value.smokingStatus,
+        profession: this.myFormWorkStatus.value.profession,
+        employmentStatus: this.myFormWorkStatus.value.employmentStatus,
+        insuredSum: this.myFormLifeInsurancePlan.value.insuredSum,
+        insuredDuration: this.myFormLifeInsurancePlan.value.insuredDuration,
+        selectedAccordion: this.myFormChooseOffer.value.selectedAccordion,
+        nationality: this.myFormPersonalDetails.value.nationality,
+        phoneNumber: this.myFormPersonalDetails.value.phoneNumber,
+        adress: this.myFormPersonalDetails.value.adress,
+        email: this.myFormPersonalDetails.value.email,
+        gender: this.myFormPersonalDetails.value.gender,
+        agreedToTerms: this.myFormPersonalDetails.value.agreedToTerms,
+        "Savings Goal": savingsGoals.join(", ")
+      };
+  
+      console.log(formData);
       this.router.navigate(['/danke']);
     } else {
       console.log('Validation failed. Cannot submit.');

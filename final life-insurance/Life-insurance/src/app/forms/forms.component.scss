@@ -265,12 +265,9 @@
         background-position: calc(100% - 10px) center;
         border: 1px solid #f3f3f3;
         padding: 0.5rem 1rem;
-        /* Adjusted padding */
         color: #a5a5a5;
         border-radius: 30px;
         transition: border-color 0.3s ease;
-
-        /* Smooth transition for border color */
         &:focus {
           outline: none;
         }
@@ -407,7 +404,6 @@
   input[type="checkbox"]:checked+label.checkbox-container::before {
     background-color: #25AE78;
     border: none;
-    // border: 1px solid #CCCCCC;
   }
 
   label.checkbox-container::after {
@@ -939,7 +935,7 @@ tbody tr:nth-child(odd) {
   white-space: pre-wrap;
 }
 
-@media screen and (min-width: 768px)and (max-width: 1200px) {
+@media screen and (min-width: 768px)and (max-width: 1400px) {
   .main-container {
     padding: 70px 0 70px 0;
   }
@@ -999,7 +995,9 @@ tbody tr:nth-child(odd) {
       }
     }
   }
-
+.acc-btn{
+  margin-left: 15px;
+}
   .second {
 
     .row-1 {
