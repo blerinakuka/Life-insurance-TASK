@@ -942,7 +942,7 @@ tbody tr:nth-child(odd) {
 
   .button-design.accordion-btn {
 
-    margin-left: 0px;
+    margin-left: 20px;
 
 
   }
@@ -996,7 +996,7 @@ tbody tr:nth-child(odd) {
     }
   }
 .acc-btn{
-  margin-left: 15px;
+  margin-left: 10px;
 }
   .second {
 
@@ -1074,6 +1074,14 @@ tbody tr:nth-child(odd) {
 
     text-align: center;
 
+
+    td{
+      display: flex;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: flex-start;
+      align-items: center;
+    }
     img {
 
       padding-left: 0px;
