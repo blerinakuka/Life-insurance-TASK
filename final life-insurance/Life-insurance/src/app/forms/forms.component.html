@@ -25,7 +25,8 @@
 
               <img class="img-margin" src="../assets/firstIcon.png" alt="img life insurance">
             </div>
-            <div class="card col-lg-7">
+            <div class="form-width">
+            <div class="card first-form">
               <div class="row">
                 <div class="col-lg-4">
                   <label>Postal Code</label>
@@ -127,7 +128,9 @@
               </div>
 
               <div formArrayName="franchises">
+         
                 <div *ngFor="let franchise of franchises.controls; let i = index" [formGroupName]="i"   class="row add-persons">
+                  <hr>
                   <div class=" row align-items-center">
                     <div class="col-lg-6">
                       <div class="person"> <img src="../assets/person-img.svg">Person {{ i + 1 }}
@@ -177,9 +180,10 @@
                       Franchise selection is required.
                     </div>
                   </div>
-                  <div class="col-lg-2">
-                    <label>Accident</label>
+                  <div class="col-lg-2 slide-toggle">
+                    <label>Accident Covered</label>
                     <mat-slide-toggle formControlName="slideToggleControl"></mat-slide-toggle>
+                    <input type="checkbox" checked data-toggle="toggle">
                   </div>
    
                 </div>
@@ -195,6 +199,7 @@
                     [disabled]="currentStep === steps.length - 1">Next</button>
                 </div>
               </div>
+            </div>
             </div>
           </div>
 

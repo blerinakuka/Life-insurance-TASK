@@ -77,6 +77,8 @@ export class FormsComponent {
   showPremiumTooltip = false;
   phoneNumberIsValid: boolean = true;
 
+  isChecked: boolean = false;
+
   @ViewChild('select') selectRef!: ElementRef;
   @ViewChild('optionsContainer') optionsContainerRef!: ElementRef;
   showOptions: boolean = false;
@@ -154,10 +156,8 @@ export class FormsComponent {
     }
   }
   nextStep(): void {
-    // Mark all form controls as touched including form arrays
     this.markFormGroupAndArraysTouched(this.myFormStart);
   
-    // Check if the form is valid and suggestion is selected
     if (this.myFormStart.valid && this.isSuggestionSelected) {
       console.log('Form is valid. Proceeding to the next step.');
       this.currentStep++;
@@ -166,7 +166,6 @@ export class FormsComponent {
     }
   }
   
-  // Helper function to mark all form controls and form arrays as touched recursively
   markFormGroupAndArraysTouched(formGroup: FormGroup | FormArray) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
@@ -746,6 +745,7 @@ onFranchiseNameInput(franchiseIndex: number) {
         email: this.myFormPersonalDetails.value.email,
         gender: this.myFormPersonalDetails.value.gender,
         agreedToTerms: this.myFormPersonalDetails.value.agreedToTerms,
+        person: this.myFormStart.get('franchises')?.value,
         "Savings Goal": savingsGoals.join(", ")
       };
   
