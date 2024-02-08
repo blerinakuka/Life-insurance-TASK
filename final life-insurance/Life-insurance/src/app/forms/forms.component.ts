@@ -9,7 +9,7 @@ import {
   AbstractControl,
   ValidationErrors,
   FormControl,
-  NgModel
+  NgModel,
 } from '@angular/forms';
 import { ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -25,7 +25,8 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { PLZService } from "../PLZ.service";
 import intlTelInput from 'intl-tel-input';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import 'intl-tel-input/build/css/intlTelInput.css';
 import 'intl-tel-input/build/js/utils.js';
 
@@ -58,7 +59,9 @@ function customEmailValidator(): ValidatorFn {
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
+    MatSlideToggleModule,
     NgbModule,
+    
   ],
 })
 
@@ -73,6 +76,10 @@ export class FormsComponent {
   showTooltip = false;
   showPremiumTooltip = false;
   phoneNumberIsValid: boolean = true;
+
+  @ViewChild('select') selectRef!: ElementRef;
+  @ViewChild('optionsContainer') optionsContainerRef!: ElementRef;
+  showOptions: boolean = false;
 
   //TEL
   @ViewChild('phoneInput') phoneInput!: ElementRef;
@@ -127,6 +134,7 @@ export class FormsComponent {
     }
   }
 
+  
 
   //STEPPER
   currentStep = 0;
@@ -146,15 +154,26 @@ export class FormsComponent {
     }
   }
   nextStep(): void {
-
-    this.markFormGroupTouched(this.myFormStart);
-
+    // Mark all form controls as touched including form arrays
+    this.markFormGroupAndArraysTouched(this.myFormStart);
+  
+    // Check if the form is valid and suggestion is selected
     if (this.myFormStart.valid && this.isSuggestionSelected) {
       console.log('Form is valid. Proceeding to the next step.');
       this.currentStep++;
     } else {
       console.log('Form is invalid. Please check the error messages.');
     }
+  }
+  
+  // Helper function to mark all form controls and form arrays as touched recursively
+  markFormGroupAndArraysTouched(formGroup: FormGroup | FormArray) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupAndArraysTouched(control);
+      }
+    });
   }
 
   goToNextStepTwo(): void {
@@ -168,7 +187,7 @@ export class FormsComponent {
     }
   }
 
-  //checkboxes required
+  //CHECKBOXES REQUIRED
   nextButtonClicked = false;
   goToNextStepThree(): void {
     this.nextButtonClicked = true;
@@ -196,6 +215,8 @@ export class FormsComponent {
       this.myFormLifeInsuranceGoal.markAsUntouched();
       this.myFormWorkStatus.markAsUntouched();
       this.myFormLifeInsurancePlan.markAsUntouched();
+  
+      window.scrollTo(0, 0);
     }
   }
 
@@ -252,17 +273,18 @@ export class FormsComponent {
     this.selectedCountry = country;
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private PLZservice: PLZService, private cdr: ChangeDetectorRef) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private PLZservice: PLZService, private cdr: ChangeDetectorRef, private ElementRef: ElementRef) {
     this.myFormStart = this.formBuilder.group({
       fullName: ['', [Validators.required, this.errorValidator.bind(this)]],
       birthyear: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
       city: ['', [this.customPLZValidator, Validators.pattern('^[0-9]*$')]],
       insuranceModel: ['', Validators.required],
       premiumModel: ['', Validators.required],
+      franchises: this.formBuilder.array([])
     });
     this.myFormWorkStatus = this.formBuilder.group({
       smokingStatus: ['', Validators.required],
-      profession: ['', Validators.required],
+      profession: ['', this.onProfessionInput],
       employmentStatus: ['', Validators.required],
     });
     this.myFormLifeInsurancePlan = this.formBuilder.group({
@@ -290,14 +312,71 @@ export class FormsComponent {
       gender: ['', Validators.required],
       agreedToTerms: [false, Validators.requiredTrue],
     });
+
+    this.addFranchise();
     this.myFormPersonalDetails.get('nationality')?.setValue('Switzerland');
 
     this.myFormStart.get('birthyear')?.valueChanges.subscribe(() => {
 
       this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(1);
     });
+    
 
   }
+//FORM ARRAY
+get franchises() {
+  return this.myFormStart.get('franchises') as FormArray;
+}
+
+addFranchise() {
+  const lastFranchiseIndex = this.franchises.length - 1;
+  
+  if (lastFranchiseIndex >= 0) {
+    const lastFranchise = this.franchises.at(lastFranchiseIndex) as FormGroup;
+
+    if (lastFranchise) {
+      Object.keys(lastFranchise.controls).forEach(key => {
+        const control = lastFranchise.get(key);
+        if (control && control.invalid) {
+          control.markAsTouched();
+        }
+      });
+
+      if (lastFranchise.valid) {
+        const franchiseGroup = this.formBuilder.group({
+          name: ['', Validators.required],
+          birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
+          franchise: ['', Validators.required],
+          slideToggleControl: [false]
+        });
+
+        this.franchises.push(franchiseGroup);
+      } else {
+        console.log('Last person details are not valid. Please complete them before adding another person.');
+      }
+    }
+  } else {
+    const franchiseGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
+      franchise: ['', Validators.required],
+      slideToggleControl: [false]
+    });
+
+    this.franchises.push(franchiseGroup);
+  }
+}
+removeFranchise(index: number) {
+  this.franchises.removeAt(index);
+}
+
+onSlideToggleChange(event: MatSlideToggleChange, index: number) {
+  const franchiseControl = this.franchises.at(index).get('slideToggleControl');
+  if (franchiseControl) {
+    franchiseControl.setValue(event.checked);
+  }
+}
+
 
   //GENDER BUTTONS VALUE
   clickedButton: string = '';
@@ -470,6 +549,23 @@ export class FormsComponent {
         this.myFormStart.get('birthyear')?.setValue(null, { emitEvent: false });
     }
 }
+  //BIRTH YEAR ADD PERSON INPUT VALIDATION
+onBirthYearInputAddPerson(event: Event, index: number): void {
+  let inputValue = (event.target as HTMLInputElement).value;
+
+  if (inputValue.length > 4) {
+      inputValue = inputValue.slice(0, 4);
+  }
+
+  const parsedValue = parseInt(inputValue, 10);
+
+  if (!isNaN(parsedValue)) {
+      this.franchises.at(index).get('birthyearAddperson')?.setValue(parsedValue, { emitEvent: false });
+  } else {
+      this.franchises.at(index).get('birthyearAddperson')?.setValue(null, { emitEvent: false });
+  }
+}
+
   //ERROR TRIGGERING FOR ALL THE INPUT VALIDATIONS
   errorValidator(control: AbstractControl): ValidationErrors | null {
     const inputValue: string = control.value;
@@ -533,8 +629,66 @@ export class FormsComponent {
     return null;
   }
 
-  onFullNameInput() {
-    this.onInputFormat1('fullName');
+  onFullNameInput(){
+  this.onInputFormat1('fullName');
+}
+
+//FULL NAME INPUT FORM ARRAY
+onInputFormat2(franchiseIndex: number, controlName: string): ValidationErrors | null {
+  const franchise = this.franchises.at(franchiseIndex);
+  let inputValue: string = franchise.get(controlName)?.value;
+
+  const originalValue = inputValue;
+
+  inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
+
+  if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
+      inputValue = inputValue.slice(1);
+  }
+
+  inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
+
+  inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
+
+  const words = inputValue.split(/\s+/);
+  if (words.length > 4) {
+      words.splice(4);
+  }
+  inputValue = words.join(' ');
+
+  inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+
+  if (inputValue.length > 100) {
+      inputValue = inputValue.substring(0, 100);
+  }
+
+  if (inputValue !== originalValue) {
+      franchise.get(controlName)?.setValue(inputValue, { emitEvent: false });
+      return { 'invalidFormat': true };
+  }
+
+  return null;
+}
+
+onFranchiseNameInput(franchiseIndex: number) {
+  this.onInputFormat2(franchiseIndex, 'name');
+}
+
+//PROFESSION INPUT VALIDATION
+  onProfessionInput(control: AbstractControl): ValidationErrors | null {
+    let inputValue: string = control.value || '';
+  
+    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+  
+    const trimmedValue = inputValue.trim();
+  
+    if (trimmedValue.length === 0) {
+      return { required: true };
+    }
+
+    control.setErrors(null);
+  
+    return null;
   }
 
   //MARK FORM GROUP TOUCHED kur e bon submit nese ka error
@@ -553,27 +707,27 @@ export class FormsComponent {
     this.markFormGroupTouched(this.myFormPersonalDetails);
   
     if (this.myFormPersonalDetails.valid && this.validatePhoneNumber()) {
-      let savingsGoals = [];
-  
-      if (this.myFormLifeInsuranceGoal.value.protectionOfFamily) {
-        savingsGoals.push("Protection of Family");
-      }
-      if (this.myFormLifeInsuranceGoal.value.buyOwnHome) {
-        savingsGoals.push("Buy Own Home");
-      }
-      if (this.myFormLifeInsuranceGoal.value.taxOptimization) {
-        savingsGoals.push("Tax Optimization");
-      }
-      if (this.myFormLifeInsuranceGoal.value.financialInvestments) {
-        savingsGoals.push("Financial Investments");
-      }
-      if (this.myFormLifeInsuranceGoal.value.financialIndependence) {
-        savingsGoals.push("Financial Independence");
-      }
-      if (this.myFormLifeInsuranceGoal.value.wealthAccumulation) {
-        savingsGoals.push("Wealth Accumulation");
-      }
-  
+      const savingsGoals = Object.entries(this.myFormLifeInsuranceGoal.value)
+        .filter(([key, value]) => value)
+        .map(([key]) => {
+          switch (key) {
+            case 'protectionOfFamily':
+              return 'Protection of Family';
+            case 'buyOwnHome':
+              return 'Buy Own Home';
+            case 'taxOptimization':
+              return 'Tax Optimization';
+            case 'financialInvestments':
+              return 'Financial Investments';
+            case 'financialIndependence':
+              return 'Financial Independence';
+            case 'wealthAccumulation':
+              return 'Wealth Accumulation';
+            default:
+              return '';
+          }
+        })
+        .filter(goal => goal !== '');
       let formData = {
         fullName: this.myFormStart.value.fullName,
         birthyear: this.myFormStart.value.birthyear,

@@ -49,6 +49,7 @@
 
                   </div>
                 </div>
+                
 
                 <div class="col-lg-4">
                   <label>Insurance model 3a/3b
@@ -56,19 +57,26 @@
                       <img src="../assets/info.svg" alt="Info Icon">
                     </span>
                   </label>
+             
                   <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
             
                     [class.selected]="myFormStart.get('insuranceModel')?.value">
                     <option value="" disabled selected>Please Select</option>
                     <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
                     <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
-                  </select>
+                </select>
+         
+
                   <div
                     *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
                     class="error-message">
                     Insurance model is required.
                   </div>
                 </div>
+
+
+
+
                 <div class="col-lg-4">
                   <label>Premium model <span matTooltip="This is information about Premium model."
                       matTooltipPosition="below"> <img src="../assets/info.svg" alt="Info Icon"></span></label>
@@ -117,9 +125,74 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+
+              <div formArrayName="franchises">
+                <div *ngFor="let franchise of franchises.controls; let i = index" [formGroupName]="i"   class="row add-persons">
+                  <div class=" row align-items-center">
+                    <div class="col-lg-6">
+                      <div class="person"> <img src="../assets/person-img.svg">Person {{ i + 1 }}
+                      </div>
+
+                    </div>
+                    <div class="col-lg-6 flex-end">
+                      <button *ngIf=" i > 0" class="remove-btn  " (click)="removeFranchise(i)">- Remove person</button>
+                    </div>
+                  </div>
+                       
+                  <div class="col-lg-4">
+                    <label>Full Name</label>
+                    <input type="text" formControlName="name" class="form-control input-design" placeholder="Name"  (input)="onFranchiseNameInput(i)">
+                    <div *ngIf="franchise.get('name')?.hasError('required') && franchise.get('name')?.touched" class="error-message">
+                      Name is required.
+                    </div>
+                  </div>
+                  <div class="col-lg-2">
+                    <label>Birth Year</label>
+                    <input type="number" formControlName="birthyearAddperson" class="form-control input-design" placeholder="YYYY"       (input)="onBirthYearInputAddPerson($event, i)">
+                    <div
+                    *ngIf="franchise.get('birthyearAddperson')?.hasError('required') && franchise.get('birthyearAddperson')?.touched"
+                    class="error-message">
+                    Birth Year is required.
+                  </div>
+                  <div
+                    *ngIf="franchise.get('birthyearAddperson')?.hasError('invalidYear') && franchise.get('birthyearAddperson')?.dirty"
+                    class="error-message">
+                    Invalid birth year. Please enter a valid year.
+                  </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <label>Franchise</label>
+                    <select formControlName="franchise" class="form-control-select"
+                    [class.selected]="franchise.get('franchise')?.value">
+                      <option value="" disabled selected>Please Select</option>
+                      <option value="300">300 CHF</option>
+                      <option value="500">500 CHF</option>
+                      <option value="1000">1000 CHF</option>
+                      <option value="1500">1500 CHF</option>
+                      <option value="2000">2000 CHF</option>
+                      <option value="2500">2500 CHF</option>
+                    </select>
+                    <div *ngIf="franchise.get('franchise')?.hasError('required') && franchise.get('franchise')?.touched"
+                      class="error-message">
+                      Franchise selection is required.
+                    </div>
+                  </div>
+                  <div class="col-lg-2">
+                    <label>Accident</label>
+                    <mat-slide-toggle formControlName="slideToggleControl"></mat-slide-toggle>
+                  </div>
+   
+                </div>
+              </div>
+              
+
+              <div class="row buttons">
                 <div class="col-lg-4">
-                  <button type="button" class="button-design form-control" (click)="nextStep()">Next</button>
+                    <button type="button" class="form-control button-design back" (click)="addFranchise()">+ Add Person</button>
+                </div>
+                <div class="col-lg-4">
+                  <button type="button" class=" form-control button-design " (click)="nextStep()"
+                    [disabled]="currentStep === steps.length - 1">Next</button>
                 </div>
               </div>
             </div>
