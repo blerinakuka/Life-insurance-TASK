@@ -120,7 +120,7 @@
                     Birth Year is required.
                   </div>
                   <div *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && 
-                  (myFormStart.get('birthyear')?.dirty || myFormStart.get('birthyear')?.touched) &&
+                  (myFormStart.get('birthyear')?.dirty) &&
                   myFormStart.get('birthyear')?.value !== null"
            class="error-message">
            Invalid birth year. Please enter a valid year.
@@ -159,7 +159,7 @@
                     Birth Year is required.
                   </div>
                   <div *ngIf="franchise.get('birthyearAddperson')?.hasError('invalidYear') && 
-                  (franchise.get('birthyearAddperson')?.dirty || franchise.get('birthyearAddperson')?.touched) &&
+                  (franchise.get('birthyearAddperson')?.dirty ) &&
                   franchise.get('birthyearAddperson')?.value !== null"
            class="error-message">
            Invalid birth year. Please enter a valid year.
