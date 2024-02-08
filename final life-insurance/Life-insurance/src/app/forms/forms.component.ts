@@ -121,8 +121,10 @@ export class FormsComponent {
   validatePhoneNumber(): boolean {
     this.reset();
     const inputValue = this.phoneInput.nativeElement.value.trim();
-
-    if (inputValue && this.iti.isValidNumberPrecise()) {
+    if (!inputValue) {
+      return false; 
+    }
+    if ( this.iti.isValidNumberPrecise()) {
       const number = this.iti.getNumber(intlTelInputUtils.numberFormat.E164);
       this.myFormPersonalDetails.patchValue({ phoneNumber: number });
       this.validMsg.nativeElement.classList.remove("hide");
@@ -153,6 +155,7 @@ export class FormsComponent {
   goToNextStep(): void {
     if (this.currentStep < this.steps.length - 1) {
       this.currentStep++;
+      window.scrollTo(0, 0);
     }
   }
   nextStep(): void {
@@ -161,6 +164,7 @@ export class FormsComponent {
     if (this.myFormStart.valid && this.isSuggestionSelected) {
       console.log('Form is valid. Proceeding to the next step.');
       this.currentStep++;
+      window.scrollTo(0, 0);
     } else {
       console.log('Form is invalid. Please check the error messages.');
     }
@@ -181,6 +185,7 @@ export class FormsComponent {
     if (this.myFormWorkStatus.valid) {
       console.log('Form is valid. Proceeding to the next step.');
       this.currentStep++;
+      window.scrollTo(0, 0);
     } else {
       console.log('Form is invalid. Please check the error messages.');
     }
@@ -193,6 +198,7 @@ export class FormsComponent {
 
     if (!this.atLeastOneCheckboxChecked() || !this.myFormLifeInsuranceGoal.valid) {
       console.log('Please select at least one checkbox.');
+      window.scrollTo(0, 0);
     } else {
       if (this.currentStep < this.steps.length - 1) {
         this.currentStep++;

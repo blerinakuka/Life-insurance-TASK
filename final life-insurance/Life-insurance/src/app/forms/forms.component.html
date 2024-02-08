@@ -119,11 +119,12 @@
                     class="error-message">
                     Birth Year is required.
                   </div>
-                  <div
-                    *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && myFormStart.get('birthyear')?.dirty"
-                    class="error-message">
-                    Invalid birth year. Please enter a valid year.
-                  </div>
+                  <div *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && 
+                  (myFormStart.get('birthyear')?.dirty || myFormStart.get('birthyear')?.touched) &&
+                  myFormStart.get('birthyear')?.value !== null"
+           class="error-message">
+           Invalid birth year. Please enter a valid year.
+      </div>
                 </div>
               </div>
 
@@ -157,11 +158,12 @@
                     class="error-message">
                     Birth Year is required.
                   </div>
-                  <div
-                    *ngIf="franchise.get('birthyearAddperson')?.hasError('invalidYear') && franchise.get('birthyearAddperson')?.dirty"
-                    class="error-message">
-                    Invalid birth year. Please enter a valid year.
-                  </div>
+                  <div *ngIf="franchise.get('birthyearAddperson')?.hasError('invalidYear') && 
+                  (franchise.get('birthyearAddperson')?.dirty || franchise.get('birthyearAddperson')?.touched) &&
+                  franchise.get('birthyearAddperson')?.value !== null"
+           class="error-message">
+           Invalid birth year. Please enter a valid year.
+      </div>
                   </div>
                   <div class="col-lg-4">
                     <label>Franchise</label>
