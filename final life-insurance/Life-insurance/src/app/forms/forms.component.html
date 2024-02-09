@@ -31,7 +31,7 @@
                   <div class="col-lg-4">
                     <label>Postal Code</label>
                     <div class="autocomplete-container">
-                      <input #autocompleteInput type="text" class="input-design form-control" formControlName="city"
+                      <input #autocompleteInput type="text" class="input-design form-control" formControlName="postalCode"
                         id="plz" placeholder="PLZ" (input)="onPlzChange()" autocomplete="off" inputmode="numeric"
                         oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
 
@@ -43,8 +43,8 @@
                       </ul>
 
                       <div
-                        *ngIf="!isSuggestionSelected && (myFormStart.get('city')?.touched || myFormStart.get('city')?.dirty) &&
-                            (!myFormStart.get('city')?.value || myFormStart.get('city')?.value.length <= 4 || myFormStart.get('city')?.value.length === 5)"
+                        *ngIf="!isSuggestionSelected && (myFormStart.get('postalCode')?.touched || myFormStart.get('postalCode')?.dirty) &&
+                            (!myFormStart.get('postalCode')?.value || myFormStart.get('postalCode')?.value.length <= 4 || myFormStart.get('postalCode')?.value.length === 5)"
                         class="error-message multiline-error">
                         Please select a suggestion from the list.
                       </div>
@@ -185,7 +185,7 @@
                     </div>
                     <div class="col-lg-2 slide-toggle">
                       <label>Accident Covered</label>
-                      <mat-slide-toggle formControlName="slideToggleControl"></mat-slide-toggle>
+                      <mat-slide-toggle formControlName="accidentCovered"></mat-slide-toggle>
                       <input type="checkbox" checked data-toggle="toggle">
                     </div>
 
@@ -582,7 +582,7 @@
                 <div class="col-lg-4">
                   <label>Postal Code</label>
                   <input placeholder="" class="form-control input-design-readonly"
-                    [value]="myFormStart.get('city')?.value" readonly>
+                    [value]="myFormStart.get('postalCode')?.value" readonly>
                 </div>
               </div>
 

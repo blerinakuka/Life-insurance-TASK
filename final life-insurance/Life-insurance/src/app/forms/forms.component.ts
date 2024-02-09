@@ -282,7 +282,7 @@ export class FormsComponent {
     this.myFormStart = this.formBuilder.group({
       fullName: ['', Validators.required],
       birthyear: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
-      city: ['', [this.customPLZValidator, Validators.pattern('^[0-9]*$')]],
+      postalCode: ['', [this.customPLZValidator, Validators.pattern('^[0-9]*$')]],
       insuranceModel: ['', Validators.required],
       premiumModel: ['', Validators.required],
       franchises: this.formBuilder.array([])
@@ -352,7 +352,7 @@ export class FormsComponent {
             name: ['', Validators.required],
             birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
             franchise: ['', Validators.required],
-            slideToggleControl: [false]
+            accidentCovered: [false]
           });
 
           this.franchises.push(franchiseGroup);
@@ -365,7 +365,7 @@ export class FormsComponent {
         name: ['', Validators.required],
         birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
         franchise: ['', Validators.required],
-        slideToggleControl: [false]
+        accidentCovered: [false]
       });
 
       this.franchises.push(franchiseGroup);
@@ -376,7 +376,7 @@ export class FormsComponent {
   }
 
   onSlideToggleChange(event: MatSlideToggleChange, index: number) {
-    const franchiseControl = this.franchises.at(index).get('slideToggleControl');
+    const franchiseControl = this.franchises.at(index).get('accidentCovered');
     if (franchiseControl) {
       franchiseControl.setValue(event.checked);
     }
@@ -417,7 +417,7 @@ export class FormsComponent {
     return null;
   }
   onPlzChange() {
-    const plzControl = this.myFormStart.get('city');
+    const plzControl = this.myFormStart.get('postalCode');
 
     if (!plzControl || !plzControl.value) {
       this.resetSuggestionState();
@@ -460,12 +460,12 @@ export class FormsComponent {
   isDataSelected: boolean = false;
   selectSuggestion(suggestion: string) {
     if (suggestion !== '') {
-      this.myFormStart.get('city')?.patchValue(suggestion);
+      this.myFormStart.get('postalCode')?.patchValue(suggestion);
       this.inputValue = suggestion;
       this.autocompleteSuggestions = [];
       this.isDataSelected = true;
-      this.myFormStart.get('city')?.clearValidators();
-      this.myFormStart.get('city')?.updateValueAndValidity();
+      this.myFormStart.get('postalCode')?.clearValidators();
+      this.myFormStart.get('postalCode')?.updateValueAndValidity();
       this.isSuggestionSelected = true;
     } else {
       this.isSuggestionSelected = false;
@@ -545,27 +545,19 @@ export class FormsComponent {
       inputValue = inputValue.slice(1);
     }
 
-    if (controlName === 'profession') {
-      const professionWords = inputValue.split(/\s+/);
-      if (professionWords.length > 10) {
-        professionWords.splice(10);
-      }
-      inputValue = professionWords.join(' ');
-    } else {
-      const words = inputValue.split(/\s+/);
-      if (words.length > 4) {
-        words.splice(4);
-      }
-      inputValue = words.join(' ');
+    const words = inputValue.split(/\s+/);
+    if (words.length > 10) {
+      words.splice(10);
     }
+    inputValue = words.join(' ');
     inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
 
     inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
 
     inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
 
-    if (inputValue.length > 100) {
-      inputValue = inputValue.substring(0, 100);
+    if (inputValue.length > 200) {
+      inputValue = inputValue.substring(0, 200);
     }
 
     if (inputValue !== originalValue) {
@@ -603,15 +595,15 @@ export class FormsComponent {
     inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
 
     const words = inputValue.split(/\s+/);
-    if (words.length > 4) {
-      words.splice(4);
+    if (words.length > 10) {
+      words.splice(10);
     }
     inputValue = words.join(' ');
 
     inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
 
-    if (inputValue.length > 100) {
-      inputValue = inputValue.substring(0, 100);
+    if (inputValue.length > 200) {
+      inputValue = inputValue.substring(0, 200);
     }
 
     if (inputValue !== originalValue) {
@@ -685,7 +677,7 @@ export class FormsComponent {
       let formData = {
         fullName: this.myFormStart.value.fullName,
         birthyear: this.myFormStart.value.birthyear,
-        city: this.myFormStart.value.city,
+        postalCode: this.myFormStart.value.postalCode,
         insuranceModel: this.myFormStart.value.insuranceModel,
         premiumModel: this.myFormStart.value.premiumModel,
         smokingStatus: this.myFormWorkStatus.value.smokingStatus,
@@ -701,7 +693,7 @@ export class FormsComponent {
         gender: this.myFormPersonalDetails.value.gender,
         agreedToTerms: this.myFormPersonalDetails.value.agreedToTerms,
         person: this.myFormStart.get('franchises')?.value,
-        "Savings Goal": savingsGoals.join(", ")
+        "savingsGoal": savingsGoals.join(", ")
       };
 
       console.log(formData);
