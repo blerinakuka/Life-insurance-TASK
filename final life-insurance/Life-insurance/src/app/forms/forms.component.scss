@@ -1063,6 +1063,61 @@ tbody tr:nth-child(odd) {
   white-space: pre-wrap;
 }
 
+signature-pad{
+  background-color: transparent;
+  width: 100%;
+}
+.btns{
+  display: inline-block;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.signature-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.signature-container signature-pad {
+  width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  background-color: #2982F61F;
+  border: 1px solid #2982F6;
+  border-radius: 0 0 20px 20px;
+  border-top: none;
+  padding: 5px;
+}
+
+
+.tool {
+  margin-right: 5px;
+}
+
+.btn-tool {
+  border: none;
+  background-color: transparent;
+  color: #495057;
+  outline: none;
+  font-size: 14px;
+  border-radius: 20px;
+}
+
+.btn-tool:hover {
+  background-color:#25AE78;
+  color: white;
+}
+:host ::ng-deep .signature-pad-canvas {
+  border: 1px solid #25AE78 !important;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+}
+
+
+
 @media screen and (min-width: 768px)and (max-width: 1400px) {
   .main-container {
     padding: 70px 0 70px 0;

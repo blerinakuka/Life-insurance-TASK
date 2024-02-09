@@ -8,3 +8,5 @@ export const routes: Routes = [
   { path: 'danke', component: DankeComponent },
   { path: 'home', component: HomeComponent}
 ];
+
+

@@ -8,10 +8,9 @@ import {
   ValidatorFn,
   AbstractControl,
   ValidationErrors,
-  FormControl,
-  NgModel,
+
 } from '@angular/forms';
-import { ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, ViewChild , EventEmitter, Output,AfterViewInit} from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +28,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import 'intl-tel-input/build/css/intlTelInput.css';
 import 'intl-tel-input/build/js/utils.js';
+import {PointGroup} from 'signature_pad';
+import {NgSignaturePadOptions, SignaturePadComponent, AngularSignaturePadModule} from '@almothafar/angular-signature-pad';
+import {SignatureService} from "../service/signature.service";
+
 
 function customEmailValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -49,6 +52,7 @@ function customEmailValidator(): ValidatorFn {
     },
   ],
   standalone: true,
+  
   imports: [
     CommonModule,
     MatStepperModule,
@@ -61,7 +65,7 @@ function customEmailValidator(): ValidatorFn {
     MatTooltipModule,
     MatSlideToggleModule,
     NgbModule,
-
+    AngularSignaturePadModule
   ],
 })
 
@@ -72,6 +76,7 @@ export class FormsComponent {
   myFormLifeInsuranceGoal: FormGroup;
   myFormChooseOffer: FormGroup;
   myFormPersonalDetails: FormGroup;
+  myFormSignature: FormGroup;
 
   showTooltip = false;
   showPremiumTooltip = false;
@@ -82,6 +87,130 @@ export class FormsComponent {
   @ViewChild('select') selectRef!: ElementRef;
   @ViewChild('optionsContainer') optionsContainerRef!: ElementRef;
   showOptions: boolean = false;
+
+
+  //signature
+ 
+  @ViewChild('signature') public signaturePad!: SignaturePadComponent;
+
+  public signaturePadOptions: NgSignaturePadOptions = {
+    minWidth: 1,
+    canvasWidth: 330,
+    canvasHeight: 300,
+    backgroundColor: 'white',
+    dotSize: 1,
+    maxWidth: 1,
+    velocityFilterWeight: 1
+  }
+
+
+  isDrawn = false;
+  @Output() signatureChange = new EventEmitter<string>();
+  signatureNeeded!: boolean;
+  private history: PointGroup[] = [];
+  private future: PointGroup[] = [];
+  // @ViewChild('signature')
+  // public signaturePad!: SignaturePadComponent;
+  
+
+  savedSignatureData: string | null = null;
+
+  ngOnInit() {
+
+
+    this.savedSignatureData = this.signatureService.getSignature();
+    this.setSignatureData();
+  }
+
+  //Signature
+  getSavedSignature(): string | null {
+    return this.signatureService.getSignature();
+  }
+
+
+
+
+  private setSignatureData() {
+    if (this.savedSignatureData && this.signaturePad) {
+      this.signaturePad.fromDataURL(this.savedSignatureData);
+    }
+  }
+  
+
+  drawComplete(event: MouseEvent | Touch) {
+    const signatureData = this.signaturePad.toDataURL();
+    const drawnData = this.signaturePad.toData();
+
+    // Check if there is any drawing (more than just dots)
+    if (drawnData.some(stroke => stroke.points.length > 1)) {
+      this.isDrawn = true;
+      this.myFormSignature.get('signature')?.setValue(signatureData);
+      this.signatureService.setSignature(signatureData);
+    } else {
+      // If no drawing (only dots), consider the signature invalid
+      this.isDrawn = false;
+      this.clear();
+
+      // Set an error in the form control
+      this.myFormSignature.get('signature')?.setErrors({'invalidSignature': true});
+    }
+  }
+
+
+  drawStart(event: MouseEvent | Touch) {
+    // will be notified of szimek/signature_pad's onBegin event
+
+  }
+
+  clear() {
+    // Save the current data before clearing
+    const data = this.signaturePad.toData();
+
+    this.history = [];
+    this.future = [];
+    this.signaturePad.clear();
+
+    // Update the form control value
+    const newSignatureValue = this.signaturePad.isEmpty() ? '' : this.signaturePad.toDataURL();
+    this.myFormSignature.get('signature')?.setValue(newSignatureValue);
+    this.signatureService.setSignature(newSignatureValue);
+  }
+
+
+  redo() {
+    if (this.future.length > 0) {
+      const data = this.signaturePad.toData();
+      const addData: any = this.future.pop();
+
+      if (addData && addData.points) { // Check if addData and addData.points are defined
+        data.push(addData);
+        this.signaturePad.fromData(data);
+
+        // Update the form control value
+        this.myFormSignature.get('signature')?.setValue(this.signaturePad.toDataURL());
+      }
+    }
+  }
+
+  undo() {
+    const data = this.signaturePad.toData();
+
+    if (data && data.length > 0) {
+      const lastStroke: any = this.history.pop();
+      const removedStroke: any = data.pop();
+      this.future.push(removedStroke);
+      this.signaturePad.fromData(data);
+
+      // Update the form control value
+      const newSignatureValue = this.signaturePad.isEmpty() ? '' : this.signaturePad.toDataURL();
+      this.myFormSignature.get('signature')?.setValue(newSignatureValue);
+      this.signatureService.setSignature(newSignatureValue);
+    } else {
+      // If no strokes left, clear the signature value
+      this.clear();
+    }
+  }
+
 
   //TEL
   @ViewChild('phoneInput') phoneInput!: ElementRef;
@@ -99,6 +228,12 @@ export class FormsComponent {
     this.errorMsg.nativeElement.classList.add("hide");
     this.validMsg.nativeElement.classList.add("hide");
   }
+
+
+  // ngAfterViewInit() {
+  //   this.savedSignatureData = this.getSavedSignature();
+  //   this.setSignatureData();
+  // }
 
   ngAfterViewInit() {
     this.iti = intlTelInput(this.phoneInput.nativeElement, {
@@ -142,7 +277,7 @@ export class FormsComponent {
 
   //STEPPER
   currentStep = 0;
-  steps = Array.from({ length: 6 }, (_, i) => i);
+  steps = Array.from({ length: 7 }, (_, i) => i);
 
   isStepClickable(step: number): boolean {
 
@@ -278,7 +413,7 @@ export class FormsComponent {
     this.selectedCountry = country;
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private PLZservice: PLZService, private cdr: ChangeDetectorRef, private ElementRef: ElementRef) {
+  constructor(private formBuilder: FormBuilder, private router: Router,private signatureService: SignatureService, private PLZservice: PLZService, private cdr: ChangeDetectorRef, private ElementRef: ElementRef) {
     this.myFormStart = this.formBuilder.group({
       fullName: ['', Validators.required],
       birthyear: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
@@ -317,7 +452,9 @@ export class FormsComponent {
       gender: ['', Validators.required],
       agreedToTerms: [false, Validators.requiredTrue],
     });
-
+    this.myFormSignature = this.formBuilder.group({
+      signature: ['', Validators.required],
+    });
     this.addFranchise();
     this.myFormPersonalDetails.get('nationality')?.setValue('Switzerland');
 
@@ -648,11 +785,23 @@ export class FormsComponent {
     this.displayedAccordionItems = [...this.displayedAccordionItems, ...this.remainingAccordionItems];
     this.remainingAccordionItems = [];
   }
+  signData: any = '';
+  sign: string = ''
+
   //SUBMIT
-  onSubmit() {
+  onLastStepNext() {
     this.markFormGroupTouched(this.myFormPersonalDetails);
 
     if (this.myFormPersonalDetails.valid && this.validatePhoneNumber()) {
+      this.currentStep++;
+    } else {
+      console.log('Validation failed. Cannot submit.');
+    }
+  }
+
+  onSubmit() {
+
+    if (this.myFormSignature.valid ) {
       const savingsGoals = Object.entries(this.myFormLifeInsuranceGoal.value)
         .filter(([key, value]) => value)
         .map(([key]) => {
@@ -692,6 +841,7 @@ export class FormsComponent {
         email: this.myFormPersonalDetails.value.email,
         gender: this.myFormPersonalDetails.value.gender,
         agreedToTerms: this.myFormPersonalDetails.value.agreedToTerms,
+        signature: this.myFormSignature.value.signature,
         person: this.myFormStart.get('franchises')?.value,
         "savingsGoal": savingsGoals.join(", ")
       };
