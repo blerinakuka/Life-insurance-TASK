@@ -1020,6 +1020,14 @@ tbody tr:nth-child(odd) {
   padding-left: 20px;
 }
 
+.responsive-values-design.added-people{
+
+    flex-wrap: wrap;
+    max-width: 590px;
+    justify-content: center;
+}
+
+
 .responsive-values-design {
   margin-top: 30px;
   display: flex;
@@ -1186,6 +1194,10 @@ tbody tr:nth-child(odd) {
       margin: 15px 0;
     }
   }
+  .responsive-values-design.added-people{
+
+flex-direction: row;
+}
 
   .paragraph-values {
     text-align: left;

@@ -532,8 +532,21 @@
 
                 <p>{{myFormWorkStatus.get('smokingStatus')?.value }}</p>
               </div>
-
             </div>
+            <div class="responsive-values-design added-people">
+              <div *ngFor="let franchise of franchises.controls; let i = index">
+                <div class="img-class-value">
+                  <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
+                </div>
+                <div class=" border-right mt-2 ">
+                <p> {{ franchise.get('name')?.value.length > 20 ? franchise.get('name')?.value .substring(0, 20) + '...' : myFormStart.get('fullName')?.value }}, {{ franchise.get('birthyearAddperson')?.value }}</p>
+                <p> {{ franchise.get('franchise')?.value }}CHF</p>
+              </div>
+            </div>
+          </div>
+          
+       
+         
             <div class="card last-form-margin ">
               <div class="row last-form">
                 <label>Gender</label>
