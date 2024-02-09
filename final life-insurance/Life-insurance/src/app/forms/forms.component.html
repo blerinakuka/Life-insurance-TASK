@@ -7,7 +7,7 @@
         <div class="circle" [class.clickable]="isStepClickable(i)">
           <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
-        <div class="step-line" *ngIf="i < steps.length - 1"></div> 
+        <div class="step-line" *ngIf="i < steps.length - 1"></div>
       </div>
     </div>
   </div>
@@ -26,182 +26,184 @@
               <img class="img-margin" src="../assets/firstIcon.png" alt="img life insurance">
             </div>
             <div class="form-width">
-            <div class="card first-form">
-              <div class="row">
-                <div class="col-lg-4">
-                  <label>Postal Code</label>
-                  <div class="autocomplete-container">
-                    <input #autocompleteInput type="text" class="input-design form-control" formControlName="city"
-                      id="plz" placeholder="PLZ" (input)="onPlzChange()" autocomplete="off" inputmode="numeric"
-                      oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
+              <div class="card first-form">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <label>Postal Code</label>
+                    <div class="autocomplete-container">
+                      <input #autocompleteInput type="text" class="input-design form-control" formControlName="city"
+                        id="plz" placeholder="PLZ" (input)="onPlzChange()" autocomplete="off" inputmode="numeric"
+                        oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
 
-                    <ul *ngIf="autocompleteSuggestions && autocompleteSuggestions.length > 0" class="autocomplete-drop">
-                      <li *ngFor="let suggestion of autocompleteSuggestions" (click)="selectSuggestion(suggestion)">
-                        {{ suggestion }}
-                      </li>
-                    </ul>
+                      <ul *ngIf="autocompleteSuggestions && autocompleteSuggestions.length > 0"
+                        class="autocomplete-drop">
+                        <li *ngFor="let suggestion of autocompleteSuggestions" (click)="selectSuggestion(suggestion)">
+                          {{ suggestion }}
+                        </li>
+                      </ul>
 
-                    <div
-                      *ngIf="!isSuggestionSelected && (myFormStart.get('city')?.touched || myFormStart.get('city')?.dirty) &&
+                      <div
+                        *ngIf="!isSuggestionSelected && (myFormStart.get('city')?.touched || myFormStart.get('city')?.dirty) &&
                             (!myFormStart.get('city')?.value || myFormStart.get('city')?.value.length <= 4 || myFormStart.get('city')?.value.length === 5)"
-                      class="error-message multiline-error">
-                      Please select a suggestion from the list.
-                    </div>
-
-                  </div>
-                </div>
-                
-
-                <div class="col-lg-4">
-                  <label>Insurance model 3a/3b
-                    <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
-                      <img src="../assets/info.svg" alt="Info Icon">
-                    </span>
-                  </label>
-             
-                  <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
-            
-                    [class.selected]="myFormStart.get('insuranceModel')?.value">
-                    <option value="" disabled selected>Please Select</option>
-                    <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
-                    <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
-                </select>
-         
-
-                  <div
-                    *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
-                    class="error-message">
-                    Insurance model is required.
-                  </div>
-                </div>
-
-
-
-
-                <div class="col-lg-4">
-                  <label>Premium model <span matTooltip="This is information about Premium model."
-                      matTooltipPosition="below"> <img src="../assets/info.svg" alt="Info Icon"></span></label>
-                  <select placeholder="Please select" class="form-control-select " formControlName="premiumModel"
-                    formControlName="premiumModel"
-        
-                    [class.selected]="myFormStart.get('premiumModel')?.value">
-                    <option value="" disabled selected>Please Select</option>
-                    <option value="Fix" class="text-dark">Fix</option>
-                    <option value="Flex" class="text-dark">Flex</option>
-                  </select>
-                  <div
-                    *ngIf="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
-                    class="error-message">
-                    Premium model is required.
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-8">
-                  <label>Full Name</label>
-                  <input type="text" placeholder="Full Name " formControlName="fullName"
-                    class="form-control input-design" (input)="onFullNameInput()"
-                    >
-                  <div *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched"
-                    class="error-message">
-                    Full Name is required.
-                  </div>
-                </div>
-
-                <div class="col-lg-4">
-                  <label>Birth Year</label>
-                  <input type="number" placeholder="YYYY" formControlName="birthyear" class="form-control input-design"
-                    (input)="onBirthYearInput($event)"
-                   >
-                  <div
-                    *ngIf="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched"
-                    class="error-message">
-                    Birth Year is required.
-                  </div>
-                  <div *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && 
-                  (myFormStart.get('birthyear')?.dirty) &&
-                  myFormStart.get('birthyear')?.value !== null"
-           class="error-message">
-           Invalid birth year. Please enter a valid year.
-      </div>
-                </div>
-              </div>
-
-              <div formArrayName="franchises">
-         
-                <div *ngFor="let franchise of franchises.controls; let i = index" [formGroupName]="i"   class="row add-persons">
-                  <hr>
-                  <div class=" row align-items-center">
-                    <div class="col-lg-6">
-                      <div class="person"> <img src="../assets/person-img.svg">Person {{ i + 1 }}
+                        class="error-message multiline-error">
+                        Please select a suggestion from the list.
                       </div>
 
                     </div>
-                    <div class="col-lg-6 flex-end">
-                      <button *ngIf=" i > 0" class="remove-btn  " (click)="removeFranchise(i)">- Remove person</button>
-                    </div>
                   </div>
-                       
-                  <div class="col-lg-4">
-                    <label>Full Name</label>
-                    <input type="text" formControlName="name" class="form-control input-design" placeholder="Name"  (input)="onFranchiseNameInput(i)">
-                    <div *ngIf="franchise.get('name')?.hasError('required') && franchise.get('name')?.touched" class="error-message">
-                      Name is required.
-                    </div>
-                  </div>
-                  <div class="col-lg-2">
-                    <label>Birth Year</label>
-                    <input type="number" formControlName="birthyearAddperson" class="form-control input-design" placeholder="YYYY"       (input)="onBirthYearInputAddPerson($event, i)">
-                    <div
-                    *ngIf="franchise.get('birthyearAddperson')?.hasError('required') && franchise.get('birthyearAddperson')?.touched"
-                    class="error-message">
-                    Birth Year is required.
-                  </div>
-                  <div *ngIf="franchise.get('birthyearAddperson')?.hasError('invalidYear') && 
-                  (franchise.get('birthyearAddperson')?.dirty ) &&
-                  franchise.get('birthyearAddperson')?.value !== null"
-           class="error-message">
-           Invalid birth year. Please enter a valid year.
-      </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Franchise</label>
-                    <select formControlName="franchise" class="form-control-select"
-                    [class.selected]="franchise.get('franchise')?.value">
-                      <option value="" disabled selected>Please Select</option>
-                      <option value="300">300 CHF</option>
-                      <option value="500">500 CHF</option>
-                      <option value="1000">1000 CHF</option>
-                      <option value="1500">1500 CHF</option>
-                      <option value="2000">2000 CHF</option>
-                      <option value="2500">2500 CHF</option>
-                    </select>
-                    <div *ngIf="franchise.get('franchise')?.hasError('required') && franchise.get('franchise')?.touched"
-                      class="error-message">
-                      Franchise selection is required.
-                    </div>
-                  </div>
-                  <div class="col-lg-2 slide-toggle">
-                    <label>Accident Covered</label>
-                    <mat-slide-toggle formControlName="slideToggleControl"></mat-slide-toggle>
-                    <input type="checkbox" checked data-toggle="toggle">
-                  </div>
-   
-                </div>
-              </div>
-              
 
-              <div class="row buttons">
-                <div class="col-lg-4">
-                    <button type="button" class="form-control button-design back" (click)="addFranchise()">+ Add Person</button>
+
+                  <div class="col-lg-4">
+                    <label>Insurance model 3a/3b
+                      <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
+                        <img src="../assets/info.svg" alt="Info Icon">
+                      </span>
+                    </label>
+
+                    <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
+                      [class.selected]="myFormStart.get('insuranceModel')?.value">
+                      <option value="" disabled selected>Please Select</option>
+                      <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
+                      <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
+                    </select>
+
+
+                    <div
+                      *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
+                      class="error-message">
+                      Insurance model is required.
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="col-lg-4">
+                    <label>Premium model <span matTooltip="This is information about Premium model."
+                        matTooltipPosition="below"> <img src="../assets/info.svg" alt="Info Icon"></span></label>
+                    <select placeholder="Please select" class="form-control-select " formControlName="premiumModel"
+                      formControlName="premiumModel" [class.selected]="myFormStart.get('premiumModel')?.value">
+                      <option value="" disabled selected>Please Select</option>
+                      <option value="Fix" class="text-dark">Fix</option>
+                      <option value="Flex" class="text-dark">Flex</option>
+                    </select>
+                    <div
+                      *ngIf="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
+                      class="error-message">
+                      Premium model is required.
+                    </div>
+                  </div>
                 </div>
-                <div class="col-lg-4">
-                  <button type="button" class=" form-control button-design " (click)="nextStep()"
-                    [disabled]="currentStep === steps.length - 1">Next</button>
+
+                <div class="row">
+                  <div class="col-lg-8">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Full Name " formControlName="fullName"
+                      class="form-control input-design" (input)="onFullNameInput()">
+                    <div
+                      *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched"
+                      class="error-message">
+                      Full Name is required.
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <label>Birth Year</label>
+                    <input type="number" placeholder="YYYY" formControlName="birthyear"
+                      class="form-control input-design" (input)="onBirthYearInput($event)">
+                    <div
+                      *ngIf="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched"
+                      class="error-message">
+                      Birth Year is required.
+                    </div>
+                    <div *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && 
+                  (myFormStart.get('birthyear')?.dirty) &&
+                  myFormStart.get('birthyear')?.value !== null" class="error-message">
+                      Invalid birth year. Please enter a valid year.
+                    </div>
+                  </div>
+                </div>
+
+                <div formArrayName="franchises">
+
+                  <div *ngFor="let franchise of franchises.controls; let i = index" [formGroupName]="i"
+                    class="row add-persons">
+                    <hr>
+                    <div class=" row align-items-center">
+                      <div class="col-lg-6">
+                        <div class="person"> <img src="../assets/person-img.svg">Person {{ i + 1 }}
+                        </div>
+
+                      </div>
+                      <div class="col-lg-6 flex-end">
+                        <button *ngIf=" i > 0" class="remove-btn  " (click)="removeFranchise(i)">- Remove
+                          person</button>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                      <label>Full Name</label>
+                      <input type="text" formControlName="name" class="form-control input-design" placeholder="Name"
+                        (input)="onFranchiseNameInput(i)">
+                      <div *ngIf="franchise.get('name')?.hasError('required') && franchise.get('name')?.touched"
+                        class="error-message">
+                        Name is required.
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      <label>Birth Year</label>
+                      <input type="number" formControlName="birthyearAddperson" class="form-control input-design"
+                        placeholder="YYYY" (input)="onBirthYearInputAddPerson($event, i)">
+                      <div
+                        *ngIf="franchise.get('birthyearAddperson')?.hasError('required') && franchise.get('birthyearAddperson')?.touched"
+                        class="error-message">
+                        Birth Year is required.
+                      </div>
+                      <div *ngIf="franchise.get('birthyearAddperson')?.hasError('invalidYear') && 
+                  (franchise.get('birthyearAddperson')?.dirty ) &&
+                  franchise.get('birthyearAddperson')?.value !== null" class="error-message">
+                        Invalid birth year. Please enter a valid year.
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <label>Franchise</label>
+                      <select formControlName="franchise" class="form-control-select"
+                        [class.selected]="franchise.get('franchise')?.value">
+                        <option value="" disabled selected>Please Select</option>
+                        <option value="300">300 CHF</option>
+                        <option value="500">500 CHF</option>
+                        <option value="1000">1000 CHF</option>
+                        <option value="1500">1500 CHF</option>
+                        <option value="2000">2000 CHF</option>
+                        <option value="2500">2500 CHF</option>
+                      </select>
+                      <div
+                        *ngIf="franchise.get('franchise')?.hasError('required') && franchise.get('franchise')?.touched"
+                        class="error-message">
+                        Franchise selection is required.
+                      </div>
+                    </div>
+                    <div class="col-lg-2 slide-toggle">
+                      <label>Accident Covered</label>
+                      <mat-slide-toggle formControlName="slideToggleControl"></mat-slide-toggle>
+                      <input type="checkbox" checked data-toggle="toggle">
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <div class="row buttons">
+                  <div class="col-lg-4">
+                    <button type="button" class="form-control button-design back" (click)="addFranchise()">+ Add
+                      Person</button>
+                  </div>
+                  <div class="col-lg-4">
+                    <button type="button" class=" form-control button-design " (click)="nextStep()"
+                      [disabled]="currentStep === steps.length - 1">Next</button>
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
 
@@ -225,7 +227,6 @@
                     </span>
                   </label>
                   <select placeholder="Please select" class="form-control-select" formControlName="smokingStatus"
-             
                     [class.selected]="myFormWorkStatus.get('smokingStatus')?.value">
                     <option value="" disabled selected>Please Select</option>
                     <option value="Never" class="text-dark">Never</option>
@@ -247,7 +248,7 @@
                     class="error-message">
                     Profession is required.
                   </div>
-      
+
                 </div>
 
               </div>
@@ -413,88 +414,90 @@
             <p class="margin-top-accordion">We work with all insurance providers; we analyze offers every day. We will
               give you the offer with the best price benefit ratio/relationship. Click more on the side of the company
               name for more details.</p>
-              <div class="accordion" id="accordionFlushExample" >
-                <div class="width-acc">
-                  <div *ngFor="let accordionItem of displayedAccordionItems" class="card acc">
-      <div class="card-header" [id]="'flush-heading' + accordionItem.id">
-        <label class="ml-3">{{ accordionItem.id }}</label>
-        <div class="card-header-item-container">
-          <div class="header-img-description">
-            <div class="col-lg-2">
-              <img [src]="accordionItem.imageSrc" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
+            <div class="accordion" id="accordionFlushExample">
+              <div class="width-acc">
+                <div *ngFor="let accordionItem of displayedAccordionItems" class="card acc">
+                  <div class="card-header" [id]="'flush-heading' + accordionItem.id">
+                    <label class="ml-3">{{ accordionItem.id }}</label>
+                    <div class="card-header-item-container">
+                      <div class="header-img-description">
+                        <div class="col-lg-2">
+                          <img [src]="accordionItem.imageSrc" alt="Accordion Image" class="img-fluid float-left mr-3">
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                              class="bolder">{{ accordionItem.savings }}</span> francs {{ accordionItem.network }}</p>
+                        </div>
+                      </div>
+                      <div class="header-buttons">
+                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                          (click)="goToNextStep(); updateSelectedAccordion(accordionItem.name); updateSelectedImage(accordionButton, accordionItem.imageSrc)"
+                          [disabled]="currentStep === steps.length - 1">Get an offer
+                        </button>
+                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#flush-collapse' + accordionItem.id" aria-expanded="false"
+                            [attr.aria-controls]="'flush-collapse' + accordionItem.id">
+                            <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div [id]="'flush-collapse' + accordionItem.id" class="accordion-collapse collapse"
+                    [attr.aria-labelledby]="'flush-heading' + accordionItem.id" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <table class="table mt-3">
+                        <tbody>
+                          <tr class="bg-light">
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                            <td>CHF 200</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                            </td>
+                            <td>CHF 1129.20</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                          </tr>
+                          <tr>
+                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <p class="bolder paragraph-margin">Customer satisfaction</p>
+                        </div>
+                        <div class="col-lg-5">
+                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                            alt="rating img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-lg-4">
-              <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">{{ accordionItem.savings }}</span> francs {{ accordionItem.network }}</p>
-            </div>
-          </div>
-          <div class="header-buttons">
-            <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                    (click)="goToNextStep(); updateSelectedAccordion(accordionItem.name); updateSelectedImage(accordionButton, accordionItem.imageSrc)"
-                    [disabled]="currentStep === steps.length - 1">Get an offer
-            </button>
-            <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-              <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                      [attr.data-bs-target]="'#flush-collapse' + accordionItem.id" aria-expanded="false"
-                      [attr.aria-controls]="'flush-collapse' + accordionItem.id">
-                <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
-              </button>
+            <div class="row center buttons">
+              <div class="col-lg-3">
+                <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
+              </div>
+              <div class="col-lg-3">
+                <button class="form-control button-design" (click)="onLoadMoreClick()"
+                  [class.disabled]="remainingAccordionItems.length === 0">Load More</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div [id]="'flush-collapse' + accordionItem.id" class="accordion-collapse collapse" [attr.aria-labelledby]="'flush-heading' + accordionItem.id"
-           data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body">
-          <table class="table mt-3">
-            <tbody>
-              <tr class="bg-light">
-                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                <td>CHF 200</td>
-              </tr>
-              <tr>
-                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                <td>CHF 94.10 (-27.45% compared to 2021)</td>
-              </tr>
-              <tr>
-                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                </td>
-                <td>CHF 1129.20</td>
-              </tr>
-              <tr>
-                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                <td>CHF 129.70 (+0.00% compared to 2020)</td>
-              </tr>
-              <tr>
-                <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                <td>CHF 129.70 (+6.31% compared to 2019)</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="row">
-            <div class="col-lg-5">
-              <p class="bolder paragraph-margin">Customer satisfaction</p>
-            </div>
-            <div class="col-lg-5">
-              <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
-                alt="rating img">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row center buttons">
-  <div class="col-lg-3">
-    <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
-  </div>
-  <div class="col-lg-3">
-    <button class="form-control button-design" (click)="onLoadMoreClick()" [class.disabled]="remainingAccordionItems.length === 0">Load More</button>
-  </div>
-</div>
-  </div>
-</div>
-</div>
 
 
       <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onSubmit()">
@@ -601,7 +604,7 @@
 
                 <div class="col-lg-4">
                   <label>E-Mail</label>
-                  <input type="email" class="form-control input-design" formControlName="email" id="email" 
+                  <input type="email" class="form-control input-design" formControlName="email" id="email"
                     placeholder="E-Mail*">
                   <div
                     *ngIf="myFormPersonalDetails.get('email')?.touched && myFormPersonalDetails.get('email')?.errors?.['required']"
