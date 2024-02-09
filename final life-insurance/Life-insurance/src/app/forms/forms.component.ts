@@ -280,7 +280,7 @@ export class FormsComponent {
 
   constructor(private formBuilder: FormBuilder, private router: Router, private PLZservice: PLZService, private cdr: ChangeDetectorRef, private ElementRef: ElementRef) {
     this.myFormStart = this.formBuilder.group({
-      fullName: ['', [Validators.required, this.errorValidator.bind(this)]],
+      fullName:['', Validators.required],
       birthyear: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
       city: ['', [this.customPLZValidator, Validators.pattern('^[0-9]*$')]],
       insuranceModel: ['', Validators.required],
@@ -289,7 +289,7 @@ export class FormsComponent {
     });
     this.myFormWorkStatus = this.formBuilder.group({
       smokingStatus: ['', Validators.required],
-      profession: ['', this.onProfessionInput],
+      profession:  ['', Validators.required],
       employmentStatus: ['', Validators.required],
     });
     this.myFormLifeInsurancePlan = this.formBuilder.group({
@@ -312,7 +312,7 @@ export class FormsComponent {
     this.myFormPersonalDetails = this.formBuilder.group({
       nationality: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      address: ['', [Validators.required, this.errorValidator.bind(this)]],
+      address:  ['', Validators.required],
       email: ['', [Validators.required, customEmailValidator()]],
       gender: ['', Validators.required],
       agreedToTerms: [false, Validators.requiredTrue],
@@ -400,12 +400,6 @@ onSlideToggleChange(event: MatSlideToggleChange, index: number) {
   updateSelectedImage(button: HTMLButtonElement, image: string) {
     this.selectedImage = image;
   }
-  showAdditionalAccordions = false;
-  isButtonDisabled = false;
-  onLoadMoreClick() {
-    this.showAdditionalAccordions = true;
-    this.isButtonDisabled = true;
-  }
 
   isAccordionCollapsed = true;
 
@@ -478,47 +472,6 @@ onSlideToggleChange(event: MatSlideToggleChange, index: number) {
     }
   }
 
-  //STREET INPUT VALIDATION
-  onStrasseInputFormat(controlName: string): ValidationErrors | null {
-    let inputValue: string = this.myFormPersonalDetails.get(controlName)?.value;
-
-    const originalValue = inputValue;
-
-    inputValue = inputValue.replace(/[^a-zA-Z0-9\s'-]/g, '');
-
-
-    if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
-      inputValue = inputValue.slice(1);
-    }
-
-    inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
-
-    inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
-
-    const words = inputValue.split(/\s+/);
-    if (words.length > 4) {
-      words.splice(4);
-    }
-    inputValue = words.join(' ');
-
-    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
-    if (inputValue.length > 150) {
-      inputValue = inputValue.substring(0, 150);
-    }
-
-    if (inputValue !== originalValue) {
-
-      this.myFormPersonalDetails.get(controlName)?.setValue(inputValue, { emitEvent: false });
-      return { 'invalidFormat': true };
-    }
-
-    return null;
-  }
-  onStrasseInput() {
-    this.onStrasseInputFormat('address');
-  }
-
   //BIRTH YEAR INPUT VALIDATION
 
   calculateSubtraction() {
@@ -571,71 +524,67 @@ onBirthYearInputAddPerson(event: Event, index: number): void {
   }
 }
 
-  //ERROR TRIGGERING FOR ALL THE INPUT VALIDATIONS
-  errorValidator(control: AbstractControl): ValidationErrors | null {
-    const inputValue: string = control.value;
-
-    const sanitizedValue = inputValue.replace(/[^a-zA-Z0-9\s'-]/g, '');
-
-    let formattedValue = sanitizedValue.trim();
-
-    formattedValue = formattedValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
-
-    formattedValue = formattedValue.replace(/\s\w/g, match => match.toUpperCase());
-
-    const words = formattedValue.split(/\s+/);
-    if (words.length > 4) {
-      words.splice(4);
-    }
-    formattedValue = words.join(' ');
-
-    formattedValue = formattedValue.charAt(0).toUpperCase() + formattedValue.slice(1);
-
-    if (formattedValue !== inputValue) {
-      return { 'invalidFormat': true };
-    }
-
-    return null;
-  }
-
   // FULL NAME INPUT VALIDATION
-  onInputFormat1(controlName: string): ValidationErrors | null {
-    let inputValue: string = this.myFormStart.get(controlName)?.value;
-
+  onInputFormat(formGroup: FormGroup, controlName: string): ValidationErrors | null {
+    const control: AbstractControl | null = formGroup.get(controlName);
+  
+    if (!control) {
+      return null;
+    }
+  
+    let inputValue: string = control.value;
     const originalValue = inputValue;
 
-    inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
-
+    if(controlName==='address'){
+      inputValue = inputValue.replace(/[^a-zA-Z0-9\s'-]/g, '');
+    }else{
+      inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
+    }
+  
+   
+  
     if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
       inputValue = inputValue.slice(1);
     }
-
+  
+    if (controlName === 'profession') {
+      const professionWords = inputValue.split(/\s+/);
+      if (professionWords.length > 10) {
+        professionWords.splice(10);
+      }
+      inputValue = professionWords.join(' ');
+    } else {
+      const words = inputValue.split(/\s+/);
+      if (words.length > 4) {
+        words.splice(4);
+      }
+      inputValue = words.join(' ');
+    }
     inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
 
     inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
-
-    const words = inputValue.split(/\s+/);
-    if (words.length > 4) {
-      words.splice(4);
-    }
-    inputValue = words.join(' ');
-
+  
     inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
+  
     if (inputValue.length > 100) {
       inputValue = inputValue.substring(0, 100);
     }
-
+  
     if (inputValue !== originalValue) {
-      this.myFormStart.get(controlName)?.setValue(inputValue, { emitEvent: false });
+      control.setValue(inputValue, { emitEvent: false });
       return { 'invalidFormat': true };
     }
-
+  
     return null;
   }
-
   onFullNameInput(){
-  this.onInputFormat1('fullName');
+  this.onInputFormat(this.myFormStart, 'fullName');
+}
+onProfessionInput1() {
+  this.onInputFormat(this.myFormWorkStatus, 'profession');
+}
+onStrasseInput() {
+  this.onInputFormat(this.myFormPersonalDetails,'address');
 }
 
 //FULL NAME INPUT FORM ARRAY
@@ -679,22 +628,6 @@ onFranchiseNameInput(franchiseIndex: number) {
   this.onInputFormat2(franchiseIndex, 'name');
 }
 
-//PROFESSION INPUT VALIDATION
-  onProfessionInput(control: AbstractControl): ValidationErrors | null {
-    let inputValue: string = control.value || '';
-  
-    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-  
-    const trimmedValue = inputValue.trim();
-  
-    if (trimmedValue.length === 0) {
-      return { required: true };
-    }
-
-    control.setErrors(null);
-  
-    return null;
-  }
 
   //MARK FORM GROUP TOUCHED kur e bon submit nese ka error
   markFormGroupTouched(formGroup: FormGroup) {
@@ -706,7 +639,25 @@ onFranchiseNameInput(franchiseIndex: number) {
       }
     });
   }
+  
+  //ACCORDION ITEMS 
+  accordionItems = [
+    { id: 1, name: 'Solidavita', imageSrc: '../assets/solidavita.svg', savings: '1540', network: 'MEDICASA network PROVITA', details: 'Accordion 1 details...' },
+    { id: 2, name: 'Allianz', imageSrc: '../assets/allianz.svg', savings: '1540', network: 'MEDICASA network PROVITA', details: 'Accordion 2 details...' },
+    { id: 3, name: 'Pax', imageSrc: '../assets/pax.svg', savings: '1540', network: 'MEDICASA network PROVITA', details: 'Accordion 3 details...' },
+    { id: 4, name: 'Concordia', imageSrc: '../assets/concordia.svg', savings: '1540', network: 'MEDICASA network PROVITA', details: 'Accordion 1 details...' },
+    { id: 5, name: 'Zuricher Kantonalbank', imageSrc: '../assets/zuricher-kantonalbank.svg', savings: '1540', network: 'MEDICASA network PROVITA', details: 'Accordion 2 details...' },
+    { id: 6, name: 'Groupe Mutuel', imageSrc: '../assets/groupe-mutuel.svg', savings: '1540', network: 'MEDICASA network PROVITA', details: 'Accordion 2 details...' },
+ 
+  ];
 
+  displayedAccordionItems = this.accordionItems.slice(0, 3);
+  remainingAccordionItems = this.accordionItems.slice(3); 
+
+  onLoadMoreClick() {
+    this.displayedAccordionItems = [...this.displayedAccordionItems, ...this.remainingAccordionItems];
+    this.remainingAccordionItems = []; 
+  }
   //SUBMIT
   onSubmit() {
     this.markFormGroupTouched(this.myFormPersonalDetails);

@@ -241,12 +241,13 @@
                 <div class="col-lg-8">
                   <label>What’s your profession?</label>
                   <input type="text" placeholder="Profession" class="form-control input-design"
-                    formControlName="profession">
+                    formControlName="profession" (input)="onProfessionInput1()">
                   <div
                     *ngIf="myFormWorkStatus.get('profession')?.hasError('required') && myFormWorkStatus.get('profession')?.touched"
                     class="error-message">
                     Profession is required.
                   </div>
+      
                 </div>
 
               </div>
@@ -404,460 +405,98 @@
       </form>
 
       <div class="step-content" [class.active]="currentStep === 4">
+
+
         <div class="container accordion  accordions-mobile img col-lg-8 ">
           <div class="">
             <h2>You are almost done</h2>
             <p class="margin-top-accordion">We work with all insurance providers; we analyze offers every day. We will
               give you the offer with the best price benefit ratio/relationship. Click more on the side of the company
               name for more details.</p>
-
-            <div class="accordion " id="accordionFlushExample">
-              <div class="width-acc">
-                          <!-- Accordion 1 -->
-                <div class="card acc">
-                  <div class="card-header" id="flush-headingOne">
-                    <label class="ml-3">1</label>
-                    <div class="card-header-item-container">
-                      <div class="header-img-description">
-                        <div class="col-lg-2">
-                          <img src="../assets/solidavita.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
-                            style="max-width: 100px;">
-                        </div>
-                        <div class="col-lg-4">
-                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
-                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
-                        </div>
-                      </div>
-                      <div class="header-buttons">
-
-                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                          (click)="goToNextStep();updateSelectedAccordion('Solidavita'); updateSelectedImage(accordionButton, '../assets/solidavita.svg') "
-                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <span class="button-text">Details</span> <i class="fas fa-chevron-down"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                    data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <table class="table mt-3">
-                        <tbody>
-                          <tr class="bg-light">
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                            <td>CHF 200</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                            </td>
-                            <td>CHF 1129.20</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="row">
-                        <div class="col-lg-5">
-                          <p class="bolder paragraph-margin">Customer satisfaction</p>
-                        </div>
-                        <div class="col-lg-5">
-                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
-                            alt="rating img">
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-                        <!-- Accordion 2 -->
-              <div class="card acc">
-                <div class="card-header" id="flush-headingTwo">
-                  <label class="ml-3">2</label>
-                  <div class="card-header-item-container">
-                    <div class="header-img-description">
-                      <div class="col-lg-2">
-                        <img src="../assets/allianz.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
-                          style="max-width: 100px;">
-                      </div>
-                      <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
-                            class="bolder">1540</span> francs MEDICASA network PROVITA</p>
-                      </div>
-                    </div>
-                    <div class="header-buttons">
-
-                      <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                        (click)="goToNextStep();updateSelectedAccordion('Allianz'); updateSelectedImage(accordionButton, '../assets/allianz.svg') "
-                        [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                      <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                        <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                          data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                          <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                  data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <table class="table mt-3">
-                      <tbody>
-                        <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                          <td>CHF 200</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                          </td>
-                          <td>CHF 1129.20</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="row">
-                      <div class="col-lg-5">
-                        <p class="bolder paragraph-margin">Customer satisfaction</p>
-                      </div>
-                      <div class="col-lg-5">
-                        <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
-                          alt="rating img">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-                        <!-- Accordion 3 -->
-              <div class="card acc">
-                <div class="card-header" id="flush-headingThree">
-                  <label class="ml-3">3</label>
-                  <div class="card-header-item-container">
-                    <div class="header-img-description">
-                      <div class="col-lg-2">
-                        <img src="../assets/pax.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
-                          style="max-width: 100px;">
-                      </div>
-                      <div class="col-lg-4">
-                        <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
-                            class="bolder">1540</span> francs MEDICASA network PROVITA</p>
-                      </div>
-                    </div>
-                    <div class="header-buttons">
-
-                      <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                        (click)="goToNextStep(); updateSelectedAccordion('Pax'); updateSelectedImage(accordionButton, '../assets/pax.svg') "
-                        [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                      <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                        <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                          data-bs-target="#flush-collapseThree" aria-expanded="false"
-                          aria-controls="flush-collapseThree">
-                          <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
-                  data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <table class="table mt-3">
-                      <tbody>
-                        <tr class="bg-light">
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                          <td>CHF 200</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                          </td>
-                          <td>CHF 1129.20</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                        </tr>
-                        <tr>
-                          <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                          <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="row">
-                      <div class="col-lg-5">
-                        <p class="bolder paragraph-margin">Customer satisfaction</p>
-                      </div>
-                      <div class="col-lg-5">
-                        <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
-                          alt="rating img">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-
-              <div *ngIf="showAdditionalAccordions" class="width-acc">
-                <!-- Accordion 4 -->
-                <div class="card acc">
-                  <div class="card-header" id="flush-headingFour">
-                    <label class="ml-3">4</label>
-                    <div class="card-header-item-container">
-                      <div class="header-img-description">
-                        <div class="col-lg-2">
-                          <img src="../assets/concordia.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
-                            style="max-width: 100px;">
-                        </div>
-                        <div class="col-lg-4">
-                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
-                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
-                        </div>
-                      </div>
-                      <div class="header-buttons">
-
-                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                          (click)="goToNextStep(); updateSelectedAccordion('Concordia'); updateSelectedImage(accordionButton, '../assets/concordia.svg') "
-                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseFour" aria-expanded="false"
-                            aria-controls="flush-collapseFour">
-                            <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
-                    data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <table class="table mt-3">
-                        <tbody>
-                          <tr class="bg-light">
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                            <td>CHF 200</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                            </td>
-                            <td>CHF 1129.20</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="row">
-                        <div class="col-lg-5">
-                          <p class="bolder paragraph-margin">Customer satisfaction</p>
-                        </div>
-                        <div class="col-lg-5">
-                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
-                            alt="rating img">
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <!-- Accordion 5 -->
-                <div class="card acc">
-                  <div class="card-header" id="flush-headingFive">
-                    <label class="ml-3">5</label>
-                    <div class="card-header-item-container">
-                      <div class="header-img-description">
-                        <div class="col-lg-2">
-                          <img src="../assets/zuricher-kantonalbank.svg" alt="Accordion Image"
-                            class="img-fluid float-left mr-3" style="max-width: 100px;">
-                        </div>
-                        <div class="col-lg-4">
-                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
-                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
-                        </div>
-                      </div>
-                      <div class="header-buttons">
-
-                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                          (click)="goToNextStep(); updateSelectedAccordion('Zuricher-kantonalbank'); updateSelectedImage(accordionButton, '../assets/zuricher-kantonalbank.svg') "
-                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseFive" aria-expanded="false"
-                            aria-controls="flush-collapseFive">
-                            <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
-                    data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <table class="table mt-3">
-                        <tbody>
-                          <tr class="bg-light">
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                            <td>CHF 200</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                            </td>
-                            <td>CHF 1129.20</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="row">
-                        <div class="col-lg-5">
-                          <p class="bolder paragraph-margin">Customer satisfaction</p>
-                        </div>
-                        <div class="col-lg-5">
-                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
-                            alt="rating img">
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <!-- Accordion 6 -->
-                <div class="card acc">
-                  <div class="card-header" id="flush-headingSix">
-                    <label class="ml-3">6</label>
-                    <div class="card-header-item-container">
-                      <div class="header-img-description">
-                        <div class="col-lg-2">
-                          <img src="../assets/groupe-mutuel.svg" alt="Accordion Image" class="img-fluid float-left mr-3"
-                            style="max-width: 100px;">
-                        </div>
-                        <div class="col-lg-4">
-                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
-                              class="bolder">1540</span> francs MEDICASA network PROVITA</p>
-                        </div>
-                      </div>
-                      <div class="header-buttons">
-
-                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                          (click)="goToNextStep(); updateSelectedAccordion('Groupe-mutuel'); updateSelectedImage(accordionButton, '../assets/groupe-mutuel.svg') "
-                          [disabled]="currentStep === steps.length - 1">Get an offer</button>
-                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
-                            <span class="button-text">Details</span><i class="fas fa-chevron-down "></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix"
-                    data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <table class="table mt-3">
-                        <tbody>
-                          <tr class="bg-light">
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                            <td>CHF 200</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                            </td>
-                            <td>CHF 1129.20</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="row">
-                        <div class="col-lg-5">
-                          <p class="bolder paragraph-margin">Customer satisfaction</p>
-                        </div>
-                        <div class="col-lg-5">
-                          <img src="../assets/ratingStars.svg" alt="rating img"><img src="../assets/5-5.svg"
-                            alt="rating img">
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
+              <div class="accordion" id="accordionFlushExample" >
+                <div class="width-acc">
+                  <div *ngFor="let accordionItem of displayedAccordionItems" class="card acc">
+      <div class="card-header" [id]="'flush-heading' + accordionItem.id">
+        <label class="ml-3">{{ accordionItem.id }}</label>
+        <div class="card-header-item-container">
+          <div class="header-img-description">
+            <div class="col-lg-2">
+              <img [src]="accordionItem.imageSrc" alt="Accordion Image" class="img-fluid float-left mr-3" style="max-width: 100px;">
             </div>
-
-            <div class="row center buttons">
-              <div class="col-lg-3">
-                <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
-              </div>
-              <div class="col-lg-3">
-                <button class="form-control button-design" (click)="onLoadMoreClick()"
-                  [class.disabled]="isButtonDisabled">Load More</button>
-              </div>
+            <div class="col-lg-4">
+              <p class="paragraph-margin table-p line-height"> Savings potential of up to <span class="bolder">{{ accordionItem.savings }}</span> francs {{ accordionItem.network }}</p>
+            </div>
+          </div>
+          <div class="header-buttons">
+            <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                    (click)="goToNextStep(); updateSelectedAccordion(accordionItem.name); updateSelectedImage(accordionButton, accordionItem.imageSrc)"
+                    [disabled]="currentStep === steps.length - 1">Get an offer
+            </button>
+            <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+              <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#flush-collapse' + accordionItem.id" aria-expanded="false"
+                      [attr.aria-controls]="'flush-collapse' + accordionItem.id">
+                <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <div [id]="'flush-collapse' + accordionItem.id" class="accordion-collapse collapse" [attr.aria-labelledby]="'flush-heading' + accordionItem.id"
+           data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <table class="table mt-3">
+            <tbody>
+              <tr class="bg-light">
+                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                <td>CHF 200</td>
+              </tr>
+              <tr>
+                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                <td>CHF 94.10 (-27.45% compared to 2021)</td>
+              </tr>
+              <tr>
+                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                </td>
+                <td>CHF 1129.20</td>
+              </tr>
+              <tr>
+                <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                <td>CHF 129.70 (+0.00% compared to 2020)</td>
+              </tr>
+              <tr>
+                <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                <td>CHF 129.70 (+6.31% compared to 2019)</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-lg-5">
+              <p class="bolder paragraph-margin">Customer satisfaction</p>
+            </div>
+            <div class="col-lg-5">
+              <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                alt="rating img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row center buttons">
+  <div class="col-lg-3">
+    <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
+  </div>
+  <div class="col-lg-3">
+    <button class="form-control button-design" (click)="onLoadMoreClick()" [class.disabled]="remainingAccordionItems.length === 0">Load More</button>
+  </div>
+</div>
+  </div>
+</div>
+</div>
+
+
       <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onSubmit()">
         <div class="step-content" [class.active]="currentStep === 5">
           <div class="container img last-form-mobile">
@@ -934,10 +573,6 @@
                     *ngIf="myFormPersonalDetails.get('address')?.touched && myFormPersonalDetails.get('address')?.errors?.['required']"
                     class="error-message">
                     Street is required.
-                  </div>
-                  <div *ngIf="myFormPersonalDetails.get('address')?.hasError('invalidFormat')"
-                    class="text-danger multiline-error">
-                    Invalid format for street.
                   </div>
                 </div>
 
