@@ -4,7 +4,7 @@
   <div class="custom-stepper">
     <div *ngFor="let step of steps; let i = index">
       <div class="step" [class.active]="currentStep === i" [class.completed]="currentStep >= i">
-        <div class="circle" [class.clickable]="isStepClickable(i)">
+        <div class="circle" [class.clickable]="isStepClickable(i)" (click)="navigateToStep(i)">
           <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
         <div class="step-line" *ngIf="i < steps.length - 1"></div>
@@ -31,8 +31,9 @@
                   <div class="col-lg-4">
                     <label>Postal Code</label>
                     <div class="autocomplete-container">
-                      <input #autocompleteInput type="text" class="input-design form-control" formControlName="postalCode"
-                        id="plz" placeholder="PLZ" (input)="onPlzChange()" autocomplete="off" inputmode="numeric"
+                      <input #autocompleteInput type="text" class="input-design form-control"
+                        formControlName="postalCode" id="plz" placeholder="PLZ" (input)="onPlzChange()"
+                        autocomplete="off" inputmode="numeric"
                         oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
 
                       <ul *ngIf="autocompleteSuggestions && autocompleteSuggestions.length > 0"
@@ -539,14 +540,15 @@
                   <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
                 </div>
                 <div class=" border-right mt-2 ">
-                <p> {{ franchise.get('name')?.value.length > 20 ? franchise.get('name')?.value .substring(0, 20) + '...' : myFormStart.get('fullName')?.value }}, {{ franchise.get('birthyearAddperson')?.value }}</p>
-                <p> {{ franchise.get('franchise')?.value }}CHF</p>
+                  <p> {{ franchise.get('name')?.value.length > 20 ? franchise.get('name')?.value .substring(0, 20) +
+                    '...' : franchise.get('name')?.value }}, {{ franchise.get('birthyearAddperson')?.value }}</p>
+                  <p> {{ franchise.get('franchise')?.value }}CHF</p>
+                </div>
               </div>
             </div>
-          </div>
-          
-       
-         
+
+
+
             <div class="card last-form-margin ">
               <div class="row last-form">
                 <label>Gender</label>
@@ -670,7 +672,7 @@
                 </div>
                 <div class="col-lg-4">
                   <button type="button" class="form-control button-design last-form-buttons"
-                  (click)="onLastStepNext();">Next</button>
+                    (click)="onLastStepNext();">Next</button>
                 </div>
               </div>
             </div>
@@ -678,61 +680,59 @@
         </div>
       </form>
 
-      <form  [formGroup]="myFormSignature" (ngSubmit)="onSubmit()">
+      <form [formGroup]="myFormSignature" (ngSubmit)="onSubmit()">
         <div class="step-content" [class.active]="currentStep === 6">
+          <div class="container">
+            <div class="card signature">
 
-       
-         
+
               <div class=" signature-container " #signatureContainer>
-             
-                <signature-pad #signature
-                 [options]="signaturePadOptions" 
-                 (drawStart)="drawStart($event)" 
-                 (drawEnd)="drawComplete($event)" 
-                 tabindex="0"
-                 formControlName="signature"></signature-pad>
-              </div>
-              <div class="toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="tool" role="group" aria-label="Basic example">
-                  <button (click)="clear()" class="btn btn-tool" type="button">Clear</button>
+
+                <signature-pad #signature [options]="signaturePadOptions" (drawEnd)="drawComplete($event)" tabindex="0"
+                  formControlName="signature" ngDefaultControl></signature-pad>
+                <div class="toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="tool" role="group" aria-label="Basic example">
+                    <button (click)="clear()" class="btn btn-tool" type="button">Clear</button>
+                  </div>
+                  <div class="tool" role="group" aria-label="Basic example">
+                    <button (click)="undo()" class="btn btn-tool" type="button">
+                      <i class="bi bi-arrow-counterclockwise"></i> Undo
+                    </button>
+                  </div>
+                  <div class="tool" role="group" aria-label="Basic example">
+                    <button (click)="redo()" class="btn btn-tool" type="button">
+                      <i class="bi bi-arrow-clockwise"></i> Redo
+                    </button>
+                  </div>
                 </div>
-                <div class="tool" role="group" aria-label="Basic example">
-                  <button (click)="undo()" class="btn btn-tool" type="button">
-                    <i class="bi bi-arrow-counterclockwise"></i> Undo
-                  </button>
+                <div *ngIf=" formSubmitted &&  myFormSignature.get('signature')?.hasError('required')">
+                  <p class="error-message"> Signature is required</p>
                 </div>
-                <div class="tool" role="group" aria-label="Basic example">
-                  <button (click)="redo()" class="btn btn-tool" type="button">
-                    <i class="bi bi-arrow-clockwise"></i> Redo
-                  </button>
+                <div *ngIf=" myFormSignature.get('signature')?.hasError('invalidSignature')">
+                  <p class="error-message">The signature provided is invalid. Please draw one
+                    valid signature with more than one point.</p>
                 </div>
               </div>
-              <!-- <div *ngIf=" formSubmitted && myFormSignature.get('signature')?.hasError('required')">
-                <p class="text-danger multiline-error"> Unterschrift ist erforderlich.</p>
-              </div> -->
-              <div *ngIf="  myFormSignature.get('signature')?.hasError('required')">
-                <p class="text-danger multiline-error"> Unterschrift ist erforderlich.</p>
-              </div>
-              <div *ngIf=" myFormSignature.get('signature')?.hasError('invalidSignature')">
-                <p class="text-danger multiline-error">Die bereitgestellte Signatur ist ungültig. Bitte zeichnen Sie eine
-                  gültige Unterschrift mit mehr als einem Punkt.</p>
-              </div>
-       
+
+    
+
 
               <div class="row buttons">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                   <button (click)="goToPreviousStep()" type="button"
                     class=" form-control button-design back last-form-buttons"
                     [disabled]="currentStep === 0">Back</button>
 
                 </div>
-                <div class="col-lg-4">
-                  <button type="button" class="form-control button-design last-form-buttons"  (click)="onSubmit()"
-                  >Finish</button>
+                <div class="col-lg-6">
+                  <button type="button" class="form-control button-design last-form-buttons"
+                    (click)="onSubmit()">Finish</button>
                 </div>
               </div>
-       
-       
+            </div>
+          </div>
+
+
         </div>
       </form>
     </div>

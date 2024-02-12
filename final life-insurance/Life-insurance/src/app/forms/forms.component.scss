@@ -182,6 +182,15 @@
     max-width: 850px;
   }
 
+  .card.signature {
+    box-shadow: none;
+    max-width: 480px;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    text-align: left;
+  }
+
   .card {
     border-radius: 27px;
     margin: 45px;
@@ -191,6 +200,10 @@
     border: none;
     max-width: 700px;
     width: 100%;
+
+    .buttons {
+      width: 100%;
+    }
 
     .checkbox-label {
 
@@ -1020,11 +1033,11 @@ tbody tr:nth-child(odd) {
   padding-left: 20px;
 }
 
-.responsive-values-design.added-people{
+.responsive-values-design.added-people {
 
-    flex-wrap: wrap;
-    max-width: 590px;
-    justify-content: center;
+  flex-wrap: wrap;
+  max-width: 590px;
+  justify-content: center;
 }
 
 
@@ -1063,11 +1076,12 @@ tbody tr:nth-child(odd) {
   white-space: pre-wrap;
 }
 
-signature-pad{
+signature-pad {
   background-color: transparent;
   width: 100%;
 }
-.btns{
+
+.btns {
   display: inline-block;
   flex-direction: row;
   justify-content: center;
@@ -1076,17 +1090,21 @@ signature-pad{
 
 .signature-container {
   position: relative;
+  width: 100%;
   overflow: hidden;
+  text-align: left;
 }
 
 .signature-container signature-pad {
   width: 100%;
+  box-shadow: 0px 0px 17px #00000029;
 }
 
 .toolbar {
   display: flex;
-  background-color: #2982F61F;
-  border: 1px solid #2982F6;
+  background-color: #abdfca;
+  border: 1px solid #25AE78;
+
   border-radius: 0 0 20px 20px;
   border-top: none;
   padding: 5px;
@@ -1107,9 +1125,10 @@ signature-pad{
 }
 
 .btn-tool:hover {
-  background-color:#25AE78;
+  background-color: #25AE78;
   color: white;
 }
+
 :host ::ng-deep .signature-pad-canvas {
   border: 1px solid #25AE78 !important;
   border-radius: 20px 20px 0 0;
@@ -1249,10 +1268,11 @@ signature-pad{
       margin: 15px 0;
     }
   }
-  .responsive-values-design.added-people{
 
-flex-direction: row;
-}
+  .responsive-values-design.added-people {
+
+    flex-direction: row;
+  }
 
   .paragraph-values {
     text-align: left;
@@ -1420,7 +1440,7 @@ flex-direction: row;
   }
 
   .step-line {
-    width: 25px;
+    width: 15px;
   }
 
   .error-message.agreed-error {
