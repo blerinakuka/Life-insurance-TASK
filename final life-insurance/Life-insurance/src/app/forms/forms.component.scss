@@ -185,7 +185,9 @@
 
 
     }
-
+    .row.buttons.last-buttons{
+      width: 100%;
+      }
     .row {
       display: flex;
       justify-content: center;
@@ -1189,6 +1191,8 @@ signature-pad {
     .row.buttons {
       display: flex;
     }
+
+ 
 
 
     .row.center.buttons {
