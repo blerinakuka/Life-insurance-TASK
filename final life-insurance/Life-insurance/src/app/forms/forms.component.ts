@@ -90,12 +90,12 @@ export class FormsComponent {
 
   public signaturePadOptions: NgSignaturePadOptions = {
     minWidth: 1,
-    canvasWidth: 420,
-    canvasHeight: 420,
-    backgroundColor: 'white',
-    dotSize: 1,
-    maxWidth: 1,
-    velocityFilterWeight: 1
+    canvasWidth: 415,
+    canvasHeight: 415,
+    backgroundColor: '#fafafa',
+    dotSize: 1.5,
+    maxWidth: 1.5,
+    velocityFilterWeight: 5
   }
 
 
@@ -109,26 +109,19 @@ export class FormsComponent {
   savedSignatureData: string | null = null;
 
   ngOnInit() {
-
-
     this.savedSignatureData = this.signatureService.getSignature();
     this.setSignatureData();
   }
 
-  //Signature
   getSavedSignature(): string | null {
     return this.signatureService.getSignature();
   }
-
-
-
 
   private setSignatureData() {
     if (this.savedSignatureData && this.signaturePad) {
       this.signaturePad.fromDataURL(this.savedSignatureData);
     }
   }
-
 
   drawComplete(event: MouseEvent | Touch) {
     const signatureData = this.signaturePad.toDataURL();
