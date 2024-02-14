@@ -49,10 +49,8 @@
                         class="error-message multiline-error">
                         Please select a suggestion from the list.
                       </div>
-
                     </div>
                   </div>
-
 
                   <div class="col-lg-4">
                     <label>Insurance model 3a/3b
@@ -75,9 +73,6 @@
                       Insurance model is required.
                     </div>
                   </div>
-
-
-
 
                   <div class="col-lg-4">
                     <label>Premium model <span matTooltip="This is information about Premium model."
@@ -126,7 +121,6 @@
                 </div>
 
                 <div formArrayName="franchises">
-
                   <div *ngFor="let franchise of franchises.controls; let i = index" [formGroupName]="i"
                     class="row add-persons">
                     <hr>
@@ -186,18 +180,13 @@
                     </div>
                     <div class="col-lg-2 slide-toggle">
                       <label>Accident Covered</label>
-<label class="switch">
-  <input type="checkbox" checked data-toggle="toggle" formControlName="accidentCovered">
-  <span class="slider round"></span>
-</label>
-                 
-           
+                      <label class="switch">
+                        <input type="checkbox" checked data-toggle="toggle" formControlName="accidentCovered">
+                        <span class="slider round"></span>
+                      </label>
                     </div>
-
                   </div>
                 </div>
-
-
                 <div class="row buttons">
                   <div class="col-lg-4">
                     <button type="button" class="form-control button-design back" (click)="addFranchise()">+ Add
@@ -253,9 +242,7 @@
                     class="error-message">
                     Profession is required.
                   </div>
-
                 </div>
-
               </div>
               <div class="row label-occupational">
                 <label>Occupational situation</label>
@@ -291,7 +278,6 @@
                   <div class="col-lg-4">
                     <button (click)="goToPreviousStep()" type="button"
                       class=" form-control button-design back">Back</button>
-
                   </div>
                   <div class="col-lg-4">
                     <button type="button" class=" form-control button-design " (click)="goToNextStepTwo()">Next</button>
@@ -319,7 +305,6 @@
                       }}<span>CHF</span></p>
                     <input class="range" type="range" formControlName="insuredSum" step="10000" min="100000"
                       max="600000" (input)="rangeSlide(myFormLifeInsurancePlan.get('insuredSum')?.value)">
-
                   </div>
                 </div>
 
@@ -412,7 +397,6 @@
 
       <div class="step-content" [class.active]="currentStep === 4">
 
-
         <div class="container accordion  accordions-mobile img col-lg-8 ">
           <div class="">
             <h2>You are almost done</h2>
@@ -504,7 +488,6 @@
         </div>
       </div>
 
-
       <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onLastStepNext()">
         <div class="step-content" [class.active]="currentStep === 5">
           <div class="container img last-form-mobile">
@@ -514,7 +497,6 @@
               <p>We will crunch numbers and analyze which provider is the best for your needs. We will present to you
                 only the best offers, and then you decide, non-binding and free of charge service. We will be in touch
                 with you for more details as soon as possible.</p>
-
             </div>
 
             <div class="values-responsive">
@@ -551,8 +533,6 @@
               </div>
             </div>
 
-
-
             <div class="card last-form-margin ">
               <div class="row last-form">
                 <label>Gender</label>
@@ -569,14 +549,12 @@
                       <img src="../assets/woman.svg" alt="Female">
                     </div>
                   </div>
-
                 </div>
                 <div
                   *ngIf="myFormPersonalDetails.get('gender')?.hasError('required') && (myFormPersonalDetails.get('gender')?.touched || myFormPersonalDetails.get('gender')?.dirty)"
                   class="error-message gender-error">
                   Gender is required.
                 </div>
-
               </div>
 
               <div class="row">
@@ -584,7 +562,6 @@
                   <label>Full name</label>
                   <input placeholder="" class="form-control input-design-readonly"
                     [value]="myFormStart.get('fullName')?.value" readonly>
-
                 </div>
 
                 <div class="col-lg-4">
@@ -597,7 +574,6 @@
                     Street is required.
                   </div>
                 </div>
-
                 <div class="col-lg-4">
                   <label>Postal Code</label>
                   <input placeholder="" class="form-control input-design-readonly"
@@ -610,10 +586,8 @@
                   <label>Phone</label>
 
                   <input #phoneInput id="phone" type="text" formControlName="phoneNumber" maxlength="20" />
-
                   <div #errorMsg id="error-message" class="hide error-message"></div>
                   <div #validMsg id="valid-msg" class="hide error-message"></div>
-
                   <div
                     *ngIf="myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']"
                     class="error-message">
@@ -665,14 +639,11 @@
                   Please accept our conditions.
                 </div>
               </div>
-
-
               <div class="row buttons">
                 <div class="col-lg-4">
                   <button (click)="goToPreviousStep()" type="button"
                     class=" form-control button-design back last-form-buttons"
                     [disabled]="currentStep === 0">Back</button>
-
                 </div>
                 <div class="col-lg-4">
                   <button type="button" class="form-control button-design last-form-buttons"
@@ -688,10 +659,7 @@
         <div class="step-content" [class.active]="currentStep === 6">
           <div class="container">
             <div class="card signature">
-
-
               <div class=" signature-container " #signatureContainer>
-
                 <signature-pad #signature [options]="signaturePadOptions" (drawEnd)="drawComplete($event)" tabindex="0"
                   formControlName="signature" ngDefaultControl></signature-pad>
                 <div class="toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -717,10 +685,6 @@
                     valid signature with more than one point.</p>
                 </div>
               </div>
-
-    
-
-
               <div class="row buttons last-buttons">
                 <div class="col-lg-6">
                   <button (click)="goToPreviousStep()" type="button"
@@ -735,8 +699,6 @@
               </div>
             </div>
           </div>
-
-
         </div>
       </form>
     </div>
