@@ -4,7 +4,7 @@
   <div class="custom-stepper">
     <div *ngFor="let step of steps; let i = index">
       <div class="step" [class.active]="currentStep === i" [class.completed]="currentStep >= i">
-        <div class="circle" [class.clickable]="isStepClickable(i)" (click)="navigateToStep(i)">
+        <div class="circle" [class.clickable]="isStepClickable(i)" >
           <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
         <div class="step-line" *ngIf="i < steps.length - 1"></div>
@@ -42,7 +42,6 @@
                           {{ suggestion }}
                         </li>
                       </ul>
-
                       <div
                         *ngIf="!isSuggestionSelected && (myFormStart.get('postalCode')?.touched || myFormStart.get('postalCode')?.dirty) &&
                             (!myFormStart.get('postalCode')?.value || myFormStart.get('postalCode')?.value.length <= 4 || myFormStart.get('postalCode')?.value.length === 5)"
@@ -65,7 +64,6 @@
                       <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
                       <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
                     </select>
-
 
                     <div
                       *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
@@ -128,7 +126,6 @@
                       <div class="col-lg-6">
                         <div class="person"> <img src="../assets/person-img.svg">Person {{ i + 1 }}
                         </div>
-
                       </div>
                       <div class="col-lg-6 flex-end">
                         <button *ngIf=" i > 0" class="remove-btn  " (click)="removeFranchise(i)">- Remove
@@ -200,7 +197,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </form>
 
@@ -211,7 +207,6 @@
             <p>We select premiums individually, depending on your employment status, your profession and whether you are
               smoker or not.</p>
             <img class="img-margin" src="../assets/secondIcon.png" alt="img life insurance">
-
             <div class="card ">
               <div class="row">
                 <div class="col-lg-4">
@@ -273,7 +268,6 @@
                   class="error-message">
                   Employment Status is required.
                 </div>
-
                 <div class="row buttons">
                   <div class="col-lg-4">
                     <button (click)="goToPreviousStep()" type="button"
@@ -307,7 +301,6 @@
                       max="600000" (input)="rangeSlide(myFormLifeInsurancePlan.get('insuredSum')?.value)">
                   </div>
                 </div>
-
                 <div class="row ">
                   <label class="label-margin">Insured duration
                   </label>
@@ -319,7 +312,6 @@
                       (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
                   </div>
                 </div>
-
                 <div class="row buttons">
                   <div class="col-lg-4">
                     <button type="button" class=" form-control button-design back" (click)="goToPreviousStep()"
@@ -347,7 +339,6 @@
             <div class="card col-lg-7">
               <div class="row checkboxes-margin">
                 <label class="checkbox-label">Savings goal</label>
-
                 <div class="second-checkboxes">
 
                   <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive ">
@@ -362,7 +353,6 @@
                     <input type="checkbox" id="checkbox3" formControlName="taxOptimization">
                     <label class="checkbox-container no-margin-label-row-1" for="checkbox3">Tax optimization</label>
                   </div>
-
                   <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
                     <input type="checkbox" id="checkbox4" formControlName="financialInvestments">
                     <label class="checkbox-container" for="checkbox4">Financial investments</label>
@@ -396,7 +386,6 @@
       </form>
 
       <div class="step-content" [class.active]="currentStep === 4">
-
         <div class="container accordion  accordions-mobile img col-lg-8 ">
           <div class="">
             <h2>You are almost done</h2>
