@@ -4,7 +4,7 @@
   <div class="custom-stepper">
     <div *ngFor="let step of steps; let i = index">
       <div class="step" [class.active]="currentStep === i" [class.completed]="currentStep >= i">
-        <div class="circle" [class.clickable]="isStepClickable(i)" >
+        <div class="circle" [class.clickable]="isStepClickable(i)" (click)=" navigateToStep(i)">
           <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
         <div class="step-line" *ngIf="i < steps.length - 1"></div>
@@ -490,7 +490,7 @@
 
             <div class="values-responsive">
               <div class="responsive-values-design">
-                <div class="img-class-value">
+                <div class="img-class-value col-lg-2">
                   <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
                 </div>
                 <div class=" border-right ">

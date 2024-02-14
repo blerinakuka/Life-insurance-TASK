@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
-import { PLZService } from "../PLZ.service";
+import { PLZService } from "../service/PLZ.service";
 import intlTelInput from 'intl-tel-input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -434,8 +434,6 @@ export class FormsComponent {
 
       this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(1);
     });
-
-
   }
   //FORM ARRAY
   get franchises() {
@@ -490,7 +488,6 @@ export class FormsComponent {
       franchiseControl.setValue(event.checked);
     }
   }
-
 
   //GENDER BUTTONS VALUE
   clickedButton: string = '';
