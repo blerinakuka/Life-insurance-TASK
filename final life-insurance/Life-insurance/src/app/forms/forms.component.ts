@@ -44,7 +44,7 @@ function customEmailValidator(): ValidatorFn {
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,

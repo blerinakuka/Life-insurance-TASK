@@ -455,6 +455,10 @@
 
   .header-img-description {
     display: contents;
+    img{
+      width: 100%;
+      max-width: 100px;
+    }
   }
 
   .accordion-item {
@@ -899,6 +903,18 @@ tbody tr:nth-child(odd) {
   color: #f44336;
   font-size: 12px;
   padding-left: 15px;
+  animation: slideIn 0.3s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .error-message.gender-error {
@@ -1052,6 +1068,7 @@ tbody tr:nth-child(odd) {
   flex-wrap: wrap;
   max-width: 590px;
   justify-content: center;
+
 }
 
 
@@ -1060,10 +1077,13 @@ tbody tr:nth-child(odd) {
   display: flex;
   align-items: center;
   text-align: left;
-
-  img {
-    padding: 0 30px;
+  .img-class-value{
+  width: 100%;
+  max-width: 100px;
   }
+  // img {
+  //   padding: 0 30px;
+  // }
 
   .border-right {
     padding: 0 30px;
