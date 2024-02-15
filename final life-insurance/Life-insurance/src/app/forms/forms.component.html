@@ -7,7 +7,10 @@
         <div class="circle" [class.clickable]="isStepClickable(i)" (click)=" navigateToStep(i)">
           <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
-        <div class="step-line" *ngIf="i < steps.length - 1"></div>
+        @if(i < steps.length - 1){
+          <div class="step-line"></div>
+        }
+  
       </div>
     </div>
   </div>
@@ -36,19 +39,27 @@
                         autocomplete="off" inputmode="numeric"
                         oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
 
-                      <ul *ngIf="autocompleteSuggestions && autocompleteSuggestions.length > 0"
+
+                        @if(autocompleteSuggestions && autocompleteSuggestions.length > 0){
+                      <ul
                         class="autocomplete-drop">
-                        <li *ngFor="let suggestion of autocompleteSuggestions" (click)="selectSuggestion(suggestion)">
-                          {{ suggestion }}
-                        </li>
+                        @for(suggestion of autocompleteSuggestions; track suggestion){
+                          <li  (click)="selectSuggestion(suggestion)">
+                            {{ suggestion }}
+                          </li>
+                        }
+                       
                       </ul>
-                      <div
-                        *ngIf="!isSuggestionSelected && (myFormStart.get('postalCode')?.touched || myFormStart.get('postalCode')?.dirty) &&
-                            (!myFormStart.get('postalCode')?.value || myFormStart.get('postalCode')?.value.length <= 4 || myFormStart.get('postalCode')?.value.length === 5)"
-                        class="error-message multiline-error">
+                    }
+
+                    @if(!isSuggestionSelected && (myFormStart.get('postalCode')?.touched || myFormStart.get('postalCode')?.dirty) &&
+                    (!myFormStart.get('postalCode')?.value || myFormStart.get('postalCode')?.value.length <= 4 || myFormStart.get('postalCode')?.value.length === 5)){
+                      <div class="error-message multiline-error">
                         Please select a suggestion from the list.
                       </div>
+                    }
                     </div>
+             
                   </div>
 
                   <div class="col-lg-4">
@@ -65,12 +76,15 @@
                       <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
                     </select>
 
+
+                    @if(myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched){
                     <div
-                      *ngIf="myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched"
                       class="error-message">
                       Insurance model is required.
                     </div>
+                  }
                   </div>
+           
 
                   <div class="col-lg-4">
                     <label>Premium model <span matTooltip="This is information about Premium model."
@@ -81,11 +95,13 @@
                       <option value="Fix" class="text-dark">Fix</option>
                       <option value="Flex" class="text-dark">Flex</option>
                     </select>
-                    <div
-                      *ngIf="myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched"
-                      class="error-message">
+
+                    @if(myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched){
+                      <div class="error-message">
                       Premium model is required.
                     </div>
+                    }
+        
                   </div>
                 </div>
 
@@ -94,27 +110,34 @@
                     <label>Full Name</label>
                     <input type="text" placeholder="Full Name " formControlName="fullName"
                       class="form-control input-design" (input)="onFullNameInput()">
-                    <div
-                      *ngIf="myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched"
-                      class="error-message">
-                      Full Name is required.
-                    </div>
+
+
+                      @if(myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched){
+                        <div class="error-message">
+                        Full Name is required.
+                      </div>
+                      }
+               
                   </div>
 
                   <div class="col-lg-4">
                     <label>Birth Year</label>
                     <input type="number" placeholder="YYYY" formControlName="birthyear"
                       class="form-control input-design" (input)="onBirthYearInput($event)">
-                    <div
-                      *ngIf="myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched"
-                      class="error-message">
-                      Birth Year is required.
-                    </div>
-                    <div *ngIf="myFormStart.get('birthyear')?.hasError('invalidYear') && 
-                  (myFormStart.get('birthyear')?.dirty) &&
-                  myFormStart.get('birthyear')?.value !== null" class="error-message">
-                      Invalid birth year. Please enter a valid year.
-                    </div>
+                      @if(myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched){
+                        <div class="error-message">
+                        Birth Year is required.
+                      </div>
+                      }
+              
+                    @if(myFormStart.get('birthyear')?.hasError('invalidYear') && 
+                    (myFormStart.get('birthyear')?.dirty) &&
+                    myFormStart.get('birthyear')?.value !== null){
+                      <div class="error-message">
+                          Invalid birth year. Please enter a valid year.
+                        </div>
+                    }
+       
                   </div>
                 </div>
 
@@ -128,8 +151,11 @@
                         </div>
                       </div>
                       <div class="col-lg-6 flex-end">
-                        <button *ngIf=" i > 0" class="remove-btn  " (click)="removeFranchise(i)">- Remove
-                          person</button>
+                        @if(i > 0){
+                          <button class="remove-btn" (click)="removeFranchise(i)">- Remove
+                            person</button>
+                        }
+                
                       </div>
                     </div>
 
@@ -137,25 +163,33 @@
                       <label>Full Name</label>
                       <input type="text" formControlName="name" class="form-control input-design" placeholder="Name"
                         (input)="onFranchiseNameInput(i)">
-                      <div *ngIf="franchise.get('name')?.hasError('required') && franchise.get('name')?.touched"
-                        class="error-message">
-                        Name is required.
-                      </div>
+                        @if(franchise.get('name')?.hasError('required') && franchise.get('name')?.touched){
+                          <div class="error-message">
+                          Name is required.
+                        </div>
+                        }
+                
                     </div>
                     <div class="col-lg-2">
                       <label>Birth Year</label>
                       <input type="number" formControlName="birthyearAddperson" class="form-control input-design"
                         placeholder="YYYY" (input)="onBirthYearInputAddPerson($event, i)">
-                      <div
-                        *ngIf="franchise.get('birthyearAddperson')?.hasError('required') && franchise.get('birthyearAddperson')?.touched"
-                        class="error-message">
-                        Birth Year is required.
-                      </div>
-                      <div *ngIf="franchise.get('birthyearAddperson')?.hasError('invalidYear') && 
-                  (franchise.get('birthyearAddperson')?.dirty ) &&
-                  franchise.get('birthyearAddperson')?.value !== null" class="error-message">
-                        Invalid birth year. Please enter a valid year.
-                      </div>
+                        @if(franchise.get('birthyearAddperson')?.hasError('required') && franchise.get('birthyearAddperson')?.touched){
+                          <div class="error-message">
+                          Birth Year is required.
+                        </div>
+                        }
+          
+@if(franchise.get('birthyearAddperson')?.hasError('invalidYear') && 
+(franchise.get('birthyearAddperson')?.dirty ) &&
+franchise.get('birthyearAddperson')?.value !== null){
+  <div class="error-message">
+    Invalid birth year. Please enter a valid year.
+  </div>
+}
+               
+
+
                     </div>
                     <div class="col-lg-4">
                       <label>Franchise</label>
@@ -169,11 +203,16 @@
                         <option value="2000">2000 CHF</option>
                         <option value="2500">2500 CHF</option>
                       </select>
-                      <div
-                        *ngIf="franchise.get('franchise')?.hasError('required') && franchise.get('franchise')?.touched"
-                        class="error-message">
-                        Franchise selection is required.
-                      </div>
+
+@if(franchise.get('franchise')?.hasError('required') && franchise.get('franchise')?.touched){
+  <div
+  class="error-message">
+  Franchise selection is required.
+</div>
+}
+                   
+
+
                     </div>
                     <div class="col-lg-2 slide-toggle">
                       <label>Accident Covered</label>
@@ -222,21 +261,25 @@
                     <option value="Rarely" class="text-dark">Rarely</option>
                     <option value="Often" class="text-dark">Often</option>
                   </select>
-                  <div
-                    *ngIf="myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched"
-                    class="error-message">
+
+                  @if(myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched){
+                    <div class="error-message">
                     Smoking status is required.
                   </div>
+                  }
+      
                 </div>
                 <div class="col-lg-8">
                   <label>What’s your profession?</label>
                   <input type="text" placeholder="Profession" class="form-control input-design"
                     formControlName="profession" (input)="onProfessionInput1()">
-                  <div
-                    *ngIf="myFormWorkStatus.get('profession')?.hasError('required') && myFormWorkStatus.get('profession')?.touched"
-                    class="error-message">
-                    Profession is required.
-                  </div>
+
+                    @if(myFormWorkStatus.get('profession')?.hasError('required') && myFormWorkStatus.get('profession')?.touched){
+                      <div class="error-message">
+                      Profession is required.
+                    </div>
+                    }
+         
                 </div>
               </div>
               <div class="row label-occupational">
@@ -263,11 +306,12 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  *ngIf="myFormWorkStatus.get('employmentStatus')?.hasError('required') && myFormWorkStatus.get('employmentStatus')?.touched"
-                  class="error-message">
+                @if(myFormWorkStatus.get('employmentStatus')?.hasError('required') && myFormWorkStatus.get('employmentStatus')?.touched){
+                  <div class="error-message">
                   Employment Status is required.
                 </div>
+                }
+        
                 <div class="row buttons">
                   <div class="col-lg-4">
                     <button (click)="goToPreviousStep()" type="button"
@@ -366,9 +410,11 @@
                     <label class="checkbox-container" for="checkbox6">Wealth accumulation</label>
                   </div>
                 </div>
-                <div *ngIf="nextButtonClicked && !atLeastOneCheckboxChecked()" class="error-message mb-2">
-                  Please select at least one checkbox.
-                </div>
+                @if(nextButtonClicked && !atLeastOneCheckboxChecked()){
+                  <div class="error-message mb-2">
+                    Please select at least one checkbox.
+                  </div>
+                }
               </div>
               <div class="row buttons ">
                 <div class="col-lg-4">
@@ -539,11 +585,11 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  *ngIf="myFormPersonalDetails.get('gender')?.hasError('required') && (myFormPersonalDetails.get('gender')?.touched || myFormPersonalDetails.get('gender')?.dirty)"
-                  class="error-message gender-error">
+                @if(myFormPersonalDetails.get('gender')?.hasError('required') && (myFormPersonalDetails.get('gender')?.touched || myFormPersonalDetails.get('gender')?.dirty)){
+                  <div class="error-message gender-error">
                   Gender is required.
                 </div>
+                }
               </div>
 
               <div class="row">
@@ -557,11 +603,12 @@
                   <label>Street, No</label>
                   <input type="text" class="form-control input-design " formControlName="address" id="strasse"
                     placeholder="Strasse, Nr*" (input)="onStrasseInput()">
-                  <div
-                    *ngIf="myFormPersonalDetails.get('address')?.touched && myFormPersonalDetails.get('address')?.errors?.['required']"
-                    class="error-message">
-                    Street is required.
-                  </div>
+                    @if(myFormPersonalDetails.get('address')?.touched && myFormPersonalDetails.get('address')?.errors?.['required']){
+                      <div class="error-message">
+                      Street is required.
+                    </div>
+                    }
+          
                 </div>
                 <div class="col-lg-4">
                   <label>Postal Code</label>
@@ -577,27 +624,30 @@
                   <input #phoneInput id="phone" type="text" formControlName="phoneNumber" maxlength="20" />
                   <div #errorMsg id="error-message" class="hide error-message"></div>
                   <div #validMsg id="valid-msg" class="hide error-message"></div>
-                  <div
-                    *ngIf="myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']"
-                    class="error-message">
+                  @if(myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']){
+                    <div class="error-message">
                     Telephone is required.
                   </div>
+                  }
+  
                 </div>
 
                 <div class="col-lg-4">
                   <label>E-Mail</label>
                   <input type="email" class="form-control input-design" formControlName="email" id="email"
                     placeholder="E-Mail*">
-                  <div
-                    *ngIf="myFormPersonalDetails.get('email')?.touched && myFormPersonalDetails.get('email')?.errors?.['required']"
-                    class="error-message">
-                    Email is required.
-                  </div>
-                  <div
-                    *ngIf="myFormPersonalDetails.get('email')?.dirty && myFormPersonalDetails.get('email')?.value && myFormPersonalDetails.get('email')?.hasError('invalidEmail')"
-                    class="error-message">
-                    Please enter a valid email address.
-                  </div>
+                    @if(myFormPersonalDetails.get('email')?.touched && myFormPersonalDetails.get('email')?.errors?.['required']){
+                      <div class="error-message">
+                      Email is required.
+                    </div>
+                    }
+       
+                    @if(myFormPersonalDetails.get('email')?.dirty && myFormPersonalDetails.get('email')?.value && myFormPersonalDetails.get('email')?.hasError('invalidEmail')){
+                      <div class="error-message">
+                      Please enter a valid email address.
+                    </div>
+                    }
+            
                 </div>
 
                 <div class="col-lg-4">
@@ -622,11 +672,12 @@
                   </a>
 
                 </label>
-                <div
-                  *ngIf="myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']"
-                  class="error-message agreed-error">
+                @if(myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']){
+                  <div class="error-message agreed-error">
                   Please accept our conditions.
                 </div>
+                }
+     
               </div>
               <div class="row buttons">
                 <div class="col-lg-4">
@@ -666,13 +717,19 @@
                     </button>
                   </div>
                 </div>
-                <div *ngIf=" formSubmitted &&  myFormSignature.get('signature')?.hasError('required')">
-                  <p class="error-message"> Signature is required</p>
-                </div>
-                <div *ngIf=" myFormSignature.get('signature')?.hasError('invalidSignature')">
-                  <p class="error-message">The signature provided is invalid. Please draw one
-                    valid signature with more than one point.</p>
-                </div>
+                @if(formSubmitted &&  myFormSignature.get('signature')?.hasError('required')){
+                  <div class="error-message">
+                    Signature is required.
+                  </div>
+                }
+           
+                @if(myFormSignature.get('signature')?.hasError('invalidSignature')){
+                  <div class="error-message">
+                    The signature provided is invalid. Please draw one
+                      valid signature with more than one point.
+                  </div>
+                }
+       
               </div>
               <div class="row buttons last-buttons">
                 <div class="col-lg-6">
