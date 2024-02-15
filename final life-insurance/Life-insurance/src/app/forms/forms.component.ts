@@ -340,26 +340,16 @@ export class FormsComponent {
     const birthYear = this.myFormStart.get('birthyear')?.value;
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
-
-    if (age === 65) {
-      return 1;
-    } else if (age < 65) {
-      return Math.max(0, 65 - age);
-    } else {
-      return 30;
-    }
+  
+    return (age === 65) ? 1 : (age < 65) ? Math.max(0, 65 - age) : 30;
   }
 
   calculateValueMin(): number {
     const birthYear = this.myFormStart.get('birthyear')?.value;
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
-
-    if (age >= 64 && age <= 65) {
-      return 0;
-    } else {
-      return 1;
-    }
+  
+    return (age >= 64 && age <= 65) ? 0 : 1;
   }
   rangeSlideDuration(value: number) {
     this.myFormLifeInsurancePlan.get('insuredDuration')?.setValue(value);
@@ -441,47 +431,34 @@ export class FormsComponent {
   }
 
   addFranchise() {
-    const lastFranchiseIndex = this.franchises.length - 1;
-
-    if (lastFranchiseIndex >= 0) {
-      const lastFranchise = this.franchises.at(lastFranchiseIndex) as FormGroup;
-
-      if (lastFranchise) {
-        Object.keys(lastFranchise.controls).forEach(key => {
-          const control = lastFranchise.get(key);
-          if (control && control.invalid) {
-            control.markAsTouched();
-          }
-        });
-
-        if (lastFranchise.valid) {
-          const franchiseGroup = this.formBuilder.group({
-            name: ['', Validators.required],
-            birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
-            franchise: ['', Validators.required],
-            accidentCovered: [false]
-          });
-
-          this.franchises.push(franchiseGroup);
-        } else {
-          console.log('Last person details are not valid. Please complete them before adding another person.');
-        }
-      }
-    } else {
-      const franchiseGroup = this.formBuilder.group({
-        name: ['', Validators.required],
-        birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
-        franchise: ['', Validators.required],
-        accidentCovered: [false]
-      });
-
-      this.franchises.push(franchiseGroup);
+    const lastFranchise = this.franchises.at(this.franchises.length - 1) as FormGroup | undefined;
+  
+    if (lastFranchise && lastFranchise.invalid) {
+      console.log('Last person details are not valid. Please complete them before adding another person.');
+      this.markFormGroupControlsAsTouched(lastFranchise);
+      return;
     }
+  
+    const franchiseGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
+      franchise: ['', Validators.required],
+      accidentCovered: [false]
+    });
+  
+    this.franchises.push(franchiseGroup);
   }
+  
+  markFormGroupControlsAsTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+  //Remove Franchise
   removeFranchise(index: number) {
     this.franchises.removeAt(index);
   }
-
+  //On Slide Toggle
   onSlideToggleChange(event: MatSlideToggleChange, index: number) {
     const franchiseControl = this.franchises.at(index).get('accidentCovered');
     if (franchiseControl) {
@@ -599,78 +576,50 @@ export class FormsComponent {
     return null;
   }
   onBirthYearInput(event: Event): void {
-    let inputValue = (event.target as HTMLInputElement).value;
-
-    if (inputValue.length > 4) {
-      inputValue = inputValue.slice(0, 4);
-    }
-
+    const inputValue = (event.target as HTMLInputElement).value.slice(0, 4);
     const parsedValue = parseInt(inputValue, 10);
-
-    if (!isNaN(parsedValue)) {
-      this.myFormStart.get('birthyear')?.setValue(parsedValue, { emitEvent: false });
-    } else {
-      this.myFormStart.get('birthyear')?.setValue(null, { emitEvent: false });
-    }
+  
+    this.myFormStart.get('birthyear')?.setValue(isNaN(parsedValue) ? null : parsedValue, { emitEvent: false });
   }
   //BIRTH YEAR ADD PERSON INPUT VALIDATION
   onBirthYearInputAddPerson(event: Event, index: number): void {
-    let inputValue = (event.target as HTMLInputElement).value;
-
-    if (inputValue.length > 4) {
-      inputValue = inputValue.slice(0, 4);
-    }
-
+    const inputValue = (event.target as HTMLInputElement).value.slice(0, 4);
     const parsedValue = parseInt(inputValue, 10);
-
-    if (!isNaN(parsedValue)) {
-      this.franchises.at(index).get('birthyearAddperson')?.setValue(parsedValue, { emitEvent: false });
-    } else {
-      this.franchises.at(index).get('birthyearAddperson')?.setValue(null, { emitEvent: false });
-    }
+    const control = this.franchises.at(index).get('birthyearAddperson');
+  
+    control?.setValue(isNaN(parsedValue) ? null : parsedValue, { emitEvent: false });
   }
-
   // FULL NAME INPUT VALIDATION
   onInputFormat(formGroup: FormGroup, controlName: string): ValidationErrors | null {
     const control: AbstractControl | null = formGroup.get(controlName);
-
+  
     if (!control) {
       return null;
     }
-
+  
     let inputValue: string = control.value;
     const originalValue = inputValue;
-
-    if (controlName === 'address') {
-      inputValue = inputValue.replace(/[^a-zA-Z0-9\s'-]/g, '');
-    } else {
-      inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
-    }
-
-    if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
-      inputValue = inputValue.slice(1);
-    }
-
-    const words = inputValue.split(/\s+/);
-    if (words.length > 10) {
-      words.splice(10);
-    }
+  
+    const alphanumericRegex = controlName === 'address' ? /[^a-zA-Z0-9\s'-]/g : /[^a-zA-Z\s'-]/g;
+  
+    inputValue = inputValue.replace(alphanumericRegex, '');
+  
+    inputValue = inputValue.trimLeft();
+  
+    const words = inputValue.split(/\s+/).slice(0, 10);
     inputValue = words.join(' ');
+  
     inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
-
-    inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
-
-    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
-    if (inputValue.length > 200) {
-      inputValue = inputValue.substring(0, 200);
-    }
-
+  
+    inputValue = inputValue.replace(/\b\w/g, match => match.toUpperCase());
+  
+    inputValue = inputValue.substring(0, 1).toUpperCase() + inputValue.substring(1, 200);
+  
     if (inputValue !== originalValue) {
       control.setValue(inputValue, { emitEvent: false });
       return { 'invalidFormat': true };
     }
-
+  
     return null;
   }
   onFullNameInput() {
@@ -686,44 +635,34 @@ export class FormsComponent {
   //FULL NAME INPUT FORM ARRAY
   onInputFormat2(franchiseIndex: number, controlName: string): ValidationErrors | null {
     const franchise = this.franchises.at(franchiseIndex);
-    let inputValue: string = franchise.get(controlName)?.value;
-
+    let inputValue: string = franchise.get(controlName)?.value || '';
+  
     const originalValue = inputValue;
 
     inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
 
-    if (inputValue.length > 0 && inputValue.charAt(0) === ' ') {
-      inputValue = inputValue.slice(1);
-    }
+    inputValue = inputValue.trimLeft();
 
     inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
 
-    inputValue = inputValue.replace(/\s\w/g, match => match.toUpperCase());
+    inputValue = inputValue.replace(/\b\w/g, match => match.toUpperCase());
 
-    const words = inputValue.split(/\s+/);
-    if (words.length > 10) {
-      words.splice(10);
-    }
+    const words = inputValue.split(/\s+/).slice(0, 10);
     inputValue = words.join(' ');
-
-    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
-    if (inputValue.length > 200) {
-      inputValue = inputValue.substring(0, 200);
-    }
-
+  
+    inputValue = inputValue.substring(0, 1).toUpperCase() + inputValue.substring(1, 200);
+  
     if (inputValue !== originalValue) {
       franchise.get(controlName)?.setValue(inputValue, { emitEvent: false });
       return { 'invalidFormat': true };
     }
-
+  
     return null;
   }
 
   onFranchiseNameInput(franchiseIndex: number) {
     this.onInputFormat2(franchiseIndex, 'name');
   }
-
 
   //MARK FORM GROUP TOUCHED kur e bon submit nese ka error
   markFormGroupTouched(formGroup: FormGroup) {
@@ -757,11 +696,13 @@ export class FormsComponent {
   signData: any = '';
   sign: string = ''
   formSubmitted: boolean = false;
+
   //SUBMIT
   onLastStepNext() {
-    this.markFormGroupTouched(this.myFormPersonalDetails);
-
-    if (this.myFormPersonalDetails.valid && this.validatePhoneNumber()) {
+    const personalDetailsForm = this.myFormPersonalDetails;
+    this.markFormGroupTouched(personalDetailsForm);
+  
+    if (personalDetailsForm.valid && this.validatePhoneNumber()) {
       this.currentStep++;
       window.scrollTo(0, 0);
     } else {
@@ -771,56 +712,50 @@ export class FormsComponent {
 
   onSubmit() {
     this.formSubmitted = true;
-    if (this.myFormSignature.valid) {
-      const savingsGoals = Object.entries(this.myFormLifeInsuranceGoal.value)
-        .filter(([key, value]) => value)
-        .map(([key]) => {
-          switch (key) {
-            case 'protectionOfFamily':
-              return 'Protection of Family';
-            case 'buyOwnHome':
-              return 'Buy Own Home';
-            case 'taxOptimization':
-              return 'Tax Optimization';
-            case 'financialInvestments':
-              return 'Financial Investments';
-            case 'financialIndependence':
-              return 'Financial Independence';
-            case 'wealthAccumulation':
-              return 'Wealth Accumulation';
-            default:
-              return '';
-          }
-        })
-        .filter(goal => goal !== '');
-      let formData = {
-        fullName: this.myFormStart.value.fullName,
-        birthyear: this.myFormStart.value.birthyear,
-        postalCode: this.myFormStart.value.postalCode,
-        insuranceModel: this.myFormStart.value.insuranceModel,
-        premiumModel: this.myFormStart.value.premiumModel,
-        smokingStatus: this.myFormWorkStatus.value.smokingStatus,
-        profession: this.myFormWorkStatus.value.profession,
-        employmentStatus: this.myFormWorkStatus.value.employmentStatus,
-        insuredSum: this.myFormLifeInsurancePlan.value.insuredSum,
-        insuredDuration: this.myFormLifeInsurancePlan.value.insuredDuration,
-        selectedAccordion: this.myFormChooseOffer.value.selectedAccordion,
-        nationality: this.myFormPersonalDetails.value.nationality,
-        phoneNumber: this.myFormPersonalDetails.value.phoneNumber,
-        address: this.myFormPersonalDetails.value.address,
-        email: this.myFormPersonalDetails.value.email,
-        gender: this.myFormPersonalDetails.value.gender,
-        agreedToTerms: this.myFormPersonalDetails.value.agreedToTerms,
-        signature: this.myFormSignature.value.signature,
-        person: this.myFormStart.get('franchises')?.value,
-        "savingsGoal": savingsGoals.join(", ")
-      };
-
-      console.log(formData);
-      this.router.navigate(['/danke']);
-    } else {
+    
+    const signatureControl = this.myFormSignature.get('signature');
+    if (!this.myFormSignature.valid || !signatureControl) {
       console.log('Validation failed. Cannot submit.');
+      return;
     }
+    
+    const savingsGoals = Object.entries(this.myFormLifeInsuranceGoal.value)
+      .filter(([_, value]) => value)
+      .map(([key]) => ({
+        'protectionOfFamily': 'Protection of Family',
+        'buyOwnHome': 'Buy Own Home',
+        'taxOptimization': 'Tax Optimization',
+        'financialInvestments': 'Financial Investments',
+        'financialIndependence': 'Financial Independence',
+        'wealthAccumulation': 'Wealth Accumulation'
+      }[key]))
+      .filter(goal => goal !== '');
+  
+    const formData = {
+      fullName: this.myFormStart.value.fullName,
+      birthyear: this.myFormStart.value.birthyear,
+      postalCode: this.myFormStart.value.postalCode,
+      insuranceModel: this.myFormStart.value.insuranceModel,
+      premiumModel: this.myFormStart.value.premiumModel,
+      smokingStatus: this.myFormWorkStatus.value.smokingStatus,
+      profession: this.myFormWorkStatus.value.profession,
+      employmentStatus: this.myFormWorkStatus.value.employmentStatus,
+      insuredSum: this.myFormLifeInsurancePlan.value.insuredSum,
+      insuredDuration: this.myFormLifeInsurancePlan.value.insuredDuration,
+      selectedAccordion: this.myFormChooseOffer.value.selectedAccordion,
+      nationality: this.myFormPersonalDetails.value.nationality,
+      phoneNumber: this.myFormPersonalDetails.value.phoneNumber,
+      address: this.myFormPersonalDetails.value.address,
+      email: this.myFormPersonalDetails.value.email,
+      gender: this.myFormPersonalDetails.value.gender,
+      agreedToTerms: this.myFormPersonalDetails.value.agreedToTerms,
+      signature: signatureControl.value,
+      person: this.myFormStart.get('franchises')?.value,
+      savingsGoal: savingsGoals.join(", ")
+    };
+  
+    console.log(formData);
+    this.router.navigate(['/danke']);
   }
 
 }
