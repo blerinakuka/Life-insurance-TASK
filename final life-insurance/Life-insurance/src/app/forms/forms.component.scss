@@ -872,21 +872,21 @@ table tr {
   height: 59px;
 }
 
-tbody td:nth-child(even) {
-  background-color: transparent;
-}
+// tbody td:nth-child(even) {
+//   background-color: transparent;
+// }
 
-tbody td:nth-child(odd) {
-  background-color: transparent;
-}
+// tbody td:nth-child(odd) {
+//   background-color: transparent;
+// }
 
-tbody tr:nth-child(even) {
-  background-color: #ffffff;
-}
+// tbody tr:nth-child(even) {
+//   background-color: #ffffff;
+// }
 
-tbody tr:nth-child(odd) {
-  background-color: #A5A5A51A;
-}
+// tbody tr:nth-child(odd) {
+//   background-color: #A5A5A51A;
+// }
 
 .card-body {
   padding: 36px;

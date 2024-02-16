@@ -2,751 +2,761 @@
 
 
   <div class="custom-stepper">
-    <div *ngFor="let step of steps; let i = index">
+    @for(step of steps; track step; let i = $index){
+    <div>
       <div class="step" [class.active]="currentStep === i" [class.completed]="currentStep >= i">
         <div class="circle" [class.clickable]="isStepClickable(i)" (click)=" navigateToStep(i)">
           <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
-        @if(i < steps.length - 1){
-          <div class="step-line"></div>
-        }
-  
+        @if(i < steps.length - 1){ 
+          <div class="step-line">
       </div>
+      }
+
     </div>
   </div>
-  <div class=" ">
-    <div>
-      <form [formGroup]="myFormStart" (ngSubmit)="nextStep()">
-        <div class="step-content" [class.active]="currentStep === 0">
-          <div class="container img first-three-forms-mobile ">
-
-            <div class="col-lg-8 ">
-              <h2>Choose the best life insurance for your financial goals</h2>
-              <p>You are in the right place. This is the first step towards your financial future. You can enter your
-                personal data and continue with the upcoming steps of analyzing your pension situation and choose the
-                right life insurance for your financial goals.</p>
-
-              <img class="img-margin" src="../assets/firstIcon.png" alt="img life insurance">
-            </div>
-            <div class="form-width">
-              <div class="card first-form">
-                <div class="row">
-                  <div class="col-lg-4">
-                    <label>Postal Code</label>
-                    <div class="autocomplete-container">
-                      <input #autocompleteInput type="text" class="input-design form-control"
-                        formControlName="postalCode" id="plz" placeholder="PLZ" (input)="onPlzChange()"
-                        autocomplete="off" inputmode="numeric"
-                        oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
-
-
-                        @if(autocompleteSuggestions && autocompleteSuggestions.length > 0){
-                      <ul
-                        class="autocomplete-drop">
-                        @for(suggestion of autocompleteSuggestions; track suggestion){
-                          <li  (click)="selectSuggestion(suggestion)">
-                            {{ suggestion }}
-                          </li>
-                        }
-                       
-                      </ul>
-                    }
-
-                    @if(!isSuggestionSelected && (myFormStart.get('postalCode')?.touched || myFormStart.get('postalCode')?.dirty) &&
-                    (!myFormStart.get('postalCode')?.value || myFormStart.get('postalCode')?.value.length <= 4 || myFormStart.get('postalCode')?.value.length === 5)){
-                      <div class="error-message multiline-error">
-                        Please select a suggestion from the list.
-                      </div>
-                    }
-                    </div>
-             
-                  </div>
-
-                  <div class="col-lg-4">
-                    <label>Insurance model 3a/3b
-                      <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
-                        <img src="../assets/info.svg" alt="Info Icon">
-                      </span>
-                    </label>
-
-                    <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
-                      [class.selected]="myFormStart.get('insuranceModel')?.value">
-                      <option value="" disabled selected>Please Select</option>
-                      <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
-                      <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
-                    </select>
-
-
-                    @if(myFormStart.get('insuranceModel')?.hasError('required') && myFormStart.get('insuranceModel')?.touched){
-                    <div
-                      class="error-message">
-                      Insurance model is required.
-                    </div>
-                  }
-                  </div>
-           
-
-                  <div class="col-lg-4">
-                    <label>Premium model <span matTooltip="This is information about Premium model."
-                        matTooltipPosition="below"> <img src="../assets/info.svg" alt="Info Icon"></span></label>
-                    <select placeholder="Please select" class="form-control-select " formControlName="premiumModel"
-                      formControlName="premiumModel" [class.selected]="myFormStart.get('premiumModel')?.value">
-                      <option value="" disabled selected>Please Select</option>
-                      <option value="Fix" class="text-dark">Fix</option>
-                      <option value="Flex" class="text-dark">Flex</option>
-                    </select>
-
-                    @if(myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched){
-                      <div class="error-message">
-                      Premium model is required.
-                    </div>
-                    }
-        
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-8">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Full Name " formControlName="fullName"
-                      class="form-control input-design" (input)="onFullNameInput()">
-
-
-                      @if(myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched){
-                        <div class="error-message">
-                        Full Name is required.
-                      </div>
-                      }
-               
-                  </div>
-
-                  <div class="col-lg-4">
-                    <label>Birth Year</label>
-                    <input type="number" placeholder="YYYY" formControlName="birthyear"
-                      class="form-control input-design" (input)="onBirthYearInput($event)">
-                      @if(myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched){
-                        <div class="error-message">
-                        Birth Year is required.
-                      </div>
-                      }
-              
-                    @if(myFormStart.get('birthyear')?.hasError('invalidYear') && 
-                    (myFormStart.get('birthyear')?.dirty) &&
-                    myFormStart.get('birthyear')?.value !== null){
-                      <div class="error-message">
-                          Invalid birth year. Please enter a valid year.
-                        </div>
-                    }
-       
-                  </div>
-                </div>
-
-                <div formArrayName="franchises">
-                  <div *ngFor="let franchise of franchises.controls; let i = index" [formGroupName]="i"
-                    class="row add-persons">
-                    <hr>
-                    <div class=" row align-items-center">
-                      <div class="col-lg-6">
-                        <div class="person"> <img src="../assets/person-img.svg">Person {{ i + 1 }}
-                        </div>
-                      </div>
-                      <div class="col-lg-6 flex-end">
-                        @if(i > 0){
-                          <button class="remove-btn" (click)="removeFranchise(i)">- Remove
-                            person</button>
-                        }
-                
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                      <label>Full Name</label>
-                      <input type="text" formControlName="name" class="form-control input-design" placeholder="Name"
-                        (input)="onFranchiseNameInput(i)">
-                        @if(franchise.get('name')?.hasError('required') && franchise.get('name')?.touched){
-                          <div class="error-message">
-                          Name is required.
-                        </div>
-                        }
-                
-                    </div>
-                    <div class="col-lg-2">
-                      <label>Birth Year</label>
-                      <input type="number" formControlName="birthyearAddperson" class="form-control input-design"
-                        placeholder="YYYY" (input)="onBirthYearInputAddPerson($event, i)">
-                        @if(franchise.get('birthyearAddperson')?.hasError('required') && franchise.get('birthyearAddperson')?.touched){
-                          <div class="error-message">
-                          Birth Year is required.
-                        </div>
-                        }
-          
-@if(franchise.get('birthyearAddperson')?.hasError('invalidYear') && 
-(franchise.get('birthyearAddperson')?.dirty ) &&
-franchise.get('birthyearAddperson')?.value !== null){
-  <div class="error-message">
-    Invalid birth year. Please enter a valid year.
-  </div>
-}
-               
-
-
-                    </div>
-                    <div class="col-lg-4">
-                      <label>Franchise</label>
-                      <select formControlName="franchise" class="form-control-select"
-                        [class.selected]="franchise.get('franchise')?.value">
-                        <option value="" disabled selected>Please Select</option>
-                        <option value="300">300 CHF</option>
-                        <option value="500">500 CHF</option>
-                        <option value="1000">1000 CHF</option>
-                        <option value="1500">1500 CHF</option>
-                        <option value="2000">2000 CHF</option>
-                        <option value="2500">2500 CHF</option>
-                      </select>
-
-@if(franchise.get('franchise')?.hasError('required') && franchise.get('franchise')?.touched){
-  <div
-  class="error-message">
-  Franchise selection is required.
+  }
 </div>
-}
-                   
+<div class=" ">
+  <div>
+    <form [formGroup]="myFormStart" (ngSubmit)="nextStep()">
+      <div class="step-content" [class.active]="currentStep === 0">
+        <div class="container img first-three-forms-mobile ">
 
+          <div class="col-lg-8 ">
+            <h2>Choose the best life insurance for your financial goals</h2>
+            <p>You are in the right place. This is the first step towards your financial future. You can enter your
+              personal data and continue with the upcoming steps of analyzing your pension situation and choose the
+              right life insurance for your financial goals.</p>
 
-                    </div>
-                    <div class="col-lg-2 slide-toggle">
-                      <label>Accident Covered</label>
-                      <label class="switch">
-                        <input type="checkbox" checked data-toggle="toggle" formControlName="accidentCovered">
-                        <span class="slider round"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row buttons">
-                  <div class="col-lg-4">
-                    <button type="button" class="form-control button-design back" (click)="addFranchise()">+ Add
-                      Person</button>
-                  </div>
-                  <div class="col-lg-4">
-                    <button type="button" class=" form-control button-design " (click)="nextStep()"
-                      [disabled]="currentStep === steps.length - 1">Next</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <img class="img-margin" src="../assets/firstIcon.png" alt="img life insurance">
           </div>
-        </div>
-      </form>
-
-      <form [formGroup]="myFormWorkStatus" (ngSubmit)="goToNextStepTwo()">
-        <div class="step-content" [class.active]="currentStep === 1">
-          <div class="container img col-lg-12 first-three-forms-mobile">
-            <h2>Tell us more about you</h2>
-            <p>We select premiums individually, depending on your employment status, your profession and whether you are
-              smoker or not.</p>
-            <img class="img-margin" src="../assets/secondIcon.png" alt="img life insurance">
-            <div class="card ">
+          <div class="form-width">
+            <div class="card first-form">
               <div class="row">
-                <div class="col-lg-4">
-                  <label>Do you smoke
-                    <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
-                      <img src="../assets/info.svg" alt="Info Icon">
-                    </span>
-                  </label>
-                  <select placeholder="Please select" class="form-control-select" formControlName="smokingStatus"
-                    [class.selected]="myFormWorkStatus.get('smokingStatus')?.value">
-                    <option value="" disabled selected>Please Select</option>
-                    <option value="Never" class="text-dark">Never</option>
-                    <option value="Rarely" class="text-dark">Rarely</option>
-                    <option value="Often" class="text-dark">Often</option>
-                  </select>
-
-                  @if(myFormWorkStatus.get('smokingStatus')?.hasError('required') && myFormWorkStatus.get('smokingStatus')?.touched){
-                    <div class="error-message">
-                    Smoking status is required.
-                  </div>
-                  }
-      
-                </div>
-                <div class="col-lg-8">
-                  <label>What’s your profession?</label>
-                  <input type="text" placeholder="Profession" class="form-control input-design"
-                    formControlName="profession" (input)="onProfessionInput1()">
-
-                    @if(myFormWorkStatus.get('profession')?.hasError('required') && myFormWorkStatus.get('profession')?.touched){
-                      <div class="error-message">
-                      Profession is required.
-                    </div>
-                    }
-         
-                </div>
-              </div>
-              <div class="row label-occupational">
-                <label>Occupational situation</label>
-                <div class="second">
-                  <div class="row-1">
-                    <div class="col-lg-6 margin-radio-responsive">
-                      <input type="radio" id="radio1" value="Employed" formControlName="employmentStatus">
-                      <label for="radio1"> Employed</label>
-                    </div>
-                    <div class="col-lg-6 margin-radio-responsive">
-                      <input type="radio" id="radio2" value="Self_employed" formControlName="employmentStatus">
-                      <label for="radio2"> Self-employed</label>
-                    </div>
-                  </div>
-                  <div class="row-1">
-                    <div class="col-lg-6 margin-radio-responsive">
-                      <input type="radio" id="radio3" value="Student" formControlName="employmentStatus">
-                      <label for="radio3"> Student</label>
-                    </div>
-                    <div class="col-lg-6 margin-radio-responsive">
-                      <input type="radio" id="radio4" value="Not_working" formControlName="employmentStatus">
-                      <label for="radio4"> Not working</label>
-                    </div>
-                  </div>
-                </div>
-                @if(myFormWorkStatus.get('employmentStatus')?.hasError('required') && myFormWorkStatus.get('employmentStatus')?.touched){
-                  <div class="error-message">
-                  Employment Status is required.
-                </div>
-                }
-        
-                <div class="row buttons">
-                  <div class="col-lg-4">
-                    <button (click)="goToPreviousStep()" type="button"
-                      class=" form-control button-design back">Back</button>
-                  </div>
-                  <div class="col-lg-4">
-                    <button type="button" class=" form-control button-design " (click)="goToNextStepTwo()">Next</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-      <form [formGroup]="myFormLifeInsurancePlan" (ngSubmit)="nextStep()">
-        <div class="step-content" [class.active]="currentStep === 2">
-          <div class="container img col-lg-12 first-three-forms-mobile">
-            <div class="">
-              <h2>Your life insurance plan</h2>
-              <p>Pull the bar and determine the amount of money you want to save for your life insurance and for how
-                long.</p>
-              <img class="img-margin" src="../assets/safeImg.svg" alt="img life insurance">
-
-              <div class="card range-slider col-lg-12">
-                <div class="row ">
-                  <label class="label-margin">Insured sum</label>
-                  <div>
-                    <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredSum')?.value
-                      }}<span>CHF</span></p>
-                    <input class="range" type="range" formControlName="insuredSum" step="10000" min="100000"
-                      max="600000" (input)="rangeSlide(myFormLifeInsurancePlan.get('insuredSum')?.value)">
-                  </div>
-                </div>
-                <div class="row ">
-                  <label class="label-margin">Insured duration
-                  </label>
-                  <div>
-                    <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredDuration')?.value
-                      }}<span>Years</span></p>
-                    <input class="range" type="range" formControlName="insuredDuration" [min]="calculateValueMin()"
-                      [max]="calculateValue()"
-                      (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
-                  </div>
-                </div>
-                <div class="row buttons">
-                  <div class="col-lg-4">
-                    <button type="button" class=" form-control button-design back" (click)="goToPreviousStep()"
-                      [disabled]="currentStep === 0">Back</button>
-                  </div>
-                  <div class="col-lg-4">
-                    <button type="button" class=" form-control button-design " (click)="goToNextStep()"
-                      [disabled]="currentStep === steps.length - 1">Next</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-      <form [formGroup]="myFormLifeInsuranceGoal" (ngSubmit)="nextStep()">
-        <div class="step-content" [class.active]="currentStep === 3">
-          <div class="container img checkboxes-container-margin">
-
-            <h2>Choose your goals</h2>
-            <p>You can select the options that are relevant to you and we will help you choose the plan that fits best
-              for your saving goals.</p>
-            <img class="img-margin" src="../assets/pigImg.svg" alt="img life insurance">
-
-            <div class="card col-lg-7">
-              <div class="row checkboxes-margin">
-                <label class="checkbox-label">Savings goal</label>
-                <div class="second-checkboxes">
-
-                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive ">
-                    <input type="checkbox" id="checkbox1" formControlName="protectionOfFamily">
-                    <label class="checkbox-container no-margin-label-row-1" for="checkbox1">Protection of family</label>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
-                    <input type="checkbox" id="checkbox2" formControlName="buyOwnHome">
-                    <label class="checkbox-container no-margin-label-row-1" for="checkbox2">Buy your own home</label>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
-                    <input type="checkbox" id="checkbox3" formControlName="taxOptimization">
-                    <label class="checkbox-container no-margin-label-row-1" for="checkbox3">Tax optimization</label>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
-                    <input type="checkbox" id="checkbox4" formControlName="financialInvestments">
-                    <label class="checkbox-container" for="checkbox4">Financial investments</label>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
-                    <input type="checkbox" id="checkbox5" formControlName="financialIndependence">
-                    <label class="checkbox-container" for="checkbox5">Financial independence</label>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
-                    <input type="checkbox" id="checkbox6" formControlName="wealthAccumulation">
-                    <label class="checkbox-container" for="checkbox6">Wealth accumulation</label>
-                  </div>
-                </div>
-                @if(nextButtonClicked && !atLeastOneCheckboxChecked()){
-                  <div class="error-message mb-2">
-                    Please select at least one checkbox.
-                  </div>
-                }
-              </div>
-              <div class="row buttons ">
-                <div class="col-lg-4">
-                  <button type="button" class=" form-control button-design back "
-                    (click)="goToPreviousStep()">Back</button>
-                </div>
-                <div class="col-lg-4">
-                  <button type="button" class=" form-control button-design next-checkboxes "
-                    (click)="goToNextStepThree()">Next</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <div class="step-content" [class.active]="currentStep === 4">
-        <div class="container accordion  accordions-mobile img col-lg-8 ">
-          <div class="">
-            <h2>You are almost done</h2>
-            <p class="margin-top-accordion">We work with all insurance providers; we analyze offers every day. We will
-              give you the offer with the best price benefit ratio/relationship. Click more on the side of the company
-              name for more details.</p>
-            <div class="accordion" id="accordionFlushExample">
-              <div class="width-acc">
-                <div *ngFor="let accordionItem of displayedAccordionItems" class="card acc">
-                  <div class="card-header" [id]="'flush-heading' + accordionItem.id">
-                    <label class="ml-3">{{ accordionItem.id }}</label>
-                    <div class="card-header-item-container">
-                      <div class="header-img-description">
-                        <div class="col-lg-2">
-                          <img [src]="accordionItem.imageSrc" alt="Accordion Image" class="img-fluid float-left mr-3">
-                        </div>
-                        <div class="col-lg-4">
-                          <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
-                              class="bolder">{{ accordionItem.savings }}</span> francs {{ accordionItem.network }}</p>
-                        </div>
-                      </div>
-                      <div class="header-buttons">
-                        <button #accordionButton type="button" class="form-control button-design accordion-btn"
-                          (click)="goToNextStep(); updateSelectedAccordion(accordionItem.name); updateSelectedImage(accordionButton, accordionItem.imageSrc)"
-                          [disabled]="currentStep === steps.length - 1">Get an offer
-                        </button>
-                        <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
-                          <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
-                            [attr.data-bs-target]="'#flush-collapse' + accordionItem.id" aria-expanded="false"
-                            [attr.aria-controls]="'flush-collapse' + accordionItem.id">
-                            <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div [id]="'flush-collapse' + accordionItem.id" class="accordion-collapse collapse"
-                    [attr.aria-labelledby]="'flush-heading' + accordionItem.id" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <table class="table mt-3">
-                        <tbody>
-                          <tr class="bg-light">
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
-                            <td>CHF 200</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 94.10 (-27.45% compared to 2021)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
-                            </td>
-                            <td>CHF 1129.20</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+0.00% compared to 2020)</td>
-                          </tr>
-                          <tr>
-                            <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
-                            <td>CHF 129.70 (+6.31% compared to 2019)</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="row">
-                        <div class="col-lg-5">
-                          <p class="bolder paragraph-margin">Customer satisfaction</p>
-                        </div>
-                        <div class="col-lg-5">
-                          <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
-                            alt="rating img">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row center buttons">
-              <div class="col-lg-3">
-                <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
-              </div>
-              <div class="col-lg-3">
-                <button class="form-control button-design" (click)="onLoadMoreClick()"
-                  [class.disabled]="remainingAccordionItems.length === 0">Load More</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onLastStepNext()">
-        <div class="step-content" [class.active]="currentStep === 5">
-          <div class="container img last-form-mobile">
-
-            <div class="col-lg-8">
-              <h2>You’re done!</h2>
-              <p>We will crunch numbers and analyze which provider is the best for your needs. We will present to you
-                only the best offers, and then you decide, non-binding and free of charge service. We will be in touch
-                with you for more details as soon as possible.</p>
-            </div>
-
-            <div class="values-responsive">
-              <div class="responsive-values-design">
-                <div class="img-class-value col-lg-2">
-                  <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
-                </div>
-                <div class=" border-right ">
-
-                  <p class="text-wrap-last">{{ myFormStart.get('fullName')?.value.length > 20 ?
-                    myFormStart.get('fullName')?.value.substring(0, 20) + '...' : myFormStart.get('fullName')?.value }},
-                    {{ myFormStart.get('birthyear')?.value }} </p>
-
-                  <p>Insured sum {{ myFormLifeInsurancePlan.get('insuredSum')?.value }} CHF</p>
-                </div>
-
-              </div>
-              <div class="paragraph-values">
-                <p>{{ myFormStart.get('insuranceModel')?.value }}, {{ myFormStart.get('premiumModel')?.value }} </p>
-
-                <p>{{myFormWorkStatus.get('smokingStatus')?.value }}</p>
-              </div>
-            </div>
-            <div class="responsive-values-design added-people">
-              <div *ngFor="let franchise of franchises.controls; let i = index">
-                <div class="img-class-value">
-                  <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
-                </div>
-                <div class=" border-right mt-2 ">
-                  <p> {{ franchise.get('name')?.value.length > 20 ? franchise.get('name')?.value .substring(0, 20) +
-                    '...' : franchise.get('name')?.value }}, {{ franchise.get('birthyearAddperson')?.value }}</p>
-                  <p> {{ franchise.get('franchise')?.value }}CHF</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="card last-form-margin ">
-              <div class="row last-form">
-                <label>Gender</label>
-                <div class="buttons-container">
-                  <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons ">
-                    <div type="button" [class.clicked]="clickedButton === 'Male'" class="gender-button-input-design"
-                      (click)="setGender('Male')">
-                      <img src="../assets/man.svg" alt="Male">
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons ">
-                    <div type="button" [class.clicked]="clickedButton === 'Female'" class="gender-button-input-design"
-                      (click)="setGender('Female')">
-                      <img src="../assets/woman.svg" alt="Female">
-                    </div>
-                  </div>
-                </div>
-                @if(myFormPersonalDetails.get('gender')?.hasError('required') && (myFormPersonalDetails.get('gender')?.touched || myFormPersonalDetails.get('gender')?.dirty)){
-                  <div class="error-message gender-error">
-                  Gender is required.
-                </div>
-                }
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4">
-                  <label>Full name</label>
-                  <input placeholder="" class="form-control input-design-readonly"
-                    [value]="myFormStart.get('fullName')?.value" readonly>
-                </div>
-
-                <div class="col-lg-4">
-                  <label>Street, No</label>
-                  <input type="text" class="form-control input-design " formControlName="address" id="strasse"
-                    placeholder="Strasse, Nr*" (input)="onStrasseInput()">
-                    @if(myFormPersonalDetails.get('address')?.touched && myFormPersonalDetails.get('address')?.errors?.['required']){
-                      <div class="error-message">
-                      Street is required.
-                    </div>
-                    }
-          
-                </div>
                 <div class="col-lg-4">
                   <label>Postal Code</label>
-                  <input placeholder="" class="form-control input-design-readonly"
-                    [value]="myFormStart.get('postalCode')?.value" readonly>
-                </div>
-              </div>
+                  <div class="autocomplete-container">
+                    <input #autocompleteInput type="text" class="input-design form-control" formControlName="postalCode"
+                      id="plz" placeholder="PLZ" (input)="onPlzChange()" autocomplete="off" inputmode="numeric"
+                      oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); } this.value = this.value.replace(/[^0-9]/g, '');">
 
-              <div class="row">
-                <div class="col-lg-4">
-                  <label>Phone</label>
 
-                  <input #phoneInput id="phone" type="text" formControlName="phoneNumber" maxlength="20" />
-                  <div #errorMsg id="error-message" class="hide error-message"></div>
-                  <div #validMsg id="valid-msg" class="hide error-message"></div>
-                  @if(myFormPersonalDetails.get('phoneNumber')?.touched && myFormPersonalDetails.get('phoneNumber')?.errors?.['required']){
-                    <div class="error-message">
-                    Telephone is required.
+                    @if(autocompleteSuggestions && autocompleteSuggestions.length > 0){
+                    <ul class="autocomplete-drop">
+                      @for(suggestion of autocompleteSuggestions; track suggestion){
+                      <li (click)="selectSuggestion(suggestion)">
+                        {{ suggestion }}
+                      </li>
+                      }
+
+                    </ul>
+                    }
+
+                    @if(!isSuggestionSelected && (myFormStart.get('postalCode')?.touched ||
+                    myFormStart.get('postalCode')?.dirty) &&
+                    (!myFormStart.get('postalCode')?.value || myFormStart.get('postalCode')?.value.length <= 4 ||
+                      myFormStart.get('postalCode')?.value.length===5)){ <div class="error-message multiline-error">
+                      Please select a suggestion from the list.
                   </div>
                   }
-  
-                </div>
-
-                <div class="col-lg-4">
-                  <label>E-Mail</label>
-                  <input type="email" class="form-control input-design" formControlName="email" id="email"
-                    placeholder="E-Mail*">
-                    @if(myFormPersonalDetails.get('email')?.touched && myFormPersonalDetails.get('email')?.errors?.['required']){
-                      <div class="error-message">
-                      Email is required.
-                    </div>
-                    }
-       
-                    @if(myFormPersonalDetails.get('email')?.dirty && myFormPersonalDetails.get('email')?.value && myFormPersonalDetails.get('email')?.hasError('invalidEmail')){
-                      <div class="error-message">
-                      Please enter a valid email address.
-                    </div>
-                    }
-            
-                </div>
-
-                <div class="col-lg-4">
-                  <label>Nationality</label>
-                  <select placeholder="Please select" class="form-control-select" formControlName="nationality"
-                    [class.selected]="myFormPersonalDetails.get('nationality')?.value">
-                    <option *ngFor="let country of countries" [value]="country.value">{{ country.name }}</option>
-                  </select>
                 </div>
 
               </div>
-              <div class="col-lg-12 agreed-container mt-3">
-                <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
-                <label class="checkbox-container agreed" for="checkbox20">
-                  I have read and accepted the
-                  <a href="https://infoversicherung.ch/impressum" target="_blank">
-                    Terms of Use
-                  </a>
-                  and
-                  <a href="https://infoversicherung.ch/datenschutz" target="_blank">
-                    Privacy Policy
-                  </a>
 
+              <div class="col-lg-4">
+                <label>Insurance model 3a/3b
+                  <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
+                    <img src="../assets/info.svg" alt="Info Icon">
+                  </span>
                 </label>
-                @if(myFormPersonalDetails.get('agreedToTerms')?.touched && myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']){
-                  <div class="error-message agreed-error">
-                  Please accept our conditions.
+
+                <select placeholder="Please select" class="form-control-select" formControlName="insuranceModel"
+                  [class.selected]="myFormStart.get('insuranceModel')?.value">
+                  <option value="" disabled selected>Please Select</option>
+                  <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
+                  <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
+                </select>
+
+
+                @if(myFormStart.get('insuranceModel')?.hasError('required') &&
+                myFormStart.get('insuranceModel')?.touched){
+                <div class="error-message">
+                  Insurance model is required.
                 </div>
                 }
-     
               </div>
-              <div class="row buttons">
+
+
+              <div class="col-lg-4">
+                <label>Premium model <span matTooltip="This is information about Premium model."
+                    matTooltipPosition="below"> <img src="../assets/info.svg" alt="Info Icon"></span></label>
+                <select placeholder="Please select" class="form-control-select " formControlName="premiumModel"
+                  formControlName="premiumModel" [class.selected]="myFormStart.get('premiumModel')?.value">
+                  <option value="" disabled selected>Please Select</option>
+                  <option value="Fix" class="text-dark">Fix</option>
+                  <option value="Flex" class="text-dark">Flex</option>
+                </select>
+
+                @if(myFormStart.get('premiumModel')?.hasError('required') && myFormStart.get('premiumModel')?.touched){
+                <div class="error-message">
+                  Premium model is required.
+                </div>
+                }
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-8">
+                <label>Full Name</label>
+                <input type="text" placeholder="Full Name " formControlName="fullName" class="form-control input-design"
+                  (input)="onFullNameInput()">
+
+
+                @if(myFormStart.get('fullName')?.hasError('required') && myFormStart.get('fullName')?.touched){
+                <div class="error-message">
+                  Full Name is required.
+                </div>
+                }
+
+              </div>
+
+              <div class="col-lg-4">
+                <label>Birth Year</label>
+                <input type="number" placeholder="YYYY" formControlName="birthyear" class="form-control input-design"
+                  (input)="onBirthYearInput($event)">
+                @if(myFormStart.get('birthyear')?.hasError('required') && myFormStart.get('birthyear')?.touched){
+                <div class="error-message">
+                  Birth Year is required.
+                </div>
+                }
+
+                @if(myFormStart.get('birthyear')?.hasError('invalidYear') &&
+                (myFormStart.get('birthyear')?.dirty) &&
+                myFormStart.get('birthyear')?.value !== null){
+                <div class="error-message">
+                  Invalid birth year. Please enter a valid year.
+                </div>
+                }
+
+              </div>
+            </div>
+
+            <div formArrayName="franchises">
+              @for(franchise of franchises.controls; track franchise; let i = $index){
+
+
+              <div [formGroupName]="i" class="row add-persons">
+                <hr>
+                <div class=" row align-items-center">
+                  <div class="col-lg-6">
+                    <div class="person"> <img src="../assets/person-img.svg">Person {{ i + 1 }}
+                    </div>
+                  </div>
+                  <div class="col-lg-6 flex-end">
+                    @if(i > 0){
+                    <button class="remove-btn" (click)="removeFranchise(i)">- Remove
+                      person</button>
+                    }
+                  </div>
+                </div>
+
                 <div class="col-lg-4">
-                  <button (click)="goToPreviousStep()" type="button"
-                    class=" form-control button-design back last-form-buttons"
-                    [disabled]="currentStep === 0">Back</button>
+                  <label>Full Name</label>
+                  <input type="text" formControlName="name" class="form-control input-design" placeholder="Name"
+                    (input)="onFranchiseNameInput(i)">
+                  @if(franchise.get('name')?.hasError('required') && franchise.get('name')?.touched){
+                  <div class="error-message">
+                    Name is required.
+                  </div>
+                  }
+
+                </div>
+                <div class="col-lg-2">
+                  <label>Birth Year</label>
+                  <input type="number" formControlName="birthyearAddperson" class="form-control input-design"
+                    placeholder="YYYY" (input)="onBirthYearInputAddPerson($event, i)">
+                  @if(franchise.get('birthyearAddperson')?.hasError('required') &&
+                  franchise.get('birthyearAddperson')?.touched){
+                  <div class="error-message">
+                    Birth Year is required.
+                  </div>
+                  }
+
+                  @if(franchise.get('birthyearAddperson')?.hasError('invalidYear') &&
+                  (franchise.get('birthyearAddperson')?.dirty ) &&
+                  franchise.get('birthyearAddperson')?.value !== null){
+                  <div class="error-message">
+                    Invalid birth year. Please enter a valid year.
+                  </div>
+                  }
                 </div>
                 <div class="col-lg-4">
-                  <button type="button" class="form-control button-design last-form-buttons"
-                    (click)="onLastStepNext();">Next</button>
+                  <label>Franchise</label>
+                  <select formControlName="franchise" class="form-control-select"
+                    [class.selected]="franchise.get('franchise')?.value">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="300">300 CHF</option>
+                    <option value="500">500 CHF</option>
+                    <option value="1000">1000 CHF</option>
+                    <option value="1500">1500 CHF</option>
+                    <option value="2000">2000 CHF</option>
+                    <option value="2500">2500 CHF</option>
+                  </select>
+
+                  @if(franchise.get('franchise')?.hasError('required') && franchise.get('franchise')?.touched){
+                  <div class="error-message">
+                    Franchise selection is required.
+                  </div>
+                  }
                 </div>
+                <div class="col-lg-2 slide-toggle">
+                  <label>Accident Covered</label>
+                  <label class="switch">
+                    <input type="checkbox" checked data-toggle="toggle" formControlName="accidentCovered">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+              }
+            </div>
+            <div class="row buttons">
+              <div class="col-lg-4">
+                <button type="button" class="form-control button-design back" (click)="addFranchise()">+ Add
+                  Person</button>
+              </div>
+              <div class="col-lg-4">
+                <button type="button" class=" form-control button-design " (click)="nextStep()"
+                  [disabled]="currentStep === steps.length - 1">Next</button>
               </div>
             </div>
           </div>
         </div>
-      </form>
+      </div>
+  </div>
+  </form>
 
-      <form [formGroup]="myFormSignature" (ngSubmit)="onSubmit()">
-        <div class="step-content" [class.active]="currentStep === 6">
-          <div class="container">
-            <div class="card signature">
-              <div class=" signature-container " #signatureContainer>
-                <signature-pad #signature [options]="signaturePadOptions" (drawEnd)="drawComplete($event)" tabindex="0"
-                  formControlName="signature" ngDefaultControl></signature-pad>
-                <div class="toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                  <div class="tool" role="group" aria-label="Basic example">
-                    <button (click)="clear()" class="btn btn-tool" type="button">Clear</button>
-                  </div>
-                  <div class="tool" role="group" aria-label="Basic example">
-                    <button (click)="undo()" class="btn btn-tool" type="button">
-                      <i class="bi bi-arrow-counterclockwise"></i> Undo
-                    </button>
-                  </div>
-                  <div class="tool" role="group" aria-label="Basic example">
-                    <button (click)="redo()" class="btn btn-tool" type="button">
-                      <i class="bi bi-arrow-clockwise"></i> Redo
-                    </button>
-                  </div>
-                </div>
-                @if(formSubmitted &&  myFormSignature.get('signature')?.hasError('required')){
-                  <div class="error-message">
-                    Signature is required.
-                  </div>
-                }
-           
-                @if(myFormSignature.get('signature')?.hasError('invalidSignature')){
-                  <div class="error-message">
-                    The signature provided is invalid. Please draw one
-                      valid signature with more than one point.
-                  </div>
-                }
-       
+  <form [formGroup]="myFormWorkStatus" (ngSubmit)="goToNextStepTwo()">
+    <div class="step-content" [class.active]="currentStep === 1">
+      <div class="container img col-lg-12 first-three-forms-mobile">
+        <h2>Tell us more about you</h2>
+        <p>We select premiums individually, depending on your employment status, your profession and whether you are
+          smoker or not.</p>
+        <img class="img-margin" src="../assets/secondIcon.png" alt="img life insurance">
+        <div class="card ">
+          <div class="row">
+            <div class="col-lg-4">
+              <label>Do you smoke
+                <span matTooltip="This is information about Insurance model 3a/3b." matTooltipPosition="below">
+                  <img src="../assets/info.svg" alt="Info Icon">
+                </span>
+              </label>
+              <select placeholder="Please select" class="form-control-select" formControlName="smokingStatus"
+                [class.selected]="myFormWorkStatus.get('smokingStatus')?.value">
+                <option value="" disabled selected>Please Select</option>
+                <option value="Never" class="text-dark">Never</option>
+                <option value="Rarely" class="text-dark">Rarely</option>
+                <option value="Often" class="text-dark">Often</option>
+              </select>
+
+              @if(myFormWorkStatus.get('smokingStatus')?.hasError('required') &&
+              myFormWorkStatus.get('smokingStatus')?.touched){
+              <div class="error-message">
+                Smoking status is required.
               </div>
-              <div class="row buttons last-buttons">
-                <div class="col-lg-6">
-                  <button (click)="goToPreviousStep()" type="button"
-                    class=" form-control button-design back last-form-buttons"
-                    [disabled]="currentStep === 0">Back</button>
+              }
 
+            </div>
+            <div class="col-lg-8">
+              <label>What’s your profession?</label>
+              <input type="text" placeholder="Profession" class="form-control input-design" formControlName="profession"
+                (input)="onProfessionInput1()">
+
+              @if(myFormWorkStatus.get('profession')?.hasError('required') &&
+              myFormWorkStatus.get('profession')?.touched){
+              <div class="error-message">
+                Profession is required.
+              </div>
+              }
+
+            </div>
+          </div>
+          <div class="row label-occupational">
+            <label>Occupational situation</label>
+            <div class="second">
+              <div class="row-1">
+                <div class="col-lg-6 margin-radio-responsive">
+                  <input type="radio" id="radio1" value="Employed" formControlName="employmentStatus">
+                  <label for="radio1"> Employed</label>
                 </div>
-                <div class="col-lg-6">
-                  <button type="button" class="form-control button-design last-form-buttons"
-                    (click)="onSubmit()">Finish</button>
+                <div class="col-lg-6 margin-radio-responsive">
+                  <input type="radio" id="radio2" value="Self_employed" formControlName="employmentStatus">
+                  <label for="radio2"> Self-employed</label>
                 </div>
+              </div>
+              <div class="row-1">
+                <div class="col-lg-6 margin-radio-responsive">
+                  <input type="radio" id="radio3" value="Student" formControlName="employmentStatus">
+                  <label for="radio3"> Student</label>
+                </div>
+                <div class="col-lg-6 margin-radio-responsive">
+                  <input type="radio" id="radio4" value="Not_working" formControlName="employmentStatus">
+                  <label for="radio4"> Not working</label>
+                </div>
+              </div>
+            </div>
+            @if(myFormWorkStatus.get('employmentStatus')?.hasError('required') &&
+            myFormWorkStatus.get('employmentStatus')?.touched){
+            <div class="error-message">
+              Employment Status is required.
+            </div>
+            }
+            <div class="row buttons">
+              <div class="col-lg-4">
+                <button (click)="goToPreviousStep()" type="button"
+                  class=" form-control button-design back">Back</button>
+              </div>
+              <div class="col-lg-4">
+                <button type="button" class=" form-control button-design " (click)="goToNextStepTwo()">Next</button>
               </div>
             </div>
           </div>
         </div>
-      </form>
+      </div>
+    </div>
+  </form>
+  <form [formGroup]="myFormLifeInsurancePlan" (ngSubmit)="nextStep()">
+    <div class="step-content" [class.active]="currentStep === 2">
+      <div class="container img col-lg-12 first-three-forms-mobile">
+        <div class="">
+          <h2>Your life insurance plan</h2>
+          <p>Pull the bar and determine the amount of money you want to save for your life insurance and for how
+            long.</p>
+          <img class="img-margin" src="../assets/safeImg.svg" alt="img life insurance">
+
+          <div class="card range-slider col-lg-12">
+            <div class="row ">
+              <label class="label-margin">Insured sum</label>
+              <div>
+                <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredSum')?.value
+                  }}<span>CHF</span></p>
+                <input class="range" type="range" formControlName="insuredSum" step="10000" min="100000" max="600000"
+                  (input)="rangeSlide(myFormLifeInsurancePlan.get('insuredSum')?.value)">
+              </div>
+            </div>
+            <div class="row ">
+              <label class="label-margin">Insured duration
+              </label>
+              <div>
+                <p id="rangeValue" class="paragraph-margin">{{ myFormLifeInsurancePlan.get('insuredDuration')?.value
+                  }}<span>Years</span></p>
+                <input class="range" type="range" formControlName="insuredDuration" [min]="calculateValueMin()"
+                  [max]="calculateValue()"
+                  (input)="rangeSlideDuration(myFormLifeInsurancePlan.get('insuredDuration')?.value)">
+              </div>
+            </div>
+            <div class="row buttons">
+              <div class="col-lg-4">
+                <button type="button" class=" form-control button-design back" (click)="goToPreviousStep()"
+                  [disabled]="currentStep === 0">Back</button>
+              </div>
+              <div class="col-lg-4">
+                <button type="button" class=" form-control button-design " (click)="goToNextStep()"
+                  [disabled]="currentStep === steps.length - 1">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form [formGroup]="myFormLifeInsuranceGoal" (ngSubmit)="nextStep()">
+    <div class="step-content" [class.active]="currentStep === 3">
+      <div class="container img checkboxes-container-margin">
+
+        <h2>Choose your goals</h2>
+        <p>You can select the options that are relevant to you and we will help you choose the plan that fits best
+          for your saving goals.</p>
+        <img class="img-margin" src="../assets/pigImg.svg" alt="img life insurance">
+
+        <div class="card col-lg-7">
+          <div class="row checkboxes-margin">
+            <label class="checkbox-label">Savings goal</label>
+            <div class="second-checkboxes">
+
+              <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive ">
+                <input type="checkbox" id="checkbox1" formControlName="protectionOfFamily">
+                <label class="checkbox-container no-margin-label-row-1" for="checkbox1">Protection of family</label>
+              </div>
+              <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
+                <input type="checkbox" id="checkbox2" formControlName="buyOwnHome">
+                <label class="checkbox-container no-margin-label-row-1" for="checkbox2">Buy your own home</label>
+              </div>
+              <div class="col-lg-4 col-sm-6 label-margin-checkboxes-responsive">
+                <input type="checkbox" id="checkbox3" formControlName="taxOptimization">
+                <label class="checkbox-container no-margin-label-row-1" for="checkbox3">Tax optimization</label>
+              </div>
+              <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
+                <input type="checkbox" id="checkbox4" formControlName="financialInvestments">
+                <label class="checkbox-container" for="checkbox4">Financial investments</label>
+              </div>
+              <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
+                <input type="checkbox" id="checkbox5" formControlName="financialIndependence">
+                <label class="checkbox-container" for="checkbox5">Financial independence</label>
+              </div>
+              <div class="col-lg-4 col-sm-6 label-margin-checkboxes ">
+                <input type="checkbox" id="checkbox6" formControlName="wealthAccumulation">
+                <label class="checkbox-container" for="checkbox6">Wealth accumulation</label>
+              </div>
+            </div>
+            @if(nextButtonClicked && !atLeastOneCheckboxChecked()){
+            <div class="error-message mb-2">
+              Please select at least one checkbox.
+            </div>
+            }
+          </div>
+          <div class="row buttons ">
+            <div class="col-lg-4">
+              <button type="button" class=" form-control button-design back " (click)="goToPreviousStep()">Back</button>
+            </div>
+            <div class="col-lg-4">
+              <button type="button" class=" form-control button-design next-checkboxes "
+                (click)="goToNextStepThree()">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="step-content" [class.active]="currentStep === 4">
+    <div class="container accordion  accordions-mobile img col-lg-8 ">
+      <div class="">
+        <h2>You are almost done</h2>
+        <p class="margin-top-accordion">We work with all insurance providers; we analyze offers every day. We will
+          give you the offer with the best price benefit ratio/relationship. Click more on the side of the company
+          name for more details.</p>
+        <div class="accordion" id="accordionFlushExample">
+          <div class="width-acc">
+            @for(accordionItem of displayedAccordionItems; track accordionItem){
+            <div class="card acc">
+              <div class="card-header" [id]="'flush-heading' + accordionItem.id">
+                <label class="ml-3">{{ accordionItem.id }}</label>
+                <div class="card-header-item-container">
+                  <div class="header-img-description">
+                    <div class="col-lg-2">
+                      <img [src]="accordionItem.imageSrc" alt="Accordion Image" class="img-fluid float-left mr-3">
+                    </div>
+                    <div class="col-lg-4">
+                      <p class="paragraph-margin table-p line-height"> Savings potential of up to <span
+                          class="bolder">{{ accordionItem.savings }}</span> francs {{ accordionItem.network }}</p>
+                    </div>
+                  </div>
+                  <div class="header-buttons">
+                    <button #accordionButton type="button" class="form-control button-design accordion-btn"
+                      (click)="goToNextStep(); updateSelectedAccordion(accordionItem.name); updateSelectedImage(accordionButton, accordionItem.imageSrc)"
+                      [disabled]="currentStep === steps.length - 1">Get an offer
+                    </button>
+                    <div class="col-sm-3 col-lg-4 col-md-4 margin-collapsed-button">
+                      <button class="acc-btn form-control collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#flush-collapse' + accordionItem.id" aria-expanded="false"
+                        [attr.aria-controls]="'flush-collapse' + accordionItem.id">
+                        <span class="button-text">Details</span><i class="fas fa-chevron-down"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div [id]="'flush-collapse' + accordionItem.id" class="accordion-collapse collapse"
+                [attr.aria-labelledby]="'flush-heading' + accordionItem.id" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <table class="table table-striped mt-3">
+                    <tbody>
+                      <tr class="bg-light">
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Chosen franchise:</td>
+                        <td>CHF 200</td>
+                      </tr>
+                      <tr>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 94.10 (-27.45% compared to 2021)</td>
+                      </tr>
+                      <tr>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Total premium per year:
+                        </td>
+                        <td>CHF 1129.20</td>
+                      </tr>
+                      <tr>
+                        <td class="bolder"><img src="../assets/tickAcc.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+0.00% compared to 2020)</td>
+                      </tr>
+                      <tr>
+                        <td class="bolder"><img src="../assets/x.svg" alt="Tick Icon">Monthly bonuses:</td>
+                        <td>CHF 129.70 (+6.31% compared to 2019)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="row">
+                    <div class="col-lg-5">
+                      <p class="bolder paragraph-margin">Customer satisfaction</p>
+                    </div>
+                    <div class="col-lg-5">
+                      <img src="../assets/ratingStars.svg" alt="rating img"> <img src="../assets/5-5.svg"
+                        alt="rating img">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="row center buttons">
+          <div class="col-lg-3">
+            <button type="button" class="form-control button-design back" (click)="goToPreviousStep()">Back</button>
+          </div>
+          <div class="col-lg-3">
+            <button class="form-control button-design" (click)="onLoadMoreClick()"
+              [class.disabled]="remainingAccordionItems.length === 0">Load More</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <form [formGroup]="myFormPersonalDetails" (ngSubmit)="onLastStepNext()">
+    <div class="step-content" [class.active]="currentStep === 5">
+      <div class="container img last-form-mobile">
+
+        <div class="col-lg-8">
+          <h2>You’re done!</h2>
+          <p>We will crunch numbers and analyze which provider is the best for your needs. We will present to you
+            only the best offers, and then you decide, non-binding and free of charge service. We will be in touch
+            with you for more details as soon as possible.</p>
+        </div>
+
+        <div class="values-responsive">
+          <div class="responsive-values-design">
+            <div class="img-class-value col-lg-2">
+              <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
+            </div>
+            <div class=" border-right ">
+
+              <p class="text-wrap-last">{{ myFormStart.get('fullName')?.value.length > 20 ?
+                myFormStart.get('fullName')?.value.substring(0, 20) + '...' : myFormStart.get('fullName')?.value }},
+                {{ myFormStart.get('birthyear')?.value }} </p>
+
+              <p>Insured sum {{ myFormLifeInsurancePlan.get('insuredSum')?.value }} CHF</p>
+            </div>
+
+          </div>
+          <div class="paragraph-values">
+            <p>{{ myFormStart.get('insuranceModel')?.value }}, {{ myFormStart.get('premiumModel')?.value }} </p>
+
+            <p>{{myFormWorkStatus.get('smokingStatus')?.value }}</p>
+          </div>
+        </div>
+        <div class="responsive-values-design added-people">
+          @for(franchise of franchises.controls; track franchise ;let i = $index){
+          <div>
+            <div class="img-class-value">
+              <img [src]="selectedImage" alt="Selected Image" class="img-fluid img float-left mr-3">
+            </div>
+            <div class=" border-right mt-2 ">
+              <p> {{ franchise.get('name')?.value.length > 20 ? franchise.get('name')?.value .substring(0, 20) +
+                '...' : franchise.get('name')?.value }}, {{ franchise.get('birthyearAddperson')?.value }}</p>
+              <p> {{ franchise.get('franchise')?.value }}CHF</p>
+            </div>
+          </div>
+          }
+        </div>
+
+        <div class="card last-form-margin ">
+          <div class="row last-form">
+            <label>Gender</label>
+            <div class="buttons-container">
+              <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons ">
+                <div type="button" [class.clicked]="clickedButton === 'Male'" class="gender-button-input-design"
+                  (click)="setGender('Male')">
+                  <img src="../assets/man.svg" alt="Male">
+                </div>
+              </div>
+              <div class="col-lg-2 col-sm-6 col-md-6 col-6 gender-icons ">
+                <div type="button" [class.clicked]="clickedButton === 'Female'" class="gender-button-input-design"
+                  (click)="setGender('Female')">
+                  <img src="../assets/woman.svg" alt="Female">
+                </div>
+              </div>
+            </div>
+            @if(myFormPersonalDetails.get('gender')?.hasError('required') &&
+            (myFormPersonalDetails.get('gender')?.touched || myFormPersonalDetails.get('gender')?.dirty)){
+            <div class="error-message gender-error">
+              Gender is required.
+            </div>
+            }
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <label>Full name</label>
+              <input placeholder="" class="form-control input-design-readonly"
+                [value]="myFormStart.get('fullName')?.value" readonly>
+            </div>
+
+            <div class="col-lg-4">
+              <label>Street, No</label>
+              <input type="text" class="form-control input-design " formControlName="address" id="strasse"
+                placeholder="Strasse, Nr*" (input)="onStrasseInput()">
+              @if(myFormPersonalDetails.get('address')?.touched &&
+              myFormPersonalDetails.get('address')?.errors?.['required']){
+              <div class="error-message">
+                Street is required.
+              </div>
+              }
+
+            </div>
+            <div class="col-lg-4">
+              <label>Postal Code</label>
+              <input placeholder="" class="form-control input-design-readonly"
+                [value]="myFormStart.get('postalCode')?.value" readonly>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <label>Phone</label>
+
+              <input #phoneInput id="phone" type="text" formControlName="phoneNumber" maxlength="20" />
+              <div #errorMsg id="error-message" class="hide error-message"></div>
+              <div #validMsg id="valid-msg" class="hide error-message"></div>
+              @if(myFormPersonalDetails.get('phoneNumber')?.touched &&
+              myFormPersonalDetails.get('phoneNumber')?.errors?.['required']){
+              <div class="error-message">
+                Telephone is required.
+              </div>
+              }
+
+            </div>
+
+            <div class="col-lg-4">
+              <label>E-Mail</label>
+              <input type="email" class="form-control input-design" formControlName="email" id="email"
+                placeholder="E-Mail*">
+              @if(myFormPersonalDetails.get('email')?.touched &&
+              myFormPersonalDetails.get('email')?.errors?.['required']){
+              <div class="error-message">
+                Email is required.
+              </div>
+              }
+
+              @if(myFormPersonalDetails.get('email')?.dirty && myFormPersonalDetails.get('email')?.value &&
+              myFormPersonalDetails.get('email')?.hasError('invalidEmail')){
+              <div class="error-message">
+                Please enter a valid email address.
+              </div>
+              }
+
+            </div>
+
+            <div class="col-lg-4">
+              <label>Nationality</label>
+              <select placeholder="Please select" class="form-control-select" formControlName="nationality"
+                [class.selected]="myFormPersonalDetails.get('nationality')?.value">
+                @for(country of countries; track country){
+                <option [value]="country.value">{{ country.name }}</option>
+                }
+              </select>
+            </div>
+
+          </div>
+          <div class="col-lg-12 agreed-container mt-3">
+            <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
+            <label class="checkbox-container agreed" for="checkbox20">
+              I have read and accepted the
+              <a href="https://infoversicherung.ch/impressum" target="_blank">
+                Terms of Use
+              </a>
+              and
+              <a href="https://infoversicherung.ch/datenschutz" target="_blank">
+                Privacy Policy
+              </a>
+
+            </label>
+            @if(myFormPersonalDetails.get('agreedToTerms')?.touched &&
+            myFormPersonalDetails.get('agreedToTerms')?.errors?.['required']){
+            <div class="error-message agreed-error">
+              Please accept our conditions.
+            </div>
+            }
+
+          </div>
+          <div class="row buttons">
+            <div class="col-lg-4">
+              <button (click)="goToPreviousStep()" type="button"
+                class=" form-control button-design back last-form-buttons" [disabled]="currentStep === 0">Back</button>
+            </div>
+            <div class="col-lg-4">
+              <button type="button" class="form-control button-design last-form-buttons"
+                (click)="onLastStepNext();">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form [formGroup]="myFormSignature" (ngSubmit)="onSubmit()">
+    <div class="step-content" [class.active]="currentStep === 6">
+      <div class="container">
+        <div class="card signature">
+          <div class=" signature-container " #signatureContainer>
+            <signature-pad #signature [options]="signaturePadOptions" (drawEnd)="drawComplete($event)" tabindex="0"
+              formControlName="signature" ngDefaultControl></signature-pad>
+            <div class="toolbar" role="toolbar" aria-label="Toolbar with button groups">
+              <div class="tool" role="group" aria-label="Basic example">
+                <button (click)="clear()" class="btn btn-tool" type="button">Clear</button>
+              </div>
+              <div class="tool" role="group" aria-label="Basic example">
+                <button (click)="undo()" class="btn btn-tool" type="button">
+                  <i class="bi bi-arrow-counterclockwise"></i> Undo
+                </button>
+              </div>
+              <div class="tool" role="group" aria-label="Basic example">
+                <button (click)="redo()" class="btn btn-tool" type="button">
+                  <i class="bi bi-arrow-clockwise"></i> Redo
+                </button>
+              </div>
+            </div>
+            @if(formSubmitted && myFormSignature.get('signature')?.hasError('required')){
+            <div class="error-message">
+              Signature is required.
+            </div>
+            }
+
+            @if(myFormSignature.get('signature')?.hasError('invalidSignature')){
+            <div class="error-message">
+              The signature provided is invalid. Please draw one
+              valid signature with more than one point.
+            </div>
+            }
+
+          </div>
+          <div class="row buttons last-buttons">
+            <div class="col-lg-6">
+              <button (click)="goToPreviousStep()" type="button"
+                class=" form-control button-design back last-form-buttons" [disabled]="currentStep === 0">Back</button>
+
+            </div>
+            <div class="col-lg-6">
+              <button type="button" class="form-control button-design last-form-buttons"
+                (click)="onSubmit()">Finish</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
 </div>
