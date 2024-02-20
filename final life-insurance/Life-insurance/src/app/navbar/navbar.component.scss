@@ -359,6 +359,7 @@ margin: 20px;
 
 .navbar-expand-lg .navbar-collapse {
   justify-content: flex-end;
+
 }
 
 .text-light{
@@ -458,7 +459,7 @@ margin: 20px;
 }
 
 .navbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -494,10 +495,6 @@ margin: 20px;
     }
   }
 
-  .card-body.no-center {
-    align-items: flex-start;
-
-  }
 
   h1 {
     font-weight: bolder;
@@ -540,6 +537,8 @@ margin: 20px;
 }
 
 @media (min-width: 768px) and (max-width: 1400px) {
+
+
    .dropdown-menu .show {
     width: 40vw;
     flex-wrap: wrap;
@@ -587,6 +586,9 @@ margin: 20px;
 }
 
 @media (max-width: 767px) {
+  .navbar-design{
+    margin:  0 15px ;
+      }
   .dropdown-menu{
     top: 0px
   }
