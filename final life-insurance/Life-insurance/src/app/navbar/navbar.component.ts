@@ -1,9 +1,10 @@
-import {Component, OnInit, OnDestroy, ViewChild, ElementRef,} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, ElementRef,HostListener} from '@angular/core';
 
 import {Subscription} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatMenuTrigger} from "@angular/material/menu";
 import {trigger, state, style, animate, transition} from '@angular/animations';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -11,6 +12,7 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   standalone: true,
+  imports: [CommonModule],
   animations: [
     trigger('dropdownState', [
       state('closed', style({
@@ -27,7 +29,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   @ViewChild('menuBtn') menuBtn!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
+  menuExpanded = false;
 
+  toggleMenu() {
+    setTimeout(() => {
+      this.menuExpanded = !this.menuExpanded;
+    }, 0);
+  }
+
+  @HostListener('window:click', ['$event'])
+  listenToOutsideClick() {
+    console.log(this.menuExpanded)
+    if (!this.menuExpanded) {
+      return;
+    }
+
+    this.menuExpanded = false;
+  }
   isMainDropdownOpen: boolean = false;
   private timeoutId: any | undefined;
   activeLang: string = '';
