@@ -1,0 +1,133 @@
+
+.container {
+    max-width: 1100px;
+    height: 50vh;
+
+    label{
+        padding-left: 15px;
+    }
+}
+.background-color{
+    background-color: #FBFBFB;
+}
+.input-design {
+
+    height: 40px;
+    color: #5f5f5f;
+    border: 1px solid #e9e9e9;
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    &::placeholder {
+      color: #a5a5a5;
+      font-size: 14px;
+    }
+&:hover,
+    &:focus,
+    &:not(:placeholder-shown) {
+    background-color: #f7f5f5;
+    }
+  }
+.button-design {
+    background-color: #f01724;
+    border: none;
+    border-radius: 10px !important;
+    color: white;
+    padding: 8px 25px;
+    margin: 5px;
+}
+.input-icon{
+    background-color: transparent;
+    border: none;
+}
+.first-form{
+    box-shadow: 1px 1px 10px rgba(138, 137, 137, 0.5);
+    width: 50%;
+     padding:30px;
+     background-color: white;
+
+}
+.row.first-form{
+    label{
+        padding-left: 30px;
+    }
+}
+// .background-image {
+//     width: 300%;
+//     height: 60vh;
+//     object-fit: cover;
+//     position: relative;
+//     left: -10%;
+//     top: 0;
+//     transform: translateX(-50%);
+//     box-shadow: none;
+// }
+//tel
+
+:host ::ng-deep .iti {
+    width: 100%;
+  }
+  
+  ::ng-deep .iti__selected-flag {
+    background-color: #F6F6F6;
+    border-radius: 8px 0px 0px 8px;
+    overflow: hidden;
+    border: red
+    ;
+  }
+  
+  :host ::ng-deep .iti__country {
+    width: 100%;
+    background-color: #b6b6b60f;
+  }
+  
+  .iti.iti--allow-dropdown {
+    width: 100%;
+  }
+  
+  .iti--allow-dropdown {
+    width: 100%;
+  }
+  
+  :host ::ng-deep .iti {
+    input#country-search-box {
+      padding-left: 10px;
+      border-radius: 0 !important;
+    }
+  }
+  
+  :host ::ng-deep .search-container input {
+    border-radius: 0 !important;
+  }
+  
+  :host ::ng-deep .iti input {
+    border: none;
+    border-radius: 8px;
+
+  
+    border: 1px solid #f3f3f3;
+    box-shadow: none;
+    outline: none;
+    height: 40px;
+    width: 100%;
+    color: #5f5f5f;
+    font-size: 14px;
+  
+    &::placeholder {
+      color: #a5a5a5 !important;
+    }
+  
+    &:focus,
+    //&:hover,
+    &:not(:placeholder-shown) {
+      border: 1px solid #25AE78;
+      outline: none;
+      color: #5f5f5f;
+      transition: border-color 0.5s, background-color 0.5s;
+  
+      &::placeholder {
+        color: #a5a5a5 !important;
+      }
+    }
+  }

@@ -5,13 +5,14 @@ import { DankeComponent } from './dankePage/danke.component';
 import { FormsComponent } from './forms/forms.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import {RouterModule} from '@angular/router';
 
 
 
 @Component({
   selector: 'app-root',
   standalone:true,
-  imports: [CommonModule, FormsComponent, RouterOutlet, DankeComponent, NavbarComponent, FooterComponent],
+  imports: [CommonModule, RouterModule,FormsComponent, RouterOutlet, DankeComponent, NavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 

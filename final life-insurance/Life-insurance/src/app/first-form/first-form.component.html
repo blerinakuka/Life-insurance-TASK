@@ -1,0 +1,79 @@
+<div class="background-color"><div class="container">
+    <div class="row">
+    
+            <div class=" first-form">
+                <div class="col-lg-12">
+                  <label>Wahlen Sie Ihre Versicherungen
+                   
+                  </label>
+  
+                  <select placeholder="Bitte Auswahlen" class="form-control-select" formControlName="insuranceModel"
+                    >
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
+                    <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
+                  </select>
+  
+                </div>
+    
+  
+  <div class="col-lg-12">
+    <label>Vorname & Nachname</label>
+
+        
+        <input type="text" placeholder="Ihr Vorname & Nachname" formControlName="fullName" class="form-control input-design">
+       
+
+</div>
+
+                <div class="col-lg-12">
+                    <label>PLZ</label>
+                    <input type="text" placeholder="Ihre Postleizahl" formControlName="fullName" class="form-control input-design">
+                </div>
+                <div class="col-lg-12">
+                    <label>E-Mail</label>
+                    <input type="email" class="form-control input-design" formControlName="email" id="email"
+                      placeholder="Ihr E-Mail">
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label>Phone</label>
+            
+                          <input #phoneInput id="phone" type="text" formControlName="phoneNumber" maxlength="20" />
+                          <div #errorMsg id="error-message" class="hide error-message"></div>
+                          <div #validMsg id="valid-msg" class="hide error-message"></div>
+                       
+            
+                        </div>
+                        <div class="col-lg-12 agreed-container mt-3">
+                            <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
+                            <label class="checkbox-container agreed" for="checkbox20">
+                              I have read and accepted the
+                              <a href="https://infoversicherung.ch/impressum" target="_blank">
+                                Terms of Use
+                              </a>
+                              and
+                              <a href="https://infoversicherung.ch/datenschutz" target="_blank">
+                                Privacy Policy
+                              </a>
+                
+                            </label>
+                      
+                
+                          </div>
+
+                          <div class="col-lg-12">
+                            <button class="form-control button-design m-0" 
+                              >Senden</button>
+                          </div>
+
+        <div class="small-cards">
+
+
+        </div>
+
+    </div>
+
+</div>
+</div>
