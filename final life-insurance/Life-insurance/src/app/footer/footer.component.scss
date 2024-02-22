@@ -468,8 +468,10 @@ footer {
 
 @media (min-width: 320px) and (max-width: 1024px) {
   article {
+    border-radius: 0%;
     .newletter {
       flex-direction: column;
+ 
 
       .width-50 {
         width: 100%;

@@ -313,6 +313,9 @@ p{
     }
     }
   .text-icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     h4{
       margin-bottom: 5px!important;
       font-weight: 500;
