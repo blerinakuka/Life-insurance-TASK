@@ -34,11 +34,14 @@
               "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/intl-tel-input/build/css/intlTelInput.css"
+              "node_modules/intl-tel-input/build/css/intlTelInput.css",
+              "node_modules/owl.carousel/dist/assets/owl.carousel.css",
+              "node_modules/owl.carousel/dist/assets/owl.theme.default.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/owl.carousel/dist/owl.carousel.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },

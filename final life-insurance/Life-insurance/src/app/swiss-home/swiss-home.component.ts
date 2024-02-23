@@ -4,10 +4,11 @@ import { FamilyInsuranceComponent } from '../family-insurance/family-insurance.c
 import { AnniversaryComponent } from '../anniversary/anniversary.component';
 import { WorkComponent } from '../work/work.component';
 import { PartnersComponent } from '../partners/partners.component';
+import { SliderComponent } from '../slider/slider.component';
 @Component({
   selector: 'app-swiss-home',
   standalone: true,
-  imports: [FirstFormComponent,FamilyInsuranceComponent, AnniversaryComponent,WorkComponent, PartnersComponent],
+  imports: [FirstFormComponent,FamilyInsuranceComponent, AnniversaryComponent,WorkComponent, PartnersComponent, SliderComponent],
   templateUrl: './swiss-home.component.html',
   styleUrl: './swiss-home.component.scss'
 })

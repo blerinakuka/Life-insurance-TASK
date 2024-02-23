@@ -32,20 +32,29 @@ export class PartnersComponent {
       .subscribe(matches => {
         if (matches) {
           this.isMobile = true;
-          this.startAutoSlide();
+          if (window.innerWidth < 767) {
+            this.startAutoSlide();
+          }
         }
       });
   }
+  
   startAutoSlide() {
     if (this.isMobile) {
-      interval(4000).subscribe(() => {
+      interval(3000).subscribe(() => {
         this.counter++;
         if (this.counter >= this.slides.nativeElement.children.length) {
-          this.counter = 0;
+          this.counter = 0; 
+          this.slides.nativeElement.style.transition = 'none'; 
+          this.slides.nativeElement.style.transform = `translateX(0)`;
+          setTimeout(() => {
+            this.slides.nativeElement.style.transition = 'transform 0.5s ease-in-out'; 
+          }, 50); 
+        } else {
+          const offset = -this.counter * (this.slideWidth * 1.23); 
+          this.slides.nativeElement.style.transition = 'transform 0.5s ease-in-out';
+          this.slides.nativeElement.style.transform = `translateX(${offset}px)`;
         }
-        const offset = -this.counter * (this.slideWidth * 1.2); // Adjust the factor as needed
-        this.slides.nativeElement.style.transition = 'transform 0.5s ease-in-out';
-        this.slides.nativeElement.style.transform = `translateX(${offset}px)`;
       });
     }
   }
