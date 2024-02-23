@@ -249,11 +249,14 @@
 }
 
 .text-subscribe {
-  padding: 25px 0 0;
+
 
   h3 {
     font-weight: 500;
     font-size: 23px;
+  }
+  p{
+    color:#707070;
   }
 }
 
@@ -312,6 +315,7 @@ article {
     display: flex;
     background-color: #f6f6f6;
     color: black;
+    justify-content: space-between;
 
     .width-50 {
       width: 50%;
@@ -324,7 +328,7 @@ article {
     .input-group {
       background-color: hsl(0, 0%, 100%);
       border-radius: 8px;
-      margin: 5px;
+      border: 1px solid #70707026;
 
     }
 
@@ -332,9 +336,9 @@ article {
       background-color: #f01724;
       border: none;
       border-radius: 8px !important;
-      color: #F9A2A7;
+      color: #FFFFFF;
       padding: 6px 25px;
-      margin: 4px;
+      margin: 3px;
       font-size: 16px;
     }
 
@@ -360,7 +364,8 @@ article {
     .form-control {
       font-size: 16px;
       box-shadow: none;
-      border-color: #F9F8FC;
+    border: 1px solid #fff;
+    height: 40px;
     }
 
 
@@ -451,7 +456,7 @@ footer {
 .social-media-links {
 
   display: flex;
-  justify-content: flex-start;
+
 
   img {}
 
@@ -465,20 +470,58 @@ footer {
   }
 }
 
+.img-background{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid #FFFFFF;
+  height: 32px;
+  width: 32px;
+  margin-right: 10px;
+}
+
+.first-part{
+  max-width: 456px;
+}
+.second-part{
+  max-width: 417.58px
+}
+
 
 @media (min-width: 320px) and (max-width: 1024px) {
   article {
     border-radius: 0%;
+    padding: 10px;
     .newletter {
       flex-direction: column;
  
+align-items: center;
+.input-group{
+  flex-direction: column;
+  background-color: transparent;
+  border: none;
+}
+.form-control {
+width: 100%;
+height: 40px;
+border: 1px solid #70707026;
+border-radius: 8px!important;
+}
+.button-design {
+  height: 40px;
+  margin: 15px 0 5px 0;
 
+}
       .width-50 {
         width: 100%;
       }
     }
   }
-
+.margin-top{
+  margin-top: 120px!important;
+}
   .position-footer-items {
 
     text-align: center;
@@ -496,6 +539,8 @@ footer {
     justify-content: center;
 
   }
+
+
 
   .subscribe-design {
 

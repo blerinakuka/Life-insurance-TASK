@@ -1,0 +1,89 @@
+.container{
+    max-width: 1100px;
+}.text{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    max-width: 992px;
+    p{
+        color:#707070 ;
+    }
+}
+.companies-images{
+    display: flex;
+
+    margin-bottom: 62.41px;
+    margin-top: 10.41px;
+
+}
+.companies-images svg {
+
+    cursor: pointer;
+}
+.image-pax:hover .a{
+    fill: #8ccd0f; 
+}
+.image-pax:hover .b { 
+    fill: #34334b; 
+}
+
+.image-css:hover .c{
+    fill: #00A4E1;
+}
+
+.image-helsana:hover .d{
+    fill: #BA0056;
+}
+
+.image-mutuel:hover .f{
+    fill: #00313C;
+}
+.image-mutuel:hover .e{
+    fill: #FAB100;
+}
+
+.image-sympany:hover .c{
+    fill: #E61A2E;
+}
+
+.image-atupri:hover .a{
+    fill: #FF3C34;
+}
+.image-atupri:hover .b{
+    fill: #324AB5;
+}
+
+.slide-container {
+  width: 100%!important;
+  overflow: hidden;
+  position: relative;
+}
+
+.slides {
+    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.5s ease-in-out;
+  align-items: flex-end;
+}
+
+.slide {
+
+
+  }
+  
+
+.active {
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 767px) {
+
+.slides{
+    .slide{
+        margin-right: 25px;
+    }
+}
+    
+  
+}
