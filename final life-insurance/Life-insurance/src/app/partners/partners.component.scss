@@ -11,7 +11,6 @@
 }
 .companies-images{
     display: flex;
-
     margin-bottom: 62.41px;
     margin-top: 10.41px;
 
@@ -71,12 +70,23 @@
 
 
   }
-  
 
 .active {
   margin: 0 auto;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1100px){
+    .companies-images svg {
+        max-width: 100px!important;
+            }
+            .slide {
+
+display: flex;
+justify-content: center;
+align-items: center;
+            }
+
+}
 @media screen and (max-width: 768px) {
 
 .slides{
@@ -84,6 +94,5 @@
         margin-right: 25px;
     }
 }
-    
   
 }

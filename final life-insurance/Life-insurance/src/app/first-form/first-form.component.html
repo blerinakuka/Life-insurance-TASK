@@ -5,38 +5,55 @@
       <div class=" first-form">
         <div class="col-lg-12">
           <label>Wahlen Sie Ihre Versicherungen</label>
-
+          <div class="input-group wrap-select">
+            <span class="input-group-text">
+              <img src="../../assets/icons/pramie.svg" alt="Icon" width="20">
+            </span>
           <select placeholder="Bitte Auswahlen" class="form-control-select" formControlName="insuranceModel">
             <option value="" disabled selected>Bitte Auswahlen</option>
             <option value="Pillar 3a" class="text-dark">Pillar 3a</option>
             <option value="Pillar 3b" class="text-dark">Pillar 3b</option>
           </select>
         </div>
+      </div>
         <div class="col-lg-12">
-          <label>Vorname & Nachname</label>
-          <input type="text" placeholder="Ihr Vorname & Nachname" formControlName="fullName"
-            class="form-control input-design">
+          <label for="fullName">Vorname & Nachname</label>
+          <div class="input-group">
+       
+              <span class="input-group-text">
+                <img src="../../assets/icons/social-media/profile.svg" alt="Icon" width="20">
+              </span>
+
+            <input type="text" id="fullName" placeholder="Ihr Vorname & Nachname" formControlName="fullName" class="form-control input-design">
+          </div>
         </div>
 
         <div class="col-lg-12">
           <label>PLZ</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <img src="../../assets/icons/social-media/location.svg" alt="Icon" width="20">
+            </span>
           <input type="text" placeholder="Ihre Postleizahl" formControlName="fullName"
             class="form-control input-design">
         </div>
+      </div>
         <div class="col-lg-12">
           <label>E-Mail</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <img src="../../assets/icons/email.svg" alt="Icon" width="20">
+            </span>
           <input type="email" class="form-control input-design" formControlName="email" id="email"
             placeholder="Ihr E-Mail">
         </div>
-
+      </div>
         <div class="row">
           <div class="col-lg-12">
             <label>Telefon</label>
-
             <input #phoneInput id="phone" type="text" formControlName="phoneNumber" maxlength="20" />
             <div #errorMsg id="error-message" class="hide error-message"></div>
             <div #validMsg id="valid-msg" class="hide error-message"></div>
-
           </div>
           <div class=" agreed-container mt-3">
             <input type="checkbox" id="checkbox20" formControlName="agreedToTerms">
@@ -52,15 +69,10 @@
               gelesen und akzeptiert
             </label>
           </div>
-
           <div class="col-lg-12 mt-3">
             <button class="form-control button-design m-0">Senden</button>
           </div>
-
-
-
         </div>
-
       </div>
       <div class="second-part">
         <h3>Lorem Ipsum is simply dummy text of the printing</h3>
@@ -92,7 +104,6 @@
             <h4>You receive call from us</h4>
             <p>Lorem Ipsum is simply dummy text of the printing</p>
           </div>
-  
         </div>
         <div class="col-lg-12 form-icons-text-wrapper ">
           <div class="img-background">

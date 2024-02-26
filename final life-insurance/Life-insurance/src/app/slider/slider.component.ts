@@ -1,42 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {register} from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-slider',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './slider.component.html',
-  styleUrl: './slider.component.scss'
+  styleUrl: './slider.component.scss',
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SliderComponent implements OnInit {
+export class SliderComponent  {
+  
+  
+  testimonials = [
+    {
+      image: '../assets/Mask Group 17.png',
+      name: 'Marissa Garza',
+      stars: [1, 1, 1, 0.5, 0.5],
+      quoteImage: 'quote1.png',
+      quote: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took.'
 
-  carouselOptions = {
-    loop: true,
-    margin: 10,
-    nav: true,
-    autoplay: true,
-    autoplayTimeout: 3000,
-    autoplayHoverPause: true,
-    center: true,
-    navText: [
-      "<i class='fa fa-angle-left'></i>",
-      "<i class='fa fa-angle-right'></i>"
-    ],
-    responsive:{
-      0:{
-          items:1
-      },
-      600:{
-          items:1
-      },
-      1000:{
-          items:3
-      }
-    }
-  };
+    },
+    {
+      image: '../assets/Mask Group 17.png',
+      name: 'Blerina Kukaj',
+      stars: [1, 1, 1, 1 ,1],
+      quoteImage: 'quote2.png',
+      quote: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took.'
+    },
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ];
 }

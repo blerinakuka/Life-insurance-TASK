@@ -5,10 +5,11 @@ import { AnniversaryComponent } from '../anniversary/anniversary.component';
 import { WorkComponent } from '../work/work.component';
 import { PartnersComponent } from '../partners/partners.component';
 import { SliderComponent } from '../slider/slider.component';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-swiss-home',
   standalone: true,
-  imports: [FirstFormComponent,FamilyInsuranceComponent, AnniversaryComponent,WorkComponent, PartnersComponent, SliderComponent],
+  imports: [FirstFormComponent,FamilyInsuranceComponent, AnniversaryComponent,WorkComponent, PartnersComponent, SliderComponent, CommonModule],
   templateUrl: './swiss-home.component.html',
   styleUrl: './swiss-home.component.scss'
 })

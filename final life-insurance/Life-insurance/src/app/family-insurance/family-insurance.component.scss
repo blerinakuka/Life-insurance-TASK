@@ -45,6 +45,17 @@ height: 275px;
 }
 
 
+@media screen and (min-width: 767px) and  (max-width: 1024px)  {
+  .responsive-container{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   }
+   .images-div{
+    margin: 42px 0;
+   }
+}
+
 @media screen and (max-width: 767px) {
     .responsive-container{
      flex-direction: column;
@@ -56,7 +67,7 @@ text-align: center;
     }
 
     .images-div{
-        
+      margin: 42px 0;
         img{
             padding: 10px;
         }
