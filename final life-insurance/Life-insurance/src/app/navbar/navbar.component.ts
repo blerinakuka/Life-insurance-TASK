@@ -1,11 +1,11 @@
-import {Component, OnInit, OnDestroy, ViewChild, ElementRef,HostListener} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 
-import {Subscription} from 'rxjs';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatMenuTrigger} from "@angular/material/menu";
-import {trigger, state, style, animate, transition} from '@angular/animations';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatMenuTrigger } from "@angular/material/menu";
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.menuExpanded = false;
   }
 
-  
+
   selectedOption: string = '';
 
   selectLanguage(option: string) {
@@ -65,7 +65,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   activeLang: string = '';
   private langChangeSubscription: Subscription = new Subscription();
 
-  constructor(  private snackBar: MatSnackBar) {
+  constructor(private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {

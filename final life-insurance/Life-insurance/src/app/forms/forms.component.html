@@ -8,8 +8,7 @@
         <div class="circle" [class.clickable]="isStepClickable(i)" (click)=" navigateToStep(i)">
           <img src="../assets/tick.png" alt="Tick Icon" class="tick-icon">
         </div>
-        @if(i < steps.length - 1){ 
-          <div class="step-line">
+        @if(i < steps.length - 1){ <div class="step-line">
       </div>
       }
 

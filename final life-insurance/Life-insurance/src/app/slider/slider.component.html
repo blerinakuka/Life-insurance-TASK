@@ -1,39 +1,58 @@
+<div class="container">
+	<div class="slider-clients">
+		<h2>What our clients say for us</h2>
+		<swiper [pagination]="true" pagination-clickable="true">
+	
+			<div class="swiper-pagination"></div>
+		</swiper>
+	</div>
+</div>
 
 
 <div class="container">
 	<div class="slider-clients">
-	<h2>What our clients say for us</h2>
-	<swiper-container pagination="true" pagination-clickable="true">
-	  <swiper-slide *ngFor="let testimonial of testimonials">
-		<div class="testimonial">
-		  
-		  <div class="name-rating">
+		<h2>What our clients say for us</h2>
+		<swiper  
+        [grabCursor]="true"
+        [centeredSlides]="false"
+        [slidesPerView]="1"
+
+       
+        [navigation]="true"
+  >
+  <ng-template *ngFor="let testimonial of testimonials">
+	<div class="testimonial">
+
+		<div class="name-rating">
 			<img [src]="testimonial.image" alt="Client Image" style="width: 48px;">
 			<div class="column-direction">
-			<h4>{{ testimonial.name }}</h4>
-			<div class="stars">
-			<ng-container *ngFor="let star of testimonial.stars">
-			  <img *ngIf="star === 1" src="../../assets/star-sharp-svgrepo-com (1).svg" alt="full star">
-			  <img *ngIf="star === 0.5" src="../../assets/Group 106470.svg" alt="half star">
-			</ng-container>
-		  </div>
+				<h4>{{ testimonial.name }}</h4>
+				<div class="stars">
+					<ng-container *ngFor="let star of testimonial.stars">
+						<img *ngIf="star === 1" src="../../assets/star-sharp-svgrepo-com (1).svg"
+							alt="full star">
+						<img *ngIf="star === 0.5" src="../../assets/Group 106470.svg" alt="half star">
+					</ng-container>
+				</div>
+			</div>
 		</div>
-		  </div>
-  
-  
-		  <div class="testimonial-content">
-			<img src="../../assets/Group 35581.svg"  alt="">
+
+
+		<div class="testimonial-content">
+			<img src="../../assets/Group 35581.svg" alt="">
 			<div class="testimonial-quote">
-			  <p>{{ testimonial.quote }}</p>
+				<p>{{ testimonial.quote }}</p>
 			</div>
 			<div class="flex-end-position">
-			<img src="../../assets/Group 35580.svg"  alt="">
-		  </div>
-		  </div>
+				<img src="../../assets/Group 35580.svg" alt="">
+			</div>
 		</div>
-  
-	  </swiper-slide>
-	  <div class="swiper-pagination"></div>
-	</swiper-container>
-  </div>
-  </div>
+	</div>
+
+</ng-template>
+			<div class="swiper-pagination"></div>
+		</swiper>
+	</div>
+</div>
+
+

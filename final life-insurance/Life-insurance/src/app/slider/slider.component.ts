@@ -1,20 +1,21 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {register} from 'swiper/element/bundle';
+import { SwiperModule } from 'swiper/angular';
+import Swiper from 'swiper';
+import SwiperCore, {Autoplay, Navigation, Pagination, EffectCoverflow} from 'swiper'
 
-register();
-
+SwiperCore.use([Navigation, Pagination, EffectCoverflow, Autoplay]);
 @Component({
   selector: 'app-slider',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SwiperModule],
   templateUrl: './slider.component.html',
   styleUrl: './slider.component.scss',
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SliderComponent  {
-  
-  
+export class SliderComponent {
+
+
   testimonials = [
     {
       image: '../assets/Mask Group 17.png',
@@ -27,7 +28,7 @@ export class SliderComponent  {
     {
       image: '../assets/Mask Group 17.png',
       name: 'Blerina Kukaj',
-      stars: [1, 1, 1, 1 ,1],
+      stars: [1, 1, 1, 1, 1],
       quoteImage: 'quote2.png',
       quote: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took.'
     },

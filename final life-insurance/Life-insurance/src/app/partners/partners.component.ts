@@ -19,7 +19,7 @@ export class PartnersComponent {
   isMobile = false;
   autoSlideSubscription: Subscription | undefined;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngAfterViewInit() {
     this.slideWidth = this.slides.nativeElement.firstElementChild.clientWidth;
@@ -41,46 +41,46 @@ export class PartnersComponent {
           this.stopAutoSlide();
         }
       });
-  
+
 
   }
-  
+
   startAutoSlide() {
     const totalSlides = this.slides.nativeElement.children.length;
-    let isTransitioning = false; 
-    
+    let isTransitioning = false;
+
     const cloneSlides = () => {
       for (let i = 0; i < totalSlides; i++) {
         const clonedSlide = this.slides.nativeElement.children[i].cloneNode(true);
         this.slides.nativeElement.appendChild(clonedSlide);
       }
     };
-    
+
     // Initial cloning of slides
     cloneSlides();
-  
+
     this.autoSlideSubscription = interval(3000).subscribe(() => {
       if (!isTransitioning) { // Check if not currently transitioning
         isTransitioning = true; // Set transitioning flag
-        
+
         this.counter++;
-    
+
         // Calculate the offset to transition to the next slide
         const offset = -this.counter * (this.slideWidth * 1.23);
-    
+
         // Smooth transition to the next slide
         this.slides.nativeElement.style.transition = 'transform 0.5s ease-in-out';
         this.slides.nativeElement.style.transform = `translateX(${offset}px)`;
-    
-    
-  
+
+
+
         // Check if transition is completed
         setTimeout(() => {
-          isTransitioning = false; 
+          isTransitioning = false;
           if (this.counter >= totalSlides - 1) {
-            cloneSlides(); 
+            cloneSlides();
           }
-        }, 500); 
+        }, 500);
       }
     });
   }
@@ -92,10 +92,10 @@ export class PartnersComponent {
   }
 
   resetSlidePosition() {
-    this.slides.nativeElement.style.transition = 'none'; 
+    this.slides.nativeElement.style.transition = 'none';
     this.slides.nativeElement.style.transform = `translateX(0)`;
     setTimeout(() => {
-      this.slides.nativeElement.style.transition = 'transform 0.5s ease-in-out'; 
-    }, 50); 
+      this.slides.nativeElement.style.transition = 'transform 0.5s ease-in-out';
+    }, 50);
   }
 }

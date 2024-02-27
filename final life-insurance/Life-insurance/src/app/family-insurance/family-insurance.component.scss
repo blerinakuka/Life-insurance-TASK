@@ -1,97 +1,111 @@
-.images-div{
-max-width: 600px;
-margin: 62px 0;
+.images-div {
+  max-width: 600px;
+  margin: 62px 0;
 
-img{
+  img {
     padding: 10px;
-}
-img:first-child {
-width:263px;
-height: 220px;
-padding-bottom: 0;
-padding-left: 0;
-}
-img:nth-child(2) {
-width: 298px;
-height: 202px;
-padding: 0 10px;
-}
-img:nth-child(3) {
-width: 383px;
-height: 255px;
-padding-bottom: 0;
-padding-left: 0;
   }
-img:nth-child(4) {
-width: 178px;
-height: 275px;
+
+  img:first-child {
+    width: 263px;
+    height: 220px;
+    padding-bottom: 0;
+    padding-left: 0;
+  }
+
+  img:nth-child(2) {
+    width: 298px;
+    height: 202px;
+    padding: 0 10px;
+  }
+
+  img:nth-child(3) {
+    width: 383px;
+    height: 255px;
+    padding-bottom: 0;
+    padding-left: 0;
+  }
+
+  img:nth-child(4) {
+    width: 178px;
+    height: 275px;
   }
 }
 
-.text-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 450px;
-  h2{
+.text-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 450px;
+
+  h2 {
     font-weight: 600;
   }
-  p{
+
+  p {
     color: #707070;
   }
 }
-.responsive-container{
-    display: flex;
+
+.responsive-container {
+  display: flex;
 }
 
 
-@media screen and (min-width: 767px) and  (max-width: 1024px)  {
-  .responsive-container{
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .responsive-container {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-   }
-   .images-div{
+  }
+
+  .images-div {
     margin: 42px 0;
-   }
+  }
 }
 
 @media screen and (max-width: 767px) {
-    .responsive-container{
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
+  .responsive-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text-section {
+    text-align: center;
+  }
+
+  .images-div {
+    margin: 42px 0;
+
+    img {
+      padding: 10px;
     }
-    .text-section{
-text-align: center;
+
+    img:first-child {
+      width: 170px;
+      height: 130px;
+      padding-top: 5px;
+
     }
 
-    .images-div{
-      margin: 42px 0;
-        img{
-            padding: 10px;
-        }
-        img:first-child {
-        width:170px;
-        height: 130px;
-        padding-top: 5px;
+    img:nth-child(2) {
+      width: 180px;
+      height: 119px;
 
-        }
-        img:nth-child(2) {
-        width: 180px;
-        height: 119px;
+    }
 
-        }
-        img:nth-child(3) {
-        width: 235px;
-        height: 151px;
-  
-          }
-        img:nth-child(4) {
-        width: 105px;
-        height: 162px;
-        padding-right: 0;
-        padding-bottom: 5px;
-          }
-        }
+    img:nth-child(3) {
+      width: 235px;
+      height: 151px;
+
+    }
+
+    img:nth-child(4) {
+      width: 105px;
+      height: 162px;
+      padding-right: 0;
+      padding-bottom: 5px;
+    }
+  }
 }

@@ -44,7 +44,7 @@ function customEmailValidator(): ValidatorFn {
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
@@ -340,7 +340,7 @@ export class FormsComponent {
     const birthYear = this.myFormStart.get('birthyear')?.value;
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
-  
+
     return (age === 65) ? 1 : (age < 65) ? Math.max(0, 65 - age) : 30;
   }
 
@@ -348,7 +348,7 @@ export class FormsComponent {
     const birthYear = this.myFormStart.get('birthyear')?.value;
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
-  
+
     return (age >= 64 && age <= 65) ? 0 : 1;
   }
   rangeSlideDuration(value: number) {
@@ -432,23 +432,23 @@ export class FormsComponent {
 
   addFranchise() {
     const lastFranchise = this.franchises.at(this.franchises.length - 1) as FormGroup | undefined;
-  
+
     if (lastFranchise && lastFranchise.invalid) {
       console.log('Last person details are not valid. Please complete them before adding another person.');
       this.markFormGroupControlsAsTouched(lastFranchise);
       return;
     }
-  
+
     const franchiseGroup = this.formBuilder.group({
       name: ['', Validators.required],
       birthyearAddperson: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), this.birthYearValidator.bind(this)]],
       franchise: ['', Validators.required],
       accidentCovered: [false]
     });
-  
+
     this.franchises.push(franchiseGroup);
   }
-  
+
   markFormGroupControlsAsTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
@@ -578,7 +578,7 @@ export class FormsComponent {
   onBirthYearInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value.slice(0, 4);
     const parsedValue = parseInt(inputValue, 10);
-  
+
     this.myFormStart.get('birthyear')?.setValue(isNaN(parsedValue) ? null : parsedValue, { emitEvent: false });
   }
   //BIRTH YEAR ADD PERSON INPUT VALIDATION
@@ -586,40 +586,40 @@ export class FormsComponent {
     const inputValue = (event.target as HTMLInputElement).value.slice(0, 4);
     const parsedValue = parseInt(inputValue, 10);
     const control = this.franchises.at(index).get('birthyearAddperson');
-  
+
     control?.setValue(isNaN(parsedValue) ? null : parsedValue, { emitEvent: false });
   }
   // FULL NAME INPUT VALIDATION
   onInputFormat(formGroup: FormGroup, controlName: string): ValidationErrors | null {
     const control: AbstractControl | null = formGroup.get(controlName);
-  
+
     if (!control) {
       return null;
     }
-  
+
     let inputValue: string = control.value;
     const originalValue = inputValue;
-  
+
     const alphanumericRegex = controlName === 'address' ? /[^a-zA-Z0-9\s'-]/g : /[^a-zA-Z\s'-]/g;
-  
+
     inputValue = inputValue.replace(alphanumericRegex, '');
-  
+
     inputValue = inputValue.trimLeft();
-  
+
     const words = inputValue.split(/\s+/).slice(0, 10);
     inputValue = words.join(' ');
-  
+
     inputValue = inputValue.replace(/(\s{2,}|-{2,}|'{2,})/g, (_, match) => match.charAt(0));
-  
+
     inputValue = inputValue.replace(/\b\w/g, match => match.toUpperCase());
-  
+
     inputValue = inputValue.substring(0, 1).toUpperCase() + inputValue.substring(1, 200);
-  
+
     if (inputValue !== originalValue) {
       control.setValue(inputValue, { emitEvent: false });
       return { 'invalidFormat': true };
     }
-  
+
     return null;
   }
   onFullNameInput() {
@@ -636,7 +636,7 @@ export class FormsComponent {
   onInputFormat2(franchiseIndex: number, controlName: string): ValidationErrors | null {
     const franchise = this.franchises.at(franchiseIndex);
     let inputValue: string = franchise.get(controlName)?.value || '';
-  
+
     const originalValue = inputValue;
 
     inputValue = inputValue.replace(/[^a-zA-Z\s'-]/g, '');
@@ -649,14 +649,14 @@ export class FormsComponent {
 
     const words = inputValue.split(/\s+/).slice(0, 10);
     inputValue = words.join(' ');
-  
+
     inputValue = inputValue.substring(0, 1).toUpperCase() + inputValue.substring(1, 200);
-  
+
     if (inputValue !== originalValue) {
       franchise.get(controlName)?.setValue(inputValue, { emitEvent: false });
       return { 'invalidFormat': true };
     }
-  
+
     return null;
   }
 
@@ -701,7 +701,7 @@ export class FormsComponent {
   onLastStepNext() {
     const personalDetailsForm = this.myFormPersonalDetails;
     this.markFormGroupTouched(personalDetailsForm);
-  
+
     if (personalDetailsForm.valid && this.validatePhoneNumber()) {
       this.currentStep++;
       window.scrollTo(0, 0);
@@ -712,13 +712,13 @@ export class FormsComponent {
 
   onSubmit() {
     this.formSubmitted = true;
-    
+
     const signatureControl = this.myFormSignature.get('signature');
     if (!this.myFormSignature.valid || !signatureControl) {
       console.log('Validation failed. Cannot submit.');
       return;
     }
-    
+
     const savingsGoals = Object.entries(this.myFormLifeInsuranceGoal.value)
       .filter(([_, value]) => value)
       .map(([key]) => ({
@@ -730,7 +730,7 @@ export class FormsComponent {
         'wealthAccumulation': 'Wealth Accumulation'
       }[key]))
       .filter(goal => goal !== '');
-  
+
     const formData = {
       fullName: this.myFormStart.value.fullName,
       birthyear: this.myFormStart.value.birthyear,
@@ -753,7 +753,7 @@ export class FormsComponent {
       person: this.myFormStart.get('franchises')?.value,
       savingsGoal: savingsGoals.join(", ")
     };
-  
+
     console.log(formData);
     this.router.navigate(['/danke']);
   }

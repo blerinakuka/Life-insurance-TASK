@@ -455,7 +455,8 @@
 
   .header-img-description {
     display: contents;
-    img{
+
+    img {
       width: 100%;
       max-width: 100px;
     }
@@ -911,6 +912,7 @@ table tr {
     opacity: 0;
     transform: translateX(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1077,10 +1079,11 @@ table tr {
   display: flex;
   align-items: center;
   text-align: left;
-  .img-class-value{
-    margin:30px;
-  width: 100%;
-  max-width: 100px;
+
+  .img-class-value {
+    margin: 30px;
+    width: 100%;
+    max-width: 100px;
   }
 
   .border-right {
@@ -1361,7 +1364,7 @@ signature-pad {
     padding: 50px 0 50px 0;
   }
 
-  
+
 
   .first-three-forms-mobile {
     padding-bottom: 55px;
