@@ -27,8 +27,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/swiss-favicon.png"
+              "src/assets"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/purple-green.css",
